@@ -20,7 +20,7 @@ pc_sp <- as.data.frame(pc_sp)
 
 #filter list to sp in species list
 #Jakes list
-top_intertidal <- read.csv('./SEED_data/intertidal_data/top_intertidal_spp.csv')
+top_intertidal <- read.csv('./data/top_intertidal_spp.csv')
 
 ct_top <- ct_sp %>% filter(ct_sp %in% top_intertidal$name) %>%
   rename(Organism = ct_sp)
