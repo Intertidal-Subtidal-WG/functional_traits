@@ -1,0 +1,70 @@
+"name","int_counts","int_cover","int_sizes"
+"Semibalanus balanoides",33,35,35
+"Mytilus edulis",32,34,35
+"Modiolus modiolus",31,32,35
+"Nucella lapillus",35,NA,34
+"Metridium senile",34,22,NA
+"Anurida maritima",35,NA,NA
+"Littorina obtusata",35,NA,NA
+"Littorina saxatilis",35,NA,NA
+"Ascophyllum nodosum",NA,35,NA
+"Chondrus crispus",NA,35,NA
+"Fucus distichus",NA,35,NA
+"Mastocarpus stellatus",NA,35,NA
+"Amphipoda",34,NA,NA
+"Carcinus maenus",34,NA,NA
+"Littorina littorea",34,NA,NA
+"Ceramium virgatum",NA,34,NA
+"Corallina officinalis",NA,34,NA
+"Fucus",NA,34,NA
+"Fucus spiralis",NA,34,NA
+"Fucus vesiculosus",NA,34,NA
+"Hildenbrandia rubra",NA,34,NA
+"Verrucaria",NA,34,NA
+"Bare rock",NA,33,NA
+"Coralline",NA,32,NA
+"Isopods",31,NA,NA
+"Strongylocentrotus droebachiensis",31,NA,NA
+"Black zone",NA,31,NA
+"Prasiola stipitata",NA,31,NA
+"Shell hash",NA,31,NA
+"Tectura testudinalis",30,NA,NA
+"Spirorbis",27,NA,NA
+"Alaria esculenta",NA,26,NA
+"Hiatella arctica",25,NA,NA
+"Arthopyrenia",NA,25,NA
+"Cryptosula pallasiana",NA,25,NA
+"Polysiphonia",NA,25,NA
+"Ulva lactuca",NA,25,NA
+"Nematodes",24,NA,NA
+"Porphyra",NA,24,NA
+"Ralfsia",NA,24,NA
+"Rhizoclonium tortuosum",NA,24,NA
+"Codium fragile",NA,23,NA
+"Cyanobacteria",NA,23,NA
+"Leathesia marina",NA,23,NA
+"Phymatolithon lenormandii",NA,23,NA
+"Nemertean",22,NA,NA
+"Asterias rubens",21,NA,NA
+"Halacarus",21,NA,NA
+"Elachista fucicola",NA,21,NA
+"Lacuna vincta",19,NA,NA
+"Polychaeta",19,NA,NA
+"Cladophora",NA,19,NA
+"Halichondria",NA,18,NA
+"Anomia simplex",17,NA,NA
+"Clathromorphum circumscriptum",NA,16,NA
+"Ulva intestinalis",NA,16,NA
+"Chaetomorpha",NA,15,NA
+"Chordaria flagelliformis",NA,14,NA
+"Saccharina latissima",NA,14,NA
+"Ophiopholis",12,NA,NA
+"Ahnfeltia plicata",NA,12,NA
+"Crepidula fornicata",10,NA,NA
+"Plumaria plumosa",NA,10,NA
+"Annelid",9,NA,NA
+"Asterias forbesi",9,NA,NA
+"Cancer borealis",9,NA,NA
+"Diadumene lineata",9,NA,NA
+"Pagurus acadianus",9,NA,NA
+"platyhelminthes",9,NA,NA
