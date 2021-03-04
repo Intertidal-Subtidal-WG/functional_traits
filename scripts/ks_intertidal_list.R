@@ -57,6 +57,8 @@ ct_filter <- ct_data %>% filter(Organism %in% inter_top$Organism & Count >= 1
 pc_filter <- pc_data %>% filter(Organism %in% inter_top$Organism & Percent_cover > 0
                                 & Transect %in% transect_choice)
 
+##CT filter first
+
 #get a rough idea of counts (how many transects x years a taxon was found, not 'count')
 table(ct_filter$Organism)
 
@@ -76,7 +78,7 @@ ct_freq_sp <- ggplot(ct_freq) +
 
 ct_freq_sp
 
-ggsave('20200303ct_freq_sp.png', plot = last_plot(), device = 'png')
+ggsave('./output/20200303ct_freq_sp.png', plot = last_plot(), device = 'png')
 
 ct_freq_25 <- ct_freq[1:25,]
 
@@ -89,5 +91,57 @@ ct_bottom_25_sp <- ggplot(ct_freq_25) +
 
 ct_bottom_25_sp
 
-ggsave('20200303ct_bottom25_sp.png', plot = last_plot(), device = 'png')
+ggsave('./output/20200303ct_bottom25_sp.png', plot = last_plot(), device = 'png')
 
+#extract the species we want
+ct_select <- ct_freq %>% filter(n > 1000)
+write.table(ct_select$Organism, './output/ct_select.csv', 
+          row.names = FALSE, col.names = FALSE)
+
+
+
+##PC filter
+#lets see rough counts
+table(pc_filter$Organism)
+
+#turn into count data, needs to be factor
+pc_filter$Organism <- as.factor(pc_filter$Organism)
+pc_freq <- count(pc_filter, Organism)
+
+pc_freq <- pc_freq %>%
+  arrange(n)
+
+#barplot of species frequencies
+pc_freq_sp <- ggplot(pc_freq) +
+  geom_col(aes(x = reorder(Organism, n), y = n)) +
+  labs(title = 'Occurrences of PC species, year x transect x level x replicate', y = '', x = '', fill = '') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = 'italic'), legend.position = c(.9,.8))
+
+pc_freq_sp
+
+ggsave('./output/20200303pc_freq_sp.png', plot = last_plot(), device = 'png')
+
+pc_freq_25 <- pc_freq[1:25,]
+
+#barplot of species frequencies
+pc_bottom_25_sp <- ggplot(pc_freq_25) +
+  geom_col(aes(x = reorder(Organism, n), y = n)) +
+  labs(title = '25 PC species with lowest occurrence', y = '', x = '', fill = '') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = 'italic'), legend.position = c(.9,.8))
+
+pc_bottom_25_sp
+
+ggsave('./output/20200303pc_bottom25_sp.png', plot = last_plot(), device = 'png')
+
+#extract the species we want
+pc_select <- pc_freq %>% filter(n > 1000)
+
+#before we export lets make sure we aren't exporting duplicates
+#first lets filter out the species we already selected from ct
+pc_select2 <- pc_select %>% subset(!(pc_select$Organism %in% ct_select$Organism))
+
+
+write.table(pc_select2$Organism, './output/pc_select.csv', 
+            row.names = FALSE, col.names = FALSE)
