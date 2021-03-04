@@ -186,7 +186,8 @@ ggplot(check_all, aes(x = Organism, y = Year, fill = Year)) +
 #Keen dataset
 keen_data <- read.csv('./data/keen_all_methods_site_merged.csv')
 
-unique(keen_data$SPECIES)
+keen_sp <- unique(keen_data$SPECIES)
+keen_sp <- as.data.frame(keen_sp)
 
 in_sheet2 <- c('Saccorhiza dermatodea','Saccharina latissima','Alaria esculenta',
                'Colpomenia peregrina','Codium fragile','Ascophyllum nodosum',
@@ -210,3 +211,28 @@ in_sheet2 <- c('Saccorhiza dermatodea','Saccharina latissima','Alaria esculenta'
                'Prasiola stipitata','Strongylocentrotus droebachiensis',
                'Hiatella arctica','Spirorbis','Anomia simplex','Lacuna vincta',
                'Ophiopholis','Crepidula fornicata')
+
+#get the unique species that aren't already in the list
+keen_unique <- subset(keen_sp, !(keen_sp %in% in_sheet2))
+#remove na's
+keen_unique <- na.omit(keen_unique)
+#check
+keen_unique
+
+#lets export this and manually remove some of the stuff
+write.table(keen_unique$keen_sp, './output/keen_sp_raw.csv', 
+            row.names = FALSE, col.names = FALSE)
+
+#unidentified/vague entries to remove, already used genera
+keen_remove <- c("UNID Juv Laminariales","Ulvaria","Amphipod tube mat",
+                 "Barnacle","Encrusting coralline","Red Algal Turf",
+                 "Unidentified Erect Coralline","Unidentified Red Blade",
+                 "Blady Ulvoid","Diatom Tube Mat","Unidentified Filamentous Red",
+                 "Tubular Ulvoid","Cliona","Myoxocephalus","Anomia","Phymatolithon")
+
+#trimmed list
+keen_trimmed <- subset(keen_unique, !(keen_sp %in% keen_remove))
+
+write.table(keen_trimmed$keen_sp, './output/keen_sp_trimmed.csv', 
+            row.names = FALSE, col.names = FALSE)
+
