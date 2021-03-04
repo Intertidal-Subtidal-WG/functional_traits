@@ -27,7 +27,7 @@ ct_top <- ct_sp %>% filter(ct_sp %in% top_intertidal$name) %>%
 pc_top <- pc_sp %>% filter(pc_sp %in% top_intertidal$name) %>%
   rename(Organism = pc_sp)
 
-#merge0 
+#merge 
 inter_top <- merge(ct_top, pc_top, all.x = TRUE, all.y = TRUE)
 
 #remove things that aren't plants or animals...
@@ -95,6 +95,8 @@ ggsave('./output/20200303ct_bottom25_sp.png', plot = last_plot(), device = 'png'
 
 #extract the species we want
 ct_select <- ct_freq %>% filter(n > 1000)
+#ct_select <- ct_freq %>% filter(n < 1000 & n > 250)
+
 write.table(ct_select$Organism, './output/ct_select.csv', 
           row.names = FALSE, col.names = FALSE)
 
@@ -138,6 +140,8 @@ ggsave('./output/20200303pc_bottom25_sp.png', plot = last_plot(), device = 'png'
 #extract the species we want
 pc_select <- pc_freq %>% filter(n > 1000)
 
+#pc_select <- pc_freq %>% filter(n < 1000 & n > 250)
+
 #before we export lets make sure we aren't exporting duplicates
 #first lets filter out the species we already selected from ct
 pc_select2 <- pc_select %>% subset(!(pc_select$Organism %in% ct_select$Organism))
@@ -145,3 +149,64 @@ pc_select2 <- pc_select %>% subset(!(pc_select$Organism %in% ct_select$Organism)
 
 write.table(pc_select2$Organism, './output/pc_select.csv', 
             row.names = FALSE, col.names = FALSE)
+
+
+
+#Lets check the years our species are found to make sure 
+#we aren't excluding recent invaders
+ct_check <- ct_freq %>% filter(n < 1000)
+pc_check <- pc_freq %>% filter(n < 1000)
+
+ct_check <- ct_freq %>% filter(n < 250)
+pc_check <- pc_freq %>% filter(n < 250)
+
+#filter data by under 1000 list
+ct_check_data <- ct_data %>% filter(Organism %in% ct_check$Organism & Count >= 1
+                                & Transect %in% transect_choice) %>%
+                          select(Organism, Year) %>%
+                          distinct(Organism, Year)
+
+pc_check_data <- pc_data %>% filter(Organism %in% pc_check$Organism & Percent_cover > 0
+                                & Transect %in% transect_choice) %>%
+                          select(Organism, Year, Transect) %>%
+                          distinct(Organism, Year)
+
+
+check_all <- merge(ct_check_data, pc_check_data, all.x = TRUE, all.y = TRUE)
+
+
+check_all$Year <- as.factor(check_all$Year)
+
+ggplot(check_all, aes(x = Organism, y = Year, fill = Year)) +
+  geom_bar(position="stack", stat="identity") +
+  coord_flip()
+
+
+
+#Keen dataset
+keen_data <- read.csv('./data/keen_all_methods_site_merged.csv')
+
+unique(keen_data$SPECIES)
+
+in_sheet2 <- c('Saccorhiza dermatodea','Saccharina latissima','Alaria esculenta',
+               'Colpomenia peregrina','Codium fragile','Ascophyllum nodosum',
+               'Ptilota serrata','Porphyra','Polysiphonia','Palmaria palmata',
+               'Mastocarpus stellatus','Lithophyllum ','Hildenbrandia rubra',
+               'Euthora cristata','Cystoclonium purpureum','Corallina officinalis',
+               'Clathromorphum circumscriptum','Chondrus crispus',
+               'Bonnemaisonia hamifera','Verrucaria','Arthopyrenia',
+               'Mytilus edulis','Modiolus modiolus',
+               'Strongylocentrotus droebachiensis','Henricia sanguinolenta',
+               'Cancer irroratus','Cancer borealis','Asterias rubens',
+               'Asterias forbesi','Schizoporella unicornis','Ostrea edulis',
+               'Membranipora membranacea','Didemnum vexillum','Crepidula fornicata',
+               'Botryllus schlosseri','Botryllus violaceus','Littorina saxatilis',
+               'Anurida maritima','Littorina littorea','Amphipoda',
+               'Littorina obtusata','Nucella lapillus',
+               'Semibalanus balanoides','Elachista fucicola',
+               'Cyanobacteria','Phymatolithon lenormandii','Ulva lactuca',
+               'Modiolus modiolus','Corallina officinalis','Carcinus maenus',
+               'Isopoda','Metridium senile','Tectura testudinalis',
+               'Prasiola stipitata','Strongylocentrotus droebachiensis',
+               'Hiatella arctica','Spirorbis','Anomia simplex','Lacuna vincta',
+               'Ophiopholis','Crepidula fornicata')
