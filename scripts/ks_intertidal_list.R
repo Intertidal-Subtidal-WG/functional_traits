@@ -51,12 +51,43 @@ inter_unique <- subset(inter_top, !(inter_top$Organism %in% in_sheet))
 
  #of these lets sort out the ct and pc data with only these and >0 count
 
-ct_filter <- ct_data %>% filter(Organism %in% inter_top$Organism & Count > 0
+ct_filter <- ct_data %>% filter(Organism %in% inter_top$Organism & Count >= 1
                                 & Transect %in% transect_choice)
 
 pc_filter <- pc_data %>% filter(Organism %in% inter_top$Organism & Percent_cover > 0
                                 & Transect %in% transect_choice)
 
+#get a rough idea of counts (how many transects x years a taxon was found, not 'count')
+table(ct_filter$Organism)
 
+#turn into count data, needs to be factor
+ct_filter$Organism <- as.factor(ct_filter$Organism)
+ct_freq <- count(ct_filter, Organism)
 
+ct_freq <- ct_freq %>%
+  arrange(n)
+
+#barplot of species frequencies
+ct_freq_sp <- ggplot(ct_freq) +
+  geom_col(aes(x = reorder(Organism, n), y = n)) +
+  labs(title = 'Occurrences of CT species, year x transect x level x replicate', y = '', x = '', fill = '') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = 'italic'), legend.position = c(.9,.8))
+
+ct_freq_sp
+
+ggsave('20200303ct_freq_sp.png', plot = last_plot(), device = 'png')
+
+ct_freq_25 <- ct_freq[1:25,]
+
+#barplot of species frequencies
+ct_bottom_25_sp <- ggplot(ct_freq_25) +
+  geom_col(aes(x = reorder(Organism, n), y = n)) +
+  labs(title = '25 species with lowest occurrence', y = '', x = '', fill = '') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = 'italic'), legend.position = c(.9,.8))
+
+ct_bottom_25_sp
+
+ggsave('20200303ct_bottom25_sp.png', plot = last_plot(), device = 'png')
 
