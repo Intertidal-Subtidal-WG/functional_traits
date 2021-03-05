@@ -3,7 +3,35 @@ title: "trait_clustering"
 output: html_document
 ---
 
+Setup
 ```{r setup, include=FALSE}
+library('nomclust')
 library('tidyverse')
+
+```
+
+Load in data
+```{r load-in}
+trait_raw <- read.csv('~/Documents/GitHub/functional_traits/data/traits_reduced_test.csv')
+```
+
+
+Ladds et al 2018
+- must have a complete dataset
+- continuous variables must be discretized
+
+Step 1: data preparation
+```{r}
+
+```
+
+Step 2 Distance Matrix
+```{r}
+
+```
+
+Data Evalutation
+```{r}
+
 ```
 
