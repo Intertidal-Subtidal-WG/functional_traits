@@ -7,7 +7,14 @@ Setup
 ```{r setup, include=FALSE}
 library('nomclust')
 library('tidyverse')
-
+library('mice')
+library('cluster')
+library(nomclust) 
+library(ggplot2)
+library(reshape)
+library(ggthemes)
+library(fpc)
+library(gridExtra)
 ```
 
 Load in data
@@ -19,14 +26,40 @@ trait_raw <- read.csv('~/Documents/GitHub/functional_traits/data/traits_reduced_
 Ladds et al 2018
 - must have a complete dataset
 - continuous variables must be discretized
+Their repository: https://github.com/MoniqueLadds/FunctionalGroupClassification
 
 Step 1: data preparation
 ```{r}
+#Ladds et al found that package mice worked best (polytomous logistic regression)
+
+#I don't know how to do this yet, need to move on nd figure it out later
+
+#trait_imp <- mice(trait_raw[,4:ncol(trait_raw)], m=5, method = 'polyreg', print = F)
+
+#ClusterImp <- complete(cluster.imp)
+#ClusterImp <- cbind(ClusterImp,fish[,1:7])
+#save(ClusterImp, file = "Data/missing/MICE_imputed.RData")
 
 ```
 
 Step 2 Distance Matrix
 ```{r}
+
+##pasted in from ladds et al again, work on 
+
+##Make a NULL dataset for the output from "nomclust"
+combdf <- combn(ClusterImp$CommonName,2)
+comparison<-data.frame(combdf[1,], combdf[2,])
+colnames(comparison) <- c("c1", "c2")
+
+#Select the variables to use from the imputed data
+dataSET <- ClusterImp[,c(1:21)]
+namesComm <- ClusterImp[,"species"]
+
+evaluation <- NULL
+cmin = 2
+cmax = 25
+
 
 ```
 

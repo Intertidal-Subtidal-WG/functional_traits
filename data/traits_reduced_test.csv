@@ -1,115 +1,115 @@
-species,group,common_name_division,turf_subcanopy_canopy_algae,Steneck_Dethier_morphology_algae,morphology1,morphology2,trophic_level,motility_juv,motility_adult,invasive,human_use,area
-Saccorhiza dermatodea,Algae,Brown Algae,Canopy,leathery macrophyte,Canopy,leathery macrophyte,primary producer,,,,,shared
-Saccharina latissima,Algae,Brown Algae,Canopy,leathery macrophyte,Canopy,leathery macrophyte,primary producer,,sessile,,,shared
-Alaria esculenta,Algae,Brown Algae,Canopy,leathery macrophyte,Canopy,leathery macrophyte,primary producer,,sessile,,,shared
-Colpomenia peregrina,Algae,Brown Algae,Turf,corticated foliose,Turf,corticated foliose,primary producer,,,yes,,shared
-Ascophyllum nodosum,Algae,Brown Algae,Canopy,leathery macrophyte,Canopy,leathery macrophyte,primary producer,,sessile,,,shared
-Ptilota serrata,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,,,,,shared
-Porphyra,Algae,Red Erect Algae,Turf,foliose algae,Turf,foliose algae,primary producer,,,,,shared
-Polysiphonia,Algae,Red Erect Algae,Turf,filamentous,Turf,filamentous,primary producer,,,,,shared
-Palmaria palmata,Algae,Red Erect Algae,Subcanopy,corticated foliose,Subcanopy,corticated foliose,primary producer,errant,sessile,,food,shared
-Mastocarpus stellatus,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,errant,sessile,,"food, pharmaceutical",shared
-Euthora cristata,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,,,,,shared
-Cystoclonium purpureum,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,,,,,shared
-Chondrus crispus,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,,sessile,,,shared
-Bonnemaisonia hamifera,Algae,Red Erect Algae,Turf,filamentous,Turf,filamentous,primary producer,,,,,shared
-Codium fragile,Algae,Green Algae,Subcanopy,corticated foliose,Subcanopy,corticated foliose,primary producer,,,yes,,shared
-Lithophyllum ,Algae,Red Crust Algae,Turf,crustose algae,Turf,crustose algae,primary producer,,,,,shared
-Hildenbrandia rubra,Algae,Red Crust Algae,Turf,crustose algae,Turf,crustose algae,primary producer,,,,,shared
-Clathromorphum circumscriptum,Algae,Red Crust Algae,Turf,crustose algae,Turf,crustose algae,primary producer,errant,sessile,no,no,shared
-Ulva lactuca,Algae,Green Algae,Turf,foliose algae,Turf,foliose algae,primary producer,errant,"sessile, errant",no,no,intertidal
-Desmarestia aculeata,Algae,Brown Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,errant,sessile,no,no,subtidal
-Desmarestia viridis,Algae,Brown Algae,Subcanopy,corticated macrophyte,Subcanopy,corticated macrophyte,primary producer,errant,sessile,no,no,subtidal
-Coccotylus truncatus,Algae,Red Erect Algae,Turf,corticated foliose,Turf,corticated foliose,primary producer,,,,,subtidal
-Titanoderma,Algae,Red Coralline Algae,Turf,crustose algae,Turf,crustose algae,primary producer,,,NA,,subtidal
-Agarum clathratum,Algae,Brown Algae,Canopy,leathery macrophyte,Canopy,leathery macrophyte,primary producer,,,,,subtidal
-Phymatolithon lenormandii,Algae,Red Coralline Algae,Turf,crustose algae,Turf,crustose algae,primary producer,errant,sessile,no,no,intertidal
-Corallina officinalis,Algae,Red Coralline Algae,Turf,articulated coralline,Turf,articulated coralline,primary producer,errant,sessile,no,"pharmaceutical, medical, vermifuge",intertidal
-Laminaria digitata,Algae,Brown Algae,Canopy,leathery macrophyte,Canopy,leathery macrophyte,primary producer,,sessile,,,subtidal
-Halosiphon tomentosus,Algae,Brown Algae,Subcanopy,filamentous,Subcanopy,filamentous,primary producer,errant,sessile,,no,subtidal
-Dasysiphonia japonica,Algae,Red Erect Algae,Turf,filamentous,Turf,filamentous,primary producer,errant,sessile,yes,no,subtidal
-Lithothamnion,Algae,Red Coralline Algae,Turf,crustose algae,Turf,crustose algae,primary producer,,,NA,,subtidal
-Phycodrys rubens,Algae,Red Erect Algae,Subcanopy,foliose algae,Subcanopy,foliose algae,primary producer,errant,sessile,no,no,subtidal
-Ceramium,Algae,Red Erect Algae,Canopy,filamentous,Canopy,filamentous,primary producer,,,NA,,subtidal
-Polyides rotunda,Algae,Red Erect Algae,Turf,corticated macrophyte,Turf,corticated macrophyte,primary producer,errant,sessile,no,no,subtidal
-Spermothamnion repens,Algae,Red Erect Algae,Turf,filamentous,Turf,filamentous,primary producer,errant,sessile,no,no,subtidal
-Elachista fucicola,Algae,Brown Algae,Turf,filamentous,Turf,filamentous,primary producer,errant,sessile,no,no,intertidal
-Prasiola stipitata,Algae,Green Algae,Turf,foliose algae,Turf,foliose algae,primary producer,errant,sessile,no,no,intertidal
-Leptophytum acervatum,Algae,Red Coralline Algae,Turf,crustose algae,Turf,crustose algae,primary producer,errant,sessile,no?,no,subtidal
-Lithophyllum,Algae,Red Coralline Algae,Turf,crustose algae,Turf,crustose algae,primary producer,,,,,subtidal
-Dumontia contorta,Algae,Red Erect Algae,Subcanopy,corticated macrophytes,Subcanopy,corticated macrophytes,primary producer,errant,sessile ,no,no,subtidal
-Cyanobacteria,Bacteria,Cyanobacteria,NA,NA,,,,,,,,intertidal
-Verrucaria,Fungus,Fungus,NA,NA,,,,,,,,intertidal
-Arthopyrenia,Fungus,Fungus,NA,NA,,,,,,,,intertidal
-Crisia eburnea,Invertebrate,Bryozoan,NA,NA,soft,soft,primary producer,motile,sessile,no,no,subtidal
-Urticina felina,Invertebrate,Anemone,NA,NA,soft,soft,secondary consumer,motile,sessile,,,subtidal
-Semibalanus balanoides,Invertebrate,Barnacle,NA,NA,hard,hard,primary consumer ,motile,sessile,,,intertidal
-Hiatella arctica,Invertebrate,Bivalve,NA,NA,hard,hard,primary consumer ,motile,sessile,,,intertidal
-Anomia simplex,Invertebrate,Bivalve,NA,NA,hard,hard,primary consumer ,motile,sessile,no,,intertidal
-Placopecten magellanicus,Invertebrate,Bivalve,NA,NA,calcareous,calcareous,primary consumer ,motile,sessile,no,food,subtidal
-Mytilus edulis,Invertebrate,Bivalve,NA,NA,hard,hard,primary consumer,motile,sessile,,,shared
-Modiolus modiolus,Invertebrate,Bivalve,NA,NA,hard,hard,primary consumer,motile,sessile,,,shared
-Ostrea edulis,Invertebrate,Bivalve,NA,NA,hard,hard,primary consumer,motile,sessile,,,shared
-Tricellaria inopinata,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,yes,no,subtidal
-Patinella verrucaria,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,no,no,subtidal
-Crisularia turrita,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,no,no,subtidal
-Bugulina spicata,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,yes,no,subtidal
-Dendrobeania murrayana,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,no,no,subtidal
-Schizoporella unicornis,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,no,no,shared
-Membranipora membranacea,Invertebrate,Bryozoan,NA,NA,calcareous,calcareous,primary consumer,motile,sessile,yes,no,shared
-Boreochiton ruber,Invertebrate,Chiton,NA,NA,calcareous,calcareous,primary consumer,motile,motile,,no,subtidal
-Stenosemus albus,Invertebrate,Chiton,NA,NA,calcareous,calcareous,primary consumer,motile,motile,no,no,subtidal
-Metridium senile,Invertebrate,Cnidarian,NA,NA,soft,soft,secondary consumer,motile,sessile,,,intertidal
-Pachycerianthus borealis,Invertebrate,Cnidarian,NA,NA,soft,soft,secondary consumer,motile,sessile,no,no,subtidal
-Anurida maritima,invertebrate,Collembolan,NA,NA,soft,soft,decomposer,motile,motile,no,no,intertidal
-Carcinus maenus,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,motile,motile,yes,no,intertidal
-Isopoda,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,motile,motile,NA,no,intertidal
-Homarus americanus,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,motile,motile,no,yes,subtidal
-Carcinus maenas,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,sessile,sessile,,,subtidal
-Cancer irroratus,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,motile,motile,no,,shared
-Cancer borealis,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,motile,motile,no,yes,shared
-Amphipoda,Invertebrate,Crustacean,NA,NA,hard,hard,secondary consumer,motile,motile,NA,,intertidal
-Echinarachnius parma,Invertebrate,Echinoderm,NA,NA,hard,hard,decomposer,motile,motile,no,,subtidal
-Ophiopholis aculeata,Invertebrate,Echinoderm,NA,NA,calcareous,calcareous,secondary consumer,motile,motile,no,no,subtidal
-Cucumaria frondosa,Invertebrate,Echinoderm,NA,NA,soft,soft,decomposer,motile,motile,no,no,subtidal
-Tectura testudinalis,Invertebrate,Gastropod,NA,NA,hard,hard,primary consumer,motile,motile,no,no,intertidal
-Crepidula fornicata,Invertebrate,Gastropod,NA,NA,hard,hard,primary consumer,sessile,sessile,,,shared
-Littorina saxatilis,Invertebrate,Gastropod,NA,NA,calcareous,calcareous,primary consumer,motile,motile,,,intertidal
-Littorina littorea,Invertebrate,Gastropod,NA,NA,calcareous,calcareous,primary consumer,motile,motile,yes,yes,intertidal
-Littorina obtusata,Invertebrate,Gastropod,NA,NA,calcareous,calcareous,primary consumer,motile,motile,,,intertidal
-Nucella lapillus,Invertebrate,Gastropod,NA,NA,calcareous,calcareous,secondary consumer,motile,motile,,,intertidal
-Thylacodes,Invertebrate,Gastropod,NA,NA,hard,hard,primary consumer,motile,sessile,no,no,subtidal
-Lacuna vincta,Invertebrate,Gastropod,NA,NA,hard,hard,primary consumer,motile,motile,no,no,intertidal
-Buccinum undatum,Invertebrate,Gastropod,NA,NA,hard,hard,secondary consumer,motile,motile,no,yes,subtidal
-Testudinalia testudinalis,Invertebrate,Gastropod,NA,NA,hard,hard,primary consumer,motile,sessile,,,subtidal
-Obelia,Invertebrate,Hydrozoan,NA,NA,soft,soft,primary consumer,sessile,both,,,subtidal
-Spirorbis,Invertebrate,Polychaete,NA,NA,calcareus,calcareus,primary consumer,motile,sessile,,no,intertidal
-Henricia sanguinolenta,Invertebrate,Sea Stars,NA,NA,hard,hard,primary consumer,motile,motile,no,no,shared
-Asterias rubens,Invertebrate,Sea Stars,NA,NA,hard,hard,secondary consumer,motile,motile,no,no,shared
-Asterias forbesi,Invertebrate,Sea Stars,NA,NA,hard,hard,secondary consumer,motile,motile,no,no,shared
-Halichondria panicea,Invertebrate,Sponge,NA,NA,soft,soft,primary consumer,motile,sessile,no,no,subtidal
-Leucosolenia,Invertebrate,Sponge,NA,NA,,,primary consumer,motile,sessile,NA,no,subtidal
-Halisarca dujardinii,Invertebrate,Sponge,NA,NA,soft,soft,primary consumer,motile,sessile,no,no,subtidal
-Hymedesmia,Invertebrate,Sponge,NA,NA,soft,soft,primary consumer,motile,sessile,NA,no,subtidal
-Boltenia ovifera,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,no,no,subtidal
-Botrylloides violaceus,Invertebrate,Tunicate,NA,NA,,,,motile,sessile,yes,,subtidal
-Diplosoma listerianum,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,,,subtidal
-Ciona savignyi,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,sessile,sessile,,,subtidal
-Dendrodoa carnea,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,no,no,subtidal
-Didemnum albidum,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,,,subtidal
-Didemnum vexillum,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,sessile,sessile,,,shared
-Botryllus schlosseri,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,yes,,shared
-Ciona intestinalis,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,yes (controversial),no,subtidal
-Boltenia echinata,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,motile,sessile,,no,subtidal
-Aplidium pallidum,Invertebrate,Tunicate,NA,NA,soft,soft,primary consumer,errant,errant,no,no,subtidal
-Strongylocentrotus droebachiensis,Invertebrate,Urchin,NA,NA,hard?,hard?,primary consumer,motile,motile,,,shared
-Tautogolabrus adspersus,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Pollachius virens,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Tautoga onitis,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, gamefish",subtidal
-Pseudopleuronectes americanus,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Urophycis regia,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Morone saxatilis,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Pholis gunnellus,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Myoxocephalus octodecemspinosus,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Myoxocephalus scorpius,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
-Cyclopterus lumpus,Vertebrate,Fish,NA,NA,soft,soft,secundary consumer,errant,motile,no,"commercial, fisheries",subtidal
+species,group,common_name_division,morphology1,morphology2,trophic_level,area
+Saccorhiza dermatodea,Algae,Brown Algae,Canopy,leathery macrophyte,primary producer,shared
+Saccharina latissima,Algae,Brown Algae,Canopy,leathery macrophyte,primary producer,shared
+Alaria esculenta,Algae,Brown Algae,Canopy,leathery macrophyte,primary producer,shared
+Colpomenia peregrina,Algae,Brown Algae,Turf,corticated foliose,primary producer,shared
+Ascophyllum nodosum,Algae,Brown Algae,Canopy,leathery macrophyte,primary producer,shared
+Ptilota serrata,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,primary producer,shared
+Porphyra,Algae,Red Erect Algae,Turf,foliose algae,primary producer,shared
+Polysiphonia,Algae,Red Erect Algae,Turf,filamentous,primary producer,shared
+Palmaria palmata,Algae,Red Erect Algae,Subcanopy,corticated foliose,primary producer,shared
+Mastocarpus stellatus,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,primary producer,shared
+Euthora cristata,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,primary producer,shared
+Cystoclonium purpureum,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,primary producer,shared
+Chondrus crispus,Algae,Red Erect Algae,Subcanopy,corticated macrophyte,primary producer,shared
+Bonnemaisonia hamifera,Algae,Red Erect Algae,Turf,filamentous,primary producer,shared
+Codium fragile,Algae,Green Algae,Subcanopy,corticated foliose,primary producer,shared
+Lithophyllum ,Algae,Red Crust Algae,Turf,crustose algae,primary producer,shared
+Hildenbrandia rubra,Algae,Red Crust Algae,Turf,crustose algae,primary producer,shared
+Clathromorphum circumscriptum,Algae,Red Crust Algae,Turf,crustose algae,primary producer,shared
+Ulva lactuca,Algae,Green Algae,Turf,foliose algae,primary producer,intertidal
+Desmarestia aculeata,Algae,Brown Algae,Subcanopy,corticated macrophyte,primary producer,subtidal
+Desmarestia viridis,Algae,Brown Algae,Subcanopy,corticated macrophyte,primary producer,subtidal
+Coccotylus truncatus,Algae,Red Erect Algae,Turf,corticated foliose,primary producer,subtidal
+Titanoderma,Algae,Red Coralline Algae,Turf,crustose algae,primary producer,subtidal
+Agarum clathratum,Algae,Brown Algae,Canopy,leathery macrophyte,primary producer,subtidal
+Phymatolithon lenormandii,Algae,Red Coralline Algae,Turf,crustose algae,primary producer,intertidal
+Corallina officinalis,Algae,Red Coralline Algae,Turf,articulated coralline,primary producer,intertidal
+Laminaria digitata,Algae,Brown Algae,Canopy,leathery macrophyte,primary producer,subtidal
+Halosiphon tomentosus,Algae,Brown Algae,Subcanopy,filamentous,primary producer,subtidal
+Dasysiphonia japonica,Algae,Red Erect Algae,Turf,filamentous,primary producer,subtidal
+Lithothamnion,Algae,Red Coralline Algae,Turf,crustose algae,primary producer,subtidal
+Phycodrys rubens,Algae,Red Erect Algae,Subcanopy,foliose algae,primary producer,subtidal
+Ceramium,Algae,Red Erect Algae,Canopy,filamentous,primary producer,subtidal
+Polyides rotunda,Algae,Red Erect Algae,Turf,corticated macrophyte,primary producer,subtidal
+Spermothamnion repens,Algae,Red Erect Algae,Turf,filamentous,primary producer,subtidal
+Elachista fucicola,Algae,Brown Algae,Turf,filamentous,primary producer,intertidal
+Prasiola stipitata,Algae,Green Algae,Turf,foliose algae,primary producer,intertidal
+Leptophytum acervatum,Algae,Red Coralline Algae,Turf,crustose algae,primary producer,subtidal
+Lithophyllum,Algae,Red Coralline Algae,Turf,crustose algae,primary producer,subtidal
+Dumontia contorta,Algae,Red Erect Algae,Subcanopy,corticated macrophytes,primary producer,subtidal
+Cyanobacteria,Bacteria,Cyanobacteria,Bacteria,Bacteria,primary producer,intertidal
+Verrucaria,Fungus,Fungus,Fungus,Fungus,decomposer,intertidal
+Arthopyrenia,Fungus,Fungus,Fungus,Fungus,decomposer,intertidal
+Crisia eburnea,Invertebrate,Bryozoan,soft,soft,primary producer,subtidal
+Urticina felina,Invertebrate,Anemone,soft,soft,secondary consumer,subtidal
+Semibalanus balanoides,Invertebrate,Barnacle,hard,hard,primary consumer ,intertidal
+Hiatella arctica,Invertebrate,Bivalve,hard,hard,primary consumer ,intertidal
+Anomia simplex,Invertebrate,Bivalve,hard,hard,primary consumer ,intertidal
+Placopecten magellanicus,Invertebrate,Bivalve,calcareous,calcareous,primary consumer ,subtidal
+Mytilus edulis,Invertebrate,Bivalve,hard,hard,primary consumer,shared
+Modiolus modiolus,Invertebrate,Bivalve,hard,hard,primary consumer,shared
+Ostrea edulis,Invertebrate,Bivalve,hard,hard,primary consumer,shared
+Tricellaria inopinata,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,subtidal
+Patinella verrucaria,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,subtidal
+Crisularia turrita,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,subtidal
+Bugulina spicata,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,subtidal
+Dendrobeania murrayana,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,subtidal
+Schizoporella unicornis,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,shared
+Membranipora membranacea,Invertebrate,Bryozoan,calcareous,calcareous,primary consumer,shared
+Boreochiton ruber,Invertebrate,Chiton,calcareous,calcareous,primary consumer,subtidal
+Stenosemus albus,Invertebrate,Chiton,calcareous,calcareous,primary consumer,subtidal
+Metridium senile,Invertebrate,Cnidarian,soft,soft,secondary consumer,intertidal
+Pachycerianthus borealis,Invertebrate,Cnidarian,soft,soft,secondary consumer,subtidal
+Anurida maritima,invertebrate,Collembolan,soft,soft,decomposer,intertidal
+Carcinus maenus,Invertebrate,Crustacean,hard,hard,secondary consumer,intertidal
+Isopoda,Invertebrate,Crustacean,hard,hard,secondary consumer,intertidal
+Homarus americanus,Invertebrate,Crustacean,hard,hard,secondary consumer,subtidal
+Carcinus maenas,Invertebrate,Crustacean,hard,hard,secondary consumer,subtidal
+Cancer irroratus,Invertebrate,Crustacean,hard,hard,secondary consumer,shared
+Cancer borealis,Invertebrate,Crustacean,hard,hard,secondary consumer,shared
+Amphipoda,Invertebrate,Crustacean,hard,hard,secondary consumer,intertidal
+Echinarachnius parma,Invertebrate,Echinoderm,hard,hard,decomposer,subtidal
+Ophiopholis aculeata,Invertebrate,Echinoderm,calcareous,calcareous,secondary consumer,subtidal
+Cucumaria frondosa,Invertebrate,Echinoderm,soft,soft,decomposer,subtidal
+Tectura testudinalis,Invertebrate,Gastropod,hard,hard,primary consumer,intertidal
+Crepidula fornicata,Invertebrate,Gastropod,hard,hard,primary consumer,shared
+Littorina saxatilis,Invertebrate,Gastropod,calcareous,calcareous,primary consumer,intertidal
+Littorina littorea,Invertebrate,Gastropod,calcareous,calcareous,primary consumer,intertidal
+Littorina obtusata,Invertebrate,Gastropod,calcareous,calcareous,primary consumer,intertidal
+Nucella lapillus,Invertebrate,Gastropod,calcareous,calcareous,secondary consumer,intertidal
+Thylacodes,Invertebrate,Gastropod,hard,hard,primary consumer,subtidal
+Lacuna vincta,Invertebrate,Gastropod,hard,hard,primary consumer,intertidal
+Buccinum undatum,Invertebrate,Gastropod,hard,hard,secondary consumer,subtidal
+Testudinalia testudinalis,Invertebrate,Gastropod,hard,hard,primary consumer,subtidal
+Obelia,Invertebrate,Hydrozoan,soft,soft,primary consumer,subtidal
+Spirorbis,Invertebrate,Polychaete,calcareus,calcareus,primary consumer,intertidal
+Henricia sanguinolenta,Invertebrate,Sea Stars,hard,hard,primary consumer,shared
+Asterias rubens,Invertebrate,Sea Stars,hard,hard,secondary consumer,shared
+Asterias forbesi,Invertebrate,Sea Stars,hard,hard,secondary consumer,shared
+Halichondria panicea,Invertebrate,Sponge,soft,soft,primary consumer,subtidal
+Leucosolenia,Invertebrate,Sponge,calcareous,calcareous,primary consumer,subtidal
+Halisarca dujardinii,Invertebrate,Sponge,soft,soft,primary consumer,subtidal
+Hymedesmia,Invertebrate,Sponge,soft,soft,primary consumer,subtidal
+Boltenia ovifera,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Botrylloides violaceus,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Diplosoma listerianum,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Ciona savignyi,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Dendrodoa carnea,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Didemnum albidum,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Didemnum vexillum,Invertebrate,Tunicate,soft,soft,primary consumer,shared
+Botryllus schlosseri,Invertebrate,Tunicate,soft,soft,primary consumer,shared
+Ciona intestinalis,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Boltenia echinata,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Aplidium pallidum,Invertebrate,Tunicate,soft,soft,primary consumer,subtidal
+Strongylocentrotus droebachiensis,Invertebrate,Urchin,hard,hard,primary consumer,shared
+Tautogolabrus adspersus,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Pollachius virens,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Tautoga onitis,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Pseudopleuronectes americanus,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Urophycis regia,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Morone saxatilis,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Pholis gunnellus,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Myoxocephalus octodecemspinosus,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Myoxocephalus scorpius,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
+Cyclopterus lumpus,Vertebrate,Fish,soft,soft,secundary consumer,subtidal
