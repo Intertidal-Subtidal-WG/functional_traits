@@ -1,4 +1,6 @@
 library(tidyverse)
+library(dplyr)
+library(stringr)
 
 #generate lists of unique species in all intertidal transects with more than 6 years of data
 
@@ -236,3 +238,18 @@ keen_trimmed <- subset(keen_unique, !(keen_sp %in% keen_remove))
 write.table(keen_trimmed$keen_sp, './output/keen_sp_trimmed.csv', 
             row.names = FALSE, col.names = FALSE)
 
+
+
+#comparing our data to the overall species list to generate a list of missed species
+trait_sp <- read.csv('./data/traits_sp_list.csv')
+ne_sp <- read.csv('./data/new-england_sp_list_jarrett.csv')
+
+#trim whitespace and remove duplicates
+ne_sp <- ne_sp %>%
+  mutate(Species = str_trim(Species, side = "both")) %>% 
+  distinct(ne_sp$Species, .keep_all = TRUE)
+
+unused_sp <- ne_sp %>%
+  filter(!(Species %in% trait_sp$species))
+  
+write.csv(unused_sp$Species, './data/unused_sp.csv')
