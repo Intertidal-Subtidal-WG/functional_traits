@@ -32,4 +32,4 @@ plot(animals_tree, cex = .8, label.offset = .1, no.margin = TRUE)
 plot(algae_tree, cex = .8, label.offset = .1, no.margin = TRUE)
 
 write.tree(animals_tree, file = './data/animals-rotl.tre')
-
+write.tree(animals_tree, file = './data/algae-rotl.tre')
