@@ -15,53 +15,222 @@ library(reshape)
 library(ggthemes)
 library(fpc)
 library(gridExtra)
+library(tidyverse)
+library(here)
+library(Rtsne)
+library(gclus)
+library(vegan)
 ```
 
 Load in data
 ```{r load-in}
-trait_raw <- read.csv('~/Documents/GitHub/functional_traits/data/traits_reduced_test.csv')
+#be sure to use na.strings or imputation will fail!
+trait_raw <- read.csv('~/Documents/GitHub/functional_traits/data/20210407_ShoalsFunctionalTraits.csv', na.strings = c("","NA", 'N/A'))
 ```
-
 
 Ladds et al 2018
 - must have a complete dataset
 - continuous variables must be discretized
 Their repository: https://github.com/MoniqueLadds/FunctionalGroupClassification
 
-Step 1: data preparation
-```{r}
-#Ladds et al found that package mice worked best (polytomous logistic regression)
+Step 1, data prep and imputation
 
-#I don't know how to do this yet, need to move on nd figure it out later
+Filtering relevant traits for imputation only
+```{r filter}
+algae_raw <- trait_raw %>%
+  subset(group == 'Algae') %>%
+    dplyr:::select(species, group, common_name_divsion_bgr,
+                   turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
+                   body_size_avg_bin, morphology1, epiphytic, epizoic, #epifaunal, 
+                 epilithic, #invasive, 
+                 intertidal, subtidal)
 
-#trait_imp <- mice(trait_raw[,4:ncol(trait_raw)], m=5, method = 'polyreg', print = F)
+animals_raw <- trait_raw %>%
+  subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
+  dplyr:::select(species, group, common_name_divsion_bgr, body_size_avg_bin,
+                 morphology1, dietary_pref_c, trophic_level, motility_juv,
+                 motility_adult, benthic, pelagic, epiphytic, epizoic, epifaunal, 
+                 epilithic, invasive, intertidal, subtidal)
 
-#ClusterImp <- complete(cluster.imp)
-#ClusterImp <- cbind(ClusterImp,fish[,1:7])
-#save(ClusterImp, file = "Data/missing/MICE_imputed.RData")
+glimpse(algae_raw)
+glimpse(animals_raw)
+#all columns are character, must be factor.
+
+algae_raw[sapply(algae_raw, is.character)] <- lapply(algae_raw[sapply(algae_raw, is.character)], 
+                                       as.factor)
+animals_raw[sapply(animals_raw, is.character)] <- lapply(animals_raw[sapply(animals_raw, is.character)], 
+                                       as.factor)
 
 ```
 
-Step 2 Distance Matrix
+
 ```{r}
 
-##pasted in from ladds et al again, work on 
+algae_imp <- mice(algae_raw[,3:ncol(algae_raw)], m=5, method = 'logreg', print = F)
+algae_imp2 <- complete(algae_imp) #action
+algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
+
+save(algae_imp2, file = here('data','algae_imputed.RData'))
+
+#to see logged events
+algae_imp$loggedEvents
+
+
+
+animals_imp <- mice(animals_raw[,3:ncol(animals_raw)], m=5, method = 'polyreg', print = F)
+animals_imp2 <- complete(animals_imp) #action
+animals_imp2 <- cbind(animals_raw[,1:2],animals_imp2)
+
+save(animals_imp2, file = here('data','animals_imputed.RData'))
+
+#to see logged events
+animals_imp$loggedEvents
+```
+
+
+
+Step 2 Distance Matrix
+
+```{r}
+#set up evaluations
+
+##list of the possible internal validation measures
+nomclustEvals <- c("WCM", "WCE", "PSTau", "PSU", "PSFM", "PSFE")
+#List of the possible linkage methods
+clusterMethod <- c("average", "complete", "single")
+
+
+#Colours for the different distance matrices
+group.colours <- c("Goodall" = "black",
+                   "Goodall_2" = "#CCCCCC",
+                   "Goodall_3" = "#999999",
+                   "Goodall_4" = "#666666",
+                   "Eskin"="blue",
+                   "IOF"="orange", 
+                   "OF" = "#D55E00",
+                   "Lin"="purple",
+                   "Lin_1" = "#9999CC",
+                   "Simple matching"="darkgreen")
+
+subDist <- c("Goodall","Eskin", "IOF", "Lin", "Simple matching")
+
+#relevant functions from Ladds 2018
+fit_nomclust <- function(distanceMethod,clusterMethod)
+                        {nomclust(dataSET, measure = distanceMethod, 
+                                           method = clusterMethod)}
+
+```
+
+
+```{r algae matrix}
+##Cluster using nomclust
 
 ##Make a NULL dataset for the output from "nomclust"
-combdf <- combn(ClusterImp$CommonName,2)
-comparison<-data.frame(combdf[1,], combdf[2,])
-colnames(comparison) <- c("c1", "c2")
+#This makes a long dataset with all possible comparisons
+algae_combdf <- combn(algae_imp2$species,2)
+algae_comparison<-data.frame(algae_combdf[1,], algae_combdf[2,])
+colnames(algae_comparison) <- c("c1", "c2")
 
 #Select the variables to use from the imputed data
-dataSET <- ClusterImp[,c(1:21)]
-namesComm <- ClusterImp[,"species"]
+dataSET <- algae_imp2[,c(1:12)]
+algae_spnames <- algae_dataSET[,"species"]
 
+#variables for the matrix
+evaluation <- NULL
+cmin = 2
+cmax = 25
+
+
+dataSET2 <- data.frame(dataSET[,-1], row.names = dataSET[,1])
+
+algae_nomclust_test <- nomclust(dataSET2, measure = 'good2', method = 'average')
+
+#extract groups and rename columns
+algae_groups <- as.data.frame(algae_nomclust_test$mem)
+algae_groups <- algae_groups %>% rename_with(~paste0("group_clu", sub("clu_*", "_", .)), 
+                   starts_with('clu'))
+#save evaluation metric
+good2_eval <- melt(algae_nomclust_test$eval, id.vars = "cluster")
+good2_eval$distance <- "Goodall2"
+good2_eval$method <-  'average'
+#append to dataset
+dataSET3 <- bind_cols(dataSET, algae_groups)
+
+
+
+#make distance matrix
+algae_matrix <- good2(dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(algae_matrix) 
+
+#mds
+algaemds <- metaMDS(algae_matrix)
+
+plot(algaemds)
+
+```
+```{r}
+"coldiss" <- function(D, nc = 4, byrank = TRUE, diag = FALSE)
+{
+	require(gclus)
+
+	if (max(D)>1) D <- D/max(D)
+
+	if (byrank) {
+		spe.color = dmat.color(1-D, cm.colors(nc))
+	}
+	else {
+		spe.color = dmat.color(1-D, byrank=FALSE, cm.colors(nc))
+	}
+
+	spe.o = order.single(1-D)
+	speo.color = spe.color[spe.o,spe.o]
+	
+	op = par(mfrow=c(1,2), pty="s")
+
+	if (diag) {
+		plotcolors(spe.color, rlabels=attributes(D)$Labels, 
+			main="Dissimilarity Matrix", 
+			dlabels=attributes(D)$Labels)
+		plotcolors(speo.color, rlabels=attributes(D)$Labels[spe.o], 
+			main="Ordered Dissimilarity Matrix", 
+			dlabels=attributes(D)$Labels[spe.o])
+	}
+	else {
+		plotcolors(spe.color, rlabels=attributes(D)$Labels, 
+			main="Dissimilarity Matrix")
+		plotcolors(speo.color, rlabels=attributes(D)$Labels[spe.o], 
+			main="Ordered Dissimilarity Matrix")
+	}
+
+	par(op)
+}
+```
+
+
+```{r animal matrix}
+##Cluster using nomclust
+
+##Make a NULL dataset for the output from "nomclust"
+#This makes a long dataset with all possible comparisons
+animals_combdf <- combn(animals_imp2$species,2)
+animals_comparison<-data.frame(animals_combdf[1,], animals_combdf[2,])
+colnames(animals_comparison) <- c("c1", "c2")
+
+#Select the variables to use from the imputed data
+animals_dataSET <- animals_imp2[,c(1:18)]
+animals_spnames <- animals_imp2[,"species"]
+
+#other variables for matrix
 evaluation <- NULL
 cmin = 2
 cmax = 25
 
 
 ```
+
 
 Data Evalutation
 ```{r}
