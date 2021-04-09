@@ -6,6 +6,7 @@ library(rotl)
 library(dplyr)
 library(stringr)
 library(ape)
+library(ggtree)
 
 #our species list
 trait_sp <- read.csv('./data/traits_sp_group.csv')
@@ -33,3 +34,5 @@ plot(algae_tree, cex = .8, label.offset = .1, no.margin = TRUE)
 
 write.tree(animals_tree, file = './data/animals-rotl.tre')
 write.tree(animals_tree, file = './data/algae-rotl.tre')
+
+ggtree(animals_tree, layout = 'fan', open.angle = TRUE)
