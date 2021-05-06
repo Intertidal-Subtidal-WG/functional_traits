@@ -169,9 +169,12 @@ coldiss(algae_matrix)
 algaemds <- metaMDS(algae_matrix)
 
 plot(algaemds)
+coldiss(algae_matrix)
+#save these as graphs for looking at later
 
+algae_matrix
 ```
-```{r}
+```{r dissimilarity matrix legendre}
 "coldiss" <- function(D, nc = 4, byrank = TRUE, diag = FALSE)
 {
 	require(gclus)
