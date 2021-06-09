@@ -39,7 +39,7 @@ Filtering relevant traits for imputation only
 ```{r filter}
 algae_raw <- trait_raw %>%
   subset(group == 'Algae') %>%
-    dplyr:::select(species, group, common_name_divsion_bgr,
+    dplyr:::select(species, group, common_name_division_bgr,
                    turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
                    body_size_avg_bin, morphology1, epiphytic, epizoic, #epifaunal, 
                  epilithic, #invasive, 
@@ -47,7 +47,7 @@ algae_raw <- trait_raw %>%
 
 animals_raw <- trait_raw %>%
   subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
-  dplyr:::select(species, group, common_name_divsion_bgr, body_size_avg_bin,
+  dplyr:::select(species, group, common_name_division_bgr, body_size_avg_bin,
                  morphology1, dietary_pref_c, trophic_level, motility_juv,
                  motility_adult, benthic, pelagic, epiphytic, epizoic, epifaunal, 
                  epilithic, invasive, intertidal, subtidal)
