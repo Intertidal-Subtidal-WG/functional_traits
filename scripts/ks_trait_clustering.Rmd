@@ -45,7 +45,7 @@ algae_raw <- trait_raw %>%
                  epilithic, #invasive, 
                  intertidal, subtidal)
 
-animals_raw <- trait_raw %>%
+animal_raw <- trait_raw %>%
   subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
   dplyr:::select(species, group, common_name_division_bgr, body_size_avg_bin,
                  morphology1, dietary_pref_c, trophic_level, motility_juv,
@@ -53,12 +53,13 @@ animals_raw <- trait_raw %>%
                  epilithic, invasive, intertidal, subtidal)
 
 glimpse(algae_raw)
-glimpse(animals_raw)
+glimpse(animal_raw)
 #all columns are character, must be factor.
 
 algae_raw[sapply(algae_raw, is.character)] <- lapply(algae_raw[sapply(algae_raw, is.character)], 
                                        as.factor)
-animals_raw[sapply(animals_raw, is.character)] <- lapply(animals_raw[sapply(animals_raw, is.character)], 
+
+animal_raw[sapply(animal_raw, is.character)] <- lapply(animal_raw[sapply(animal_raw, is.character)], 
                                        as.factor)
 
 ```
@@ -77,14 +78,14 @@ algae_imp$loggedEvents
 
 
 
-animals_imp <- mice(animals_raw[,3:ncol(animals_raw)], m=5, method = 'polyreg', print = F)
-animals_imp2 <- complete(animals_imp) #action
-animals_imp2 <- cbind(animals_raw[,1:2],animals_imp2)
+animal_imp <- mice(animal_raw[,3:ncol(animal_raw)], m=5, method = 'polyreg', print = F)
+animal_imp2 <- complete(animal_imp) #action
+animal_imp2 <- cbind(animal_raw[,1:2],animal_imp2)
 
-save(animals_imp2, file = here('data','animals_imputed.RData'))
+save(animal_imp2, file = here('data','animals_imputed.RData'))
 
 #to see logged events
-animals_imp$loggedEvents
+animal_imp$loggedEvents
 ```
 
 
@@ -122,58 +123,6 @@ fit_nomclust <- function(distanceMethod,clusterMethod)
 ```
 
 
-```{r algae matrix}
-##Cluster using nomclust
-
-##Make a NULL dataset for the output from "nomclust"
-#This makes a long dataset with all possible comparisons
-algae_combdf <- combn(algae_imp2$species,2)
-algae_comparison<-data.frame(algae_combdf[1,], algae_combdf[2,])
-colnames(algae_comparison) <- c("c1", "c2")
-
-#Select the variables to use from the imputed data
-dataSET <- algae_imp2[,c(1:12)]
-algae_spnames <- algae_dataSET[,"species"]
-
-#variables for the matrix
-evaluation <- NULL
-cmin = 2
-cmax = 25
-
-
-dataSET2 <- data.frame(dataSET[,-1], row.names = dataSET[,1])
-
-algae_nomclust_test <- nomclust(dataSET2, measure = 'good2', method = 'average')
-
-#extract groups and rename columns
-algae_groups <- as.data.frame(algae_nomclust_test$mem)
-algae_groups <- algae_groups %>% rename_with(~paste0("group_clu", sub("clu_*", "_", .)), 
-                   starts_with('clu'))
-#save evaluation metric
-good2_eval <- melt(algae_nomclust_test$eval, id.vars = "cluster")
-good2_eval$distance <- "Goodall2"
-good2_eval$method <-  'average'
-#append to dataset
-dataSET3 <- bind_cols(dataSET, algae_groups)
-
-
-
-#make distance matrix
-algae_matrix <- good2(dataSET2)
-
-
-#legendre dissimilarity matrix
-coldiss(algae_matrix) 
-
-#mds
-algaemds <- metaMDS(algae_matrix)
-
-plot(algaemds)
-coldiss(algae_matrix)
-#save these as graphs for looking at later
-
-algae_matrix
-```
 ```{r dissimilarity matrix legendre}
 "coldiss" <- function(D, nc = 4, byrank = TRUE, diag = FALSE)
 {
@@ -212,19 +161,73 @@ algae_matrix
 }
 ```
 
+```{r algae matrix}
+##Cluster using nomclust
+
+##Make a NULL dataset for the output from "nomclust"
+#This makes a long dataset with all possible comparisons
+algae_combdf <- combn(algae_imp2$species,2)
+algae_comparison<-data.frame(algae_combdf[1,], algae_combdf[2,])
+colnames(algae_comparison) <- c("c1", "c2")
+
+#Select the variables to use from the imputed data
+algae_dataSET <- algae_imp2[,c(1:12)]
+algae_spnames <- algae_dataSET[,"species"]
+
+#variables for the matrix
+evaluation <- NULL
+cmin = 2
+cmax = 25
+
+
+algae_dataSET2 <- data.frame(algae_dataSET[,-1], row.names = algae_dataSET[,1])
+
+algae_nomclust_test <- nomclust(algae_dataSET2, measure = 'good2', method = 'average')
+
+#extract groups and rename columns
+algae_groups <- as.data.frame(algae_nomclust_test$mem)
+algae_groups <- algae_groups %>% rename_with(~paste0("group_clu", sub("clu_*", "_", .)), 
+                   starts_with('clu'))
+#save evaluation metric
+good2_eval <- melt(algae_nomclust_test$eval, id.vars = "cluster")
+good2_eval$distance <- "Goodall2"
+good2_eval$method <-  'average'
+#append to dataset
+algae_dataSET3 <- bind_cols(algae_dataSET, algae_groups)
+
+
+
+#make distance matrix
+algae_matrix <- good2(algae_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(algae_matrix) 
+
+#mds
+algaemds <- metaMDS(algae_matrix)
+
+plot(algaemds)
+coldiss(algae_matrix)
+#save these as graphs for looking at later
+
+algae_matrix
+```
+
+
 
 ```{r animal matrix}
 ##Cluster using nomclust
 
 ##Make a NULL dataset for the output from "nomclust"
 #This makes a long dataset with all possible comparisons
-animals_combdf <- combn(animals_imp2$species,2)
-animals_comparison<-data.frame(animals_combdf[1,], animals_combdf[2,])
-colnames(animals_comparison) <- c("c1", "c2")
+animal_combdf <- combn(animal_imp2$species,2)
+animal_comparison<-data.frame(animal_combdf[1,], animal_combdf[2,])
+colnames(animal_comparison) <- c("c1", "c2")
 
 #Select the variables to use from the imputed data
-animals_dataSET <- animals_imp2[,c(1:18)]
-animals_spnames <- animals_imp2[,"species"]
+animal_dataSET <- animal_imp2[,c(1:18)]
+animal_spnames <- animal_imp2[,"species"]
 
 #other variables for matrix
 evaluation <- NULL
@@ -232,6 +235,38 @@ cmin = 2
 cmax = 25
 
 
+animal_dataSET2 <- data.frame(animal_dataSET[,-1], row.names = animal_dataSET[,1])
+
+animal_nomclust_test <- nomclust(animal_dataSET2, measure = 'good2', method = 'average')
+
+#extract groups and rename columns
+animal_groups <- as.data.frame(animal_nomclust_test$mem)
+animal_groups <- animal_groups %>% rename_with(~paste0("group_clu", sub("clu_*", "_", .)), 
+                   starts_with('clu'))
+#save evaluation metric
+animal_good2_eval <- melt(animal_nomclust_test$eval, id.vars = "cluster")
+animal_good2_eval$distance <- "Goodall2"
+animal_good2_eval$method <-  'average'
+#append to dataset
+animal_dataSET3 <- bind_cols(animal_dataSET, animal_groups)
+
+
+
+#make distance matrix
+animal_matrix <- good2(animal_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(animal_matrix) 
+
+#mds
+animalmds <- metaMDS(animal_matrix)
+
+plot(animalmds)
+coldiss(animal_matrix)
+#save these as graphs for looking at later
+
+animal_matrix
 ```
 
 
