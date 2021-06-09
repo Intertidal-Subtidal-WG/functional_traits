@@ -25,7 +25,7 @@ library(vegan)
 Load in data
 ```{r load-in}
 #be sure to use na.strings or imputation will fail!
-trait_raw <- read.csv('~/Documents/GitHub/functional_traits/data/20210407_ShoalsFunctionalTraits.csv', na.strings = c("","NA", 'N/A'))
+trait_raw <- read.csv(here("data", '20210601_ShoalsFunctionalTraits.csv'), na.strings = c("","NA", 'N/A'))
 ```
 
 Ladds et al 2018
