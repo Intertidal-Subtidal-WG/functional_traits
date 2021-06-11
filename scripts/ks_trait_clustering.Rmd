@@ -20,6 +20,8 @@ library(here)
 library(Rtsne)
 library(gclus)
 library(vegan)
+library(ggdendro)
+library(tsne)
 ```
 
 Load in data
@@ -273,5 +275,61 @@ animal_matrix
 Data Evalutation
 ```{r}
 
+```
+
+
+
+```{r dendrograms}
+#define options for heirarchcal clustering 
+methodsClust <- c("single", "complete", "average")
+
+######Algae  
+#build the model and select the number of clusters
+algae_fit <- hclust(algae_matrix, method = methodsClust[3])  #change cluster method
+algae_clust <- cutree(algae_fit, 4)  # change number of clusters
+
+#make into dendro data for plotting
+algae_dendr <- dendro_data(algae_fit, type="rectangle") 
+  
+#add labels
+algae_labs <- label(algae_dendr)
+algae_labs$cluster <- as.factor(algae_clust)
+  
+algae_dendr_plot <- ggplot() +
+  geom_segment(data=segment(algae_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=algae_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+algae_dendr_plot
+
+
+
+######Animals
+animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
+animal_clust <- cutree(animal_fit, 4)  # change number of clusters
+
+animal_dendr <- dendro_data(animal_fit, type="rectangle") 
+
+animal_labs <- label(animal_dendr)
+animal_labs$cluster <- as.factor(animal_clust)
+  
+animal_dendr_plot <- ggplot() +
+  geom_segment(data=segment(animal_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=animal_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+animal_dendr_plot
+```
+
+```{r}
+algae_tsne <- tsne(algae_matrix, epoch = 100, perplexity = 3, k = 3)
+plot(algae_tsne)
+
+tsne_obj <- Rtsne(algae_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj$Y)
 ```
 
