@@ -1,6 +1,6 @@
 #run data_prep.R first
 rm(list = ls())
-source("0. functions.R")
+source("0-functions.R")
 
 docDir <- "C://Users/laddsmo/Victoria University of Wellington - STAFF/OneDrive - Victoria University of Wellington - STAFF/Papers_Projects/TropicGroupClassification/"
 
@@ -40,6 +40,7 @@ ClusterImp <- ClusterImp[,-c(5)]
                            lin1(ClusterImp[,1:21]),sm(ClusterImp[,1:21]))
   
   #rownames(distanceMatrices[[1]]) <- fishes$CommonName
+  row.names(distanceMatrices[[1]]) <- rownames(ClusterImp)
 
 #shows the most similar and most dissimilar pair of observations
   similar(distanceMatrices[[8]],fishes)
