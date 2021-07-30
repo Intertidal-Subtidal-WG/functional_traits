@@ -5,12 +5,9 @@ output: html_document
 
 Setup
 ```{r setup, include=FALSE}
-library('nomclust')
-library('tidyverse')
-library('mice')
-library('cluster')
+library(mice)
+library(cluster)
 library(nomclust) 
-library(ggplot2)
 library(reshape)
 library(ggthemes)
 library(fpc)
@@ -40,34 +37,40 @@ Step 1, data prep and imputation
 Filtering relevant traits for imputation only
 ```{r filter}
 algae_raw <- trait_raw %>%
-  subset(group == 'Algae') %>%
-    dplyr:::select(species, group, common_name_division_bgr,
-                   turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
-                   body_size_avg_bin, morphology1, benthic, epibiotic,
-                   #epiphytic, epizoic, epifaunal, epilithic, 
-                   #invasive, 
-                 intertidal, subtidal)
+  filter(group == 'Algae') %>%
+  dplyr::select(species, group, common_name_division_bgr,
+                turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
+                body_size_avg_bin, morphology1, benthic, epibiotic,
+                #epiphytic, epizoic, epifaunal, epilithic, #invasive, 
+                intertidal, subtidal)
 
 animal_raw <- trait_raw %>%
-  subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
-  dplyr:::select(species, group, common_name_division_bgr, body_size_avg_bin,
+  filter(group %in% c('Invertebrate', 'Vertebrate')) %>%
+  dplyr::select(species, group, common_name_division_bgr, body_size_avg_bin,
                  morphology1, dietary_pref_c, trophic_level, motility_juv,
                  motility_adult, benthic, epibiotic,
                  #epiphytic, epizoic, epifaunal, epilithic, 
                  invasive, intertidal, subtidal)
 
-glimpse(algae_raw)
-glimpse(animal_raw)
-#all columns are character, must be factor.
+# DATA CLEANING #
+# all columns are character, must be factor.
 
-algae_raw[sapply(algae_raw, is.character)] <- lapply(algae_raw[sapply(algae_raw, is.character)], 
-                                       as.factor)
+algae_clean <- algae_raw %>% 
+  mutate(Steneck_Dethier_morphology_algae = replace(Steneck_Dethier_morphology_algae, 
+                                                    Steneck_Dethier_morphology_algae == 'corticated macrophytes',
+                                                    'corticated macrophyte')) %>% 
+  mutate(across(.fns = ~ as.factor(.)))
 
-animal_raw[sapply(animal_raw, is.character)] <- lapply(animal_raw[sapply(animal_raw, is.character)], 
-                                       as.factor)
+# motility_adult has a "both" in there that should probably be fixed
+animal_clean <- animal_raw %>% 
+  mutate(trophic_level = str_trim(trophic_level),
+         invasive = replace(invasive, invasive == 'no?', 'no'),
+         invasive = replace(invasive, invasive == 'yes (controversial)', 'yes')) %>% 
+  mutate(across(.fns = ~ as.factor(.)))
 
+# write_csv(algae_clean, "../data/algae_clean.csv")
+# write_csv(animal_clean, '../data/animal_clean.csv')
 ```
-
 
 ```{r}
 
