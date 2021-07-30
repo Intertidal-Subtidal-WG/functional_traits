@@ -27,7 +27,7 @@ library(tsne)
 Load in data
 ```{r load-in}
 #be sure to use na.strings or imputation will fail!
-trait_raw <- read.csv(here("data", '20210601_ShoalsFunctionalTraits.csv'), na.strings = c("","NA", 'N/A'))
+trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), na.strings = c("","NA", 'N/A'))
 ```
 
 Ladds et al 2018
@@ -43,16 +43,18 @@ algae_raw <- trait_raw %>%
   subset(group == 'Algae') %>%
     dplyr:::select(species, group, common_name_division_bgr,
                    turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
-                   body_size_avg_bin, morphology1, epiphytic, epizoic, #epifaunal, 
-                 epilithic, #invasive, 
+                   body_size_avg_bin, morphology1, benthic, epibiotic,
+                   #epiphytic, epizoic, epifaunal, epilithic, 
+                   #invasive, 
                  intertidal, subtidal)
 
 animal_raw <- trait_raw %>%
   subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
   dplyr:::select(species, group, common_name_division_bgr, body_size_avg_bin,
                  morphology1, dietary_pref_c, trophic_level, motility_juv,
-                 motility_adult, benthic, pelagic, epiphytic, epizoic, epifaunal, 
-                 epilithic, invasive, intertidal, subtidal)
+                 motility_adult, benthic, epibiotic,
+                 #epiphytic, epizoic, epifaunal, epilithic, 
+                 invasive, intertidal, subtidal)
 
 glimpse(algae_raw)
 glimpse(animal_raw)
@@ -173,7 +175,7 @@ algae_comparison<-data.frame(algae_combdf[1,], algae_combdf[2,])
 colnames(algae_comparison) <- c("c1", "c2")
 
 #Select the variables to use from the imputed data
-algae_dataSET <- algae_imp2[,c(1:12)]
+algae_dataSET <- algae_imp2[,c(1:11)]
 algae_spnames <- algae_dataSET[,"species"]
 
 #variables for the matrix
@@ -228,7 +230,7 @@ animal_comparison<-data.frame(animal_combdf[1,], animal_combdf[2,])
 colnames(animal_comparison) <- c("c1", "c2")
 
 #Select the variables to use from the imputed data
-animal_dataSET <- animal_imp2[,c(1:18)]
+animal_dataSET <- animal_imp2[,c(1:14)]
 animal_spnames <- animal_imp2[,"species"]
 
 #other variables for matrix
