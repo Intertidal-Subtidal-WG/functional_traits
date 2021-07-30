@@ -345,7 +345,7 @@ animal_dendr_plot
 ggsave(here('output', '20210730_animal-cluster-dendro.png'), plot = last_plot())
 ```
 
-
+to do, probably figure out other coloring methods, if i can set k with rtsne, etc
 
 ```{r}
 #algae_tsne <- tsne(algae_matrix, epoch = 100, perplexity = 3, k = 3)
@@ -358,11 +358,12 @@ tsne_plot_ag <- data.frame(x = tsne_obj_ag$Y[,1], y = tsne_obj_ag$Y[,2],
                          algae_dataSET2)
 
 tsne_algae <- ggplot(tsne_plot_ag, aes(x=x, y=y)) + 
-  geom_point(aes(color = common_name_division_bgr))
+  geom_point(aes(color = common_name_division_bgr)) +
+  theme_classic()
 
 tsne_algae
 
-
+ggsave(here('output', '20210730_algae-cluster-tsne.png'), plot = last_plot())
 
 ## animals
 
@@ -373,9 +374,12 @@ tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2],
                          animal_dataSET2)
 
 tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
-  geom_point(aes(color = common_name_division_bgr))
+  geom_point(aes(color = common_name_division_bgr)) +
+  theme_classic()
 
 tsne_animal
+
+ggsave(here('output', '20210730_animal-cluster-tsne.png'), plot = last_plot())
 
 ```
 
