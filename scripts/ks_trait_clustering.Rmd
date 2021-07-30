@@ -220,6 +220,7 @@ algae_matrix
 
 
 
+
 ```{r animal matrix}
 ##Cluster using nomclust
 
@@ -273,6 +274,21 @@ coldiss(animal_matrix)
 animal_matrix
 ```
 
+```{r export graphs}
+png(filename = here('output', '20210730_algae-dissimilarity.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(algae_matrix)
+dev.off()
+
+
+png(filename = here('output', '20210730_animal-dissimilarity.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(animal_matrix)
+dev.off()
+```
+
 
 Data Evalutation
 ```{r}
@@ -306,7 +322,7 @@ algae_dendr_plot <- ggplot() +
 
 algae_dendr_plot
 
-
+ggsave(here('output', '20210730_algae-cluster-dendro.png'), plot = last_plot())
 
 ######Animals
 animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
@@ -325,13 +341,41 @@ animal_dendr_plot <- ggplot() +
   
 
 animal_dendr_plot
+
+ggsave(here('output', '20210730_animal-cluster-dendro.png'), plot = last_plot())
 ```
 
-```{r}
-algae_tsne <- tsne(algae_matrix, epoch = 100, perplexity = 3, k = 3)
-plot(algae_tsne)
 
-tsne_obj <- Rtsne(algae_matrix, is_distance = TRUE, perplexity = 5)
-plot(tsne_obj$Y)
+
+```{r}
+#algae_tsne <- tsne(algae_matrix, epoch = 100, perplexity = 3, k = 3)
+#plot(algae_tsne)
+
+tsne_obj_ag <- Rtsne(algae_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj_ag$Y)
+
+tsne_plot_ag <- data.frame(x = tsne_obj_ag$Y[,1], y = tsne_obj_ag$Y[,2], 
+                         algae_dataSET2)
+
+tsne_algae <- ggplot(tsne_plot_ag, aes(x=x, y=y)) + 
+  geom_point(aes(color = common_name_division_bgr))
+
+tsne_algae
+
+
+
+## animals
+
+tsne_obj_an <- Rtsne(animal_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj_an$Y)
+
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         animal_dataSET2)
+
+tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  geom_point(aes(color = common_name_division_bgr))
+
+tsne_animal
+
 ```
 
