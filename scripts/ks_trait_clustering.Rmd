@@ -74,9 +74,9 @@ animal_clean <- animal_raw %>%
 
 ```{r}
 
-algae_imp <- mice(algae_raw[,3:ncol(algae_raw)], m=5, method = 'logreg', print = F)
+algae_imp <- mice(algae_clean[,3:ncol(algae_raw)], m=5, method = 'logreg', print = F)
 algae_imp2 <- complete(algae_imp) #action
-algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
+algae_imp2 <- cbind(algae_clean[,1:2],algae_imp2)
 
 save(algae_imp2, file = here('data','algae_imputed.RData'))
 
@@ -85,9 +85,9 @@ algae_imp$loggedEvents
 
 
 
-animal_imp <- mice(animal_raw[,3:ncol(animal_raw)], m=5, method = 'polyreg', print = F)
+animal_imp <- mice(animal_clean[,3:ncol(animal_raw)], m=5, method = 'polyreg', print = F)
 animal_imp2 <- complete(animal_imp) #action
-animal_imp2 <- cbind(animal_raw[,1:2],animal_imp2)
+animal_imp2 <- cbind(animal_clean[,1:2],animal_imp2)
 
 save(animal_imp2, file = here('data','animals_imputed.RData'))
 
