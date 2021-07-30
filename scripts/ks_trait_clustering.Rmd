@@ -5,9 +5,12 @@ output: html_document
 
 Setup
 ```{r setup, include=FALSE}
-library(mice)
-library(cluster)
+library('nomclust')
+library('tidyverse')
+library('mice')
+library('cluster')
 library(nomclust) 
+library(ggplot2)
 library(reshape)
 library(ggthemes)
 library(fpc)
@@ -19,6 +22,7 @@ library(gclus)
 library(vegan)
 library(ggdendro)
 library(tsne)
+library(stringr)
 ```
 
 Load in data
@@ -37,46 +41,48 @@ Step 1, data prep and imputation
 Filtering relevant traits for imputation only
 ```{r filter}
 algae_raw <- trait_raw %>%
-  filter(group == 'Algae') %>%
-  dplyr::select(species, group, common_name_division_bgr,
-                turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
-                body_size_avg_bin, morphology1, benthic, epibiotic,
-                #epiphytic, epizoic, epifaunal, epilithic, #invasive, 
-                intertidal, subtidal)
+  subset(group == 'Algae') %>%
+    dplyr:::select(species, group, common_name_division_bgr,
+                   turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
+                   body_size_avg_bin, morphology1, benthic, epibiotic,
+                   #epiphytic, epizoic, epifaunal, epilithic, 
+                   #invasive, 
+                 intertidal, subtidal)
 
 animal_raw <- trait_raw %>%
-  filter(group %in% c('Invertebrate', 'Vertebrate')) %>%
-  dplyr::select(species, group, common_name_division_bgr, body_size_avg_bin,
+  subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
+  dplyr:::select(species, group, common_name_division_bgr, body_size_avg_bin,
                  morphology1, dietary_pref_c, trophic_level, motility_juv,
                  motility_adult, benthic, epibiotic,
                  #epiphytic, epizoic, epifaunal, epilithic, 
                  invasive, intertidal, subtidal)
 
+glimpse(algae_raw)
+glimpse(animal_raw)
+
 # DATA CLEANING #
 # all columns are character, must be factor.
-
 algae_clean <- algae_raw %>% 
   mutate(Steneck_Dethier_morphology_algae = replace(Steneck_Dethier_morphology_algae, 
                                                     Steneck_Dethier_morphology_algae == 'corticated macrophytes',
                                                     'corticated macrophyte')) %>% 
   mutate(across(.fns = ~ as.factor(.)))
-
 # motility_adult has a "both" in there that should probably be fixed
 animal_clean <- animal_raw %>% 
   mutate(trophic_level = str_trim(trophic_level),
          invasive = replace(invasive, invasive == 'no?', 'no'),
          invasive = replace(invasive, invasive == 'yes (controversial)', 'yes')) %>% 
   mutate(across(.fns = ~ as.factor(.)))
-
 # write_csv(algae_clean, "../data/algae_clean.csv")
 # write_csv(animal_clean, '../data/animal_clean.csv')
 ```
 
+
 ```{r}
 
-algae_imp <- mice(algae_clean[,3:ncol(algae_raw)], m=5, method = 'logreg', print = F)
+algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'logreg', print = F)
 algae_imp2 <- complete(algae_imp) #action
-algae_imp2 <- cbind(algae_clean[,1:2],algae_imp2)
+algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
 
 save(algae_imp2, file = here('data','algae_imputed.RData'))
 
@@ -85,9 +91,9 @@ algae_imp$loggedEvents
 
 
 
-animal_imp <- mice(animal_clean[,3:ncol(animal_raw)], m=5, method = 'polyreg', print = F)
+animal_imp <- mice(animal_clean[,3:ncol(animal_clean)], m=5, method = 'polyreg', print = F)
 animal_imp2 <- complete(animal_imp) #action
-animal_imp2 <- cbind(animal_clean[,1:2],animal_imp2)
+animal_imp2 <- cbind(animal_raw[,1:2],animal_imp2)
 
 save(animal_imp2, file = here('data','animals_imputed.RData'))
 
@@ -223,6 +229,7 @@ algae_matrix
 
 
 
+
 ```{r animal matrix}
 ##Cluster using nomclust
 
@@ -276,6 +283,21 @@ coldiss(animal_matrix)
 animal_matrix
 ```
 
+```{r export graphs}
+png(filename = here('output', '20210730_algae-dissimilarity.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(algae_matrix)
+dev.off()
+
+
+png(filename = here('output', '20210730_animal-dissimilarity.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(animal_matrix)
+dev.off()
+```
+
 
 Data Evalutation
 ```{r}
@@ -309,11 +331,11 @@ algae_dendr_plot <- ggplot() +
 
 algae_dendr_plot
 
-
+ggsave(here('output', '20210730_algae-cluster-dendro.png'), plot = last_plot())
 
 ######Animals
 animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
-animal_clust <- cutree(animal_fit, 4)  # change number of clusters
+animal_clust <- cutree(animal_fit, 8)  # change number of clusters
 
 animal_dendr <- dendro_data(animal_fit, type="rectangle") 
 
@@ -328,13 +350,51 @@ animal_dendr_plot <- ggplot() +
   
 
 animal_dendr_plot
+
+ggsave(here('output', '20210730_animal-cluster-dendro.png'), plot = last_plot())
 ```
 
-```{r}
-algae_tsne <- tsne(algae_matrix, epoch = 100, perplexity = 3, k = 3)
-plot(algae_tsne)
+to do, probably figure out other coloring methods, if i can set k with rtsne, etc
 
-tsne_obj <- Rtsne(algae_matrix, is_distance = TRUE, perplexity = 5)
-plot(tsne_obj$Y)
+```{r}
+#algae_tsne <- tsne(algae_matrix, epoch = 100, perplexity = 3, k = 3)
+#plot(algae_tsne)
+
+tsne_obj_ag <- Rtsne(algae_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj_ag$Y)
+
+tsne_plot_ag <- data.frame(x = tsne_obj_ag$Y[,1], y = tsne_obj_ag$Y[,2], 
+                         algae_dataSET2)
+
+tsne_algae <- ggplot(tsne_plot_ag, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  geom_point(aes(color = morphology1)) +
+  theme_classic()
+
+tsne_algae
+
+#ggsave(here('output', '20210730_algae-cluster-tsne2.png'), plot = last_plot())
+
+## animals
+
+animal_phyla <- trait_raw %>%
+  subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
+  dplyr:::select(species, phylum)
+
+tsne_obj_an <- Rtsne(animal_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj_an$Y)
+
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         animal_dataSET2, animal_phyla)
+
+tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  geom_point(aes(color = phylum)) +
+  theme_classic()
+
+tsne_animal
+
+ggsave(here('output', '20210730_animal-cluster-tsne.png'), plot = last_plot())
+
 ```
 
