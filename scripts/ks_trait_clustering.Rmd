@@ -75,7 +75,7 @@ animal_clean <- animal_raw %>%
          invasive = replace(invasive, invasive == 'yes (controversial)', 'yes')) %>% 
   mutate(across(.fns = ~ as.factor(.)))
 # write_csv(algae_clean, "../data/algae_clean.csv")
-# write_csv(animal_clean, '../data/animal_clean.csv')
+#write_csv(animal_clean, '../data/animal_clean.csv')
 ```
 
 
@@ -85,8 +85,8 @@ algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'logreg', pri
 algae_imp2 <- complete(algae_imp) #action
 algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
 
-#save(algae_imp2, file = here('data','algae_imputed.RData'))
-write.csv(algae_imp2, file = here('data', 'clean','algae_imputed.csv'))
+save(algae_imp2, file = here('data','algae_imputed.RData'))
+write.csv(algae_imp2, file = here('data', 'clean','20210806_algae_imputed.csv'))
 
 #to see logged events
 algae_imp$loggedEvents
@@ -97,8 +97,8 @@ animal_imp <- mice(animal_clean[,3:ncol(animal_clean)], m=5, method = 'polyreg',
 animal_imp2 <- complete(animal_imp) #action
 animal_imp2 <- cbind(animal_raw[,1:2],animal_imp2)
 
-#save(animal_imp2, file = here('data','animals_imputed.RData'))
-write.csv(animal_imp2, file = here('data', 'clean','animal_imputed.csv'))
+save(animal_imp2, file = here('data','animals_imputed.RData'))
+write.csv(animal_imp2, file = here('data', 'clean','20210806_animal_imputed.csv'))
 
 #to see logged events
 animal_imp$loggedEvents
@@ -231,7 +231,7 @@ coldiss(algae_matrix)
 algae_matrix2 <- fortify(algae_matrix)
 
 save(algae_matrix, file = here('data','algae_matrix.RData'))
-write.csv(algae_matrix2, file = here('data', 'clean', '20210606_algae_matrix.csv'))
+write.csv(algae_matrix2, file = here('data', 'clean', '20210806_algae_matrix.csv'))
 ```
 
 
@@ -291,18 +291,18 @@ animal_matrix2 <- fortify(animal_matrix)
 
 
 save(animal_matrix, file = here('data','animal_matrix.RData'))
-write.csv(animal_matrix2, file = here('data', 'clean', '20210606_animal_matrix.csv'))
+write.csv(animal_matrix2, file = here('data', 'clean', '20210806_animal_matrix.csv'))
 ```
 
 ```{r export graphs}
-png(filename = here('output', '20210730_algae-dissimilarity.png'),
+png(filename = here('output', '20210806_algae-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(algae_matrix)
 dev.off()
 
 
-png(filename = here('output', '20210730_animal-dissimilarity.png'),
+png(filename = here('output', '20210806_animal-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(animal_matrix)
@@ -342,7 +342,7 @@ algae_dendr_plot <- ggplot() +
 
 algae_dendr_plot
 
-ggsave(here('output', '20210730_algae-cluster-dendro.png'), plot = last_plot())
+ggsave(here('output', '20210806_algae-cluster-dendro.png'), plot = last_plot())
 
 ######Animals
 animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
@@ -362,7 +362,7 @@ animal_dendr_plot <- ggplot() +
 
 animal_dendr_plot
 
-ggsave(here('output', '20210730_animal-cluster-dendro.png'), plot = last_plot())
+ggsave(here('output', '20210806_animal-cluster-dendro.png'), plot = last_plot())
 ```
 
 to do, probably figure out other coloring methods, if i can set k with rtsne, etc
@@ -405,7 +405,7 @@ tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) +
 
 tsne_animal
 
-ggsave(here('output', '20210730_animal-cluster-tsne.png'), plot = last_plot())
+ggsave(here('output', '20210806_animal-cluster-tsne.png'), plot = last_plot())
 
 ```
 
