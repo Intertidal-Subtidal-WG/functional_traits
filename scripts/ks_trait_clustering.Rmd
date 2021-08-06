@@ -23,6 +23,7 @@ library(vegan)
 library(ggdendro)
 library(tsne)
 library(stringr)
+library(ggfortify)
 ```
 
 Load in data
@@ -84,7 +85,8 @@ algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'logreg', pri
 algae_imp2 <- complete(algae_imp) #action
 algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
 
-save(algae_imp2, file = here('data','algae_imputed.RData'))
+#save(algae_imp2, file = here('data','algae_imputed.RData'))
+write.csv(algae_imp2, file = here('data', 'clean','algae_imputed.csv'))
 
 #to see logged events
 algae_imp$loggedEvents
@@ -95,7 +97,8 @@ animal_imp <- mice(animal_clean[,3:ncol(animal_clean)], m=5, method = 'polyreg',
 animal_imp2 <- complete(animal_imp) #action
 animal_imp2 <- cbind(animal_raw[,1:2],animal_imp2)
 
-save(animal_imp2, file = here('data','animals_imputed.RData'))
+#save(animal_imp2, file = here('data','animals_imputed.RData'))
+write.csv(animal_imp2, file = here('data', 'clean','animal_imputed.csv'))
 
 #to see logged events
 animal_imp$loggedEvents
@@ -224,7 +227,11 @@ plot(algaemds)
 coldiss(algae_matrix)
 #save these as graphs for looking at later
 
-algae_matrix
+#save matrix as R obejct and csv
+algae_matrix2 <- fortify(algae_matrix)
+
+save(algae_matrix, file = here('data','algae_matrix.RData'))
+write.csv(algae_matrix2, file = here('data', 'clean', '20210606_algae_matrix.csv'))
 ```
 
 
@@ -280,7 +287,11 @@ plot(animalmds)
 coldiss(animal_matrix)
 #save these as graphs for looking at later
 
-animal_matrix
+animal_matrix2 <- fortify(animal_matrix)
+
+
+save(animal_matrix, file = here('data','animal_matrix.RData'))
+write.csv(animal_matrix2, file = here('data', 'clean', '20210606_animal_matrix.csv'))
 ```
 
 ```{r export graphs}
