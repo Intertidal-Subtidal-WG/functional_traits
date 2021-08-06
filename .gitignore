@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 scripts/trait_cluster_eb_update.Rmd
+data/clean/.DS_Store
