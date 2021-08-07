@@ -60,29 +60,36 @@ evaluation <- NULL
 cmin = 2
 cmax = 25
 
+
+fit_nomclust <- function(distanceMethod,clusterMethod, cmin, cmax)
+{nomclust(dataSET, measure = distanceMethod, 
+          method = clusterMethod,
+          clu.low = cmin, clu.high = cmax)}
+
+
 # #heirachical clustering#
-# for(i in 1:length(clusterMethod))  {
+ for(i in 1:length(clusterMethod))  {
 # 
 #   ##---Goodall 1
 # 
 #   #fit the model
-#   good_fit<-fit_nomclust(good1,clusterMethod[i], cmin, cmax)
-#   comparison<-groupfits(good_fit,"good",clusterMethod[i])
+   good_fit<-fit_nomclust(good1,clusterMethod[i], cmin, cmax)
+   comparison<-groupfits(good_fit,"good",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-#   good_eval <- melt(good_fit$eval, id.vars = "cluster")
-#   good_eval$distance <- "Goodall"
-#   good_eval$method <-  clusterMethod[i]
+   good_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good_eval$distance <- "Goodall"
+   good_eval$method <-  clusterMethod[i]
 # 
 #   ##---Goodall 2
 # 
-#   good2_fit<-fit_nomclust(good2,clusterMethod[i], cmin, cmax)
-#   comparison<-groupfits(good2_fit,"good2",clusterMethod[i])
+   good2_fit<-fit_nomclust(good2,clusterMethod[i], cmin, cmax)
+   comparison<-groupfits(good2_fit,"good2",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-#   good2_eval <- melt(good_fit$eval, id.vars = "cluster")
-#   good2_eval$distance <- "Goodall_3"
-#   good2_eval$method <-  clusterMethod[i]
+  good2_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good2_eval$distance <- "Goodall_3"
+  good2_eval$method <-  clusterMethod[i]
 # 
 #   ##---Goodall 3
 #   good3_fit<-fit_nomclust(good2,clusterMethod[i], cmin, cmax)
@@ -162,12 +169,13 @@ cmax = 25
 #   sm_eval$distance <- "Simple matching"
 #   sm_eval$method <- clusterMethod[i]
 # 
-#   evaluation <- rbind(evaluation, good_eval, good2_eval,
+   evaluation <- rbind(evaluation, good_eval, good2_eval,
 #                       good3_eval, good4_eval,eskin_eval,
 #                       iof_eval, of_eval, lin_eval,
-#                       lin1_eval, sm_eval)
+#                       lin1_eval, sm_eval
+)
 # 
-# }
+ }
 
 save(evaluation, file = "output/evaluation_2-25.RData")
 
