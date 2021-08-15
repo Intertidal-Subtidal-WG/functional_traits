@@ -29,7 +29,16 @@ library(ggfortify)
 Load in data
 ```{r load-in}
 #be sure to use na.strings or imputation will fail!
-trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), na.strings = c("","NA", 'N/A'))
+trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
+                      na.strings = c("","NA", 'N/A'))
+
+#or load in imputed data to skip ahead
+animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))
+algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))
+
+#remove x column
+animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
+algae_imp2 <- algae_imp2[,2:ncol(algae_imp2),]
 ```
 
 Ladds et al 2018
@@ -310,9 +319,74 @@ dev.off()
 ```
 
 
-Data Evalutation
-```{r}
+## Data Evalutation
 
+still just pasted in, need to do the different kinds
+```{r}
+EvalData <- evaluation[evaluation$variable==nomclustEvals[6]&!evaluation$cluster==1,]
+
+##If you want to subset further
+EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+
+EvalPlotPSFE <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("PSFE")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(variable~method)+
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(),
+        legend.position = c(0.87, 0.68), # c(0,0) bottom left, c(1,1) top-right.
+        legend.background = element_rect(fill = "white", colour = NA),
+        plot.background = element_blank())
+
+ggsave(EvalPlotPSFE, filename = paste0(docDir,"documents/figures/EvalPlotPSFE.pdf"),
+       width = 9, height = 4)
+
+```
+
+
+
+```{r}
+###----bootstrap the clusters to find the most stable
+#https://www.r-bloggers.com/bootstrap-evaluation-of-clusters/
+
+
+output <- NULL
+
+#The first loop can have as many clusters as you want to test [j]
+for(j in c(seq(3,9,2))){
+  stabilities <- NULL
+  
+  #this loop runs the bootstrapping procedure - 
+  #at the moment it runs over the 10 distance matrices available from nomclust.
+  
+  #The options for clustermethod are:
+  #claraCBI
+  #pamkCBI
+  #distnoisemclustCBI
+  #disttrimkmeansCBI
+  
+    for(i in 1:length(distanceMatrices)){
+    cboot.mod <- clusterboot(distanceMatrices[[i]], B=100, distances = TRUE, 
+                             bootmethod = "boot", showplots = FALSE,
+                             k = j, clustermethod = pamkCBI)
+       # The vector of cluster stabilities. 
+    # Values close to 1 indicate stable clusters
+    stabilities <- rbind(stabilities,cboot.mod$bootmean)
+    new.stabs <- melt(stabilities)
+    new.stabs$clusts <- j
+    }
+  output <- rbind(output,new.stabs)
+  
+}
 ```
 
 
