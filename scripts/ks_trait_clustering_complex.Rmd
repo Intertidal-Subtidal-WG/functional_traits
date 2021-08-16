@@ -10,10 +10,10 @@ This script skips the imputation step to go straight to the various models.
 Setup
 ```{r setup, include=FALSE}
 library(stringr)
-library('cluster')
+library(cluster)
 library(nomclust) 
 library(ggplot2)
-library(reshape)
+library(reshape2)
 library(ggthemes)
 library(fpc)
 library(gridExtra)
@@ -26,6 +26,7 @@ library(ggdendro)
 library(tsne)
 library(stringr)
 library(ggfortify)
+library(dplyr)
 library(here)
 ```
 
@@ -240,16 +241,10 @@ write.csv(algae_matrix2, file = here('data', 'clean', '20210806_algae_matrix.csv
 ```
 
 
-```{r}
-good_fit$eval$PSFM
-
-good_fit[eval$P]
-```
-
-
 ```{r algae loop}
 
 dataSET <- algae_dataSET2
+algae_eval <- {}
 # #heirachical clustering#
  for(i in 1:length(clusterMethod))  {
 # 
@@ -260,7 +255,7 @@ dataSET <- algae_dataSET2
    #comparison<-groupfits(good_fit,"good1",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-   good_eval <- melt(good_fit$eval, id.vars = "names")
+   good_eval <- dplyr::bind_rows(good_fit$eval)
    good_eval$distance <- "Goodall"
    good_eval$method <-  clusterMethod[i]
 # 
@@ -270,7 +265,7 @@ dataSET <- algae_dataSET2
    #comparison<-groupfits(good2_fit,"good2",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-  good2_eval <- melt(good_fit$eval, id.vars = "names")
+  good2_eval <- dplyr::bind_rows(good2_fit$eval)
   good2_eval$distance <- "Goodall_3"
   good2_eval$method <-  clusterMethod[i]
 # 
@@ -279,7 +274,7 @@ dataSET <- algae_dataSET2
 #   comparison<-groupfits(good2_fit,"good3",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-   good3_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good3_eval <- dplyr::bind_rows(good3_fit$eval)
    good3_eval$distance <- "Goodall_3"
    good3_eval$method <-  clusterMethod[i]
 # 
@@ -290,7 +285,7 @@ dataSET <- algae_dataSET2
 #   comparison<-groupfits(good4_fit,"good2",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-   good4_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good4_eval <- dplyr::bind_rows(good4_fit$eval)
    good4_eval$distance <- "Goodall_4"
    good4_eval$method <-  clusterMethod[i]
 # 
@@ -299,7 +294,7 @@ dataSET <- algae_dataSET2
    eskin_fit <- fit_nomclust(dataSET, 'eskin',clusterMethod[i], cmax)
 #   comparison<-groupfits(eskin_fit,"eskin",clusterMethod[i])
 # 
-   eskin_eval <- melt(eskin_fit$eval, id.vars = "cluster")
+   eskin_eval <- dplyr::bind_rows(eskin_fit$eval)
    eskin_eval$distance <- "Eskin"
    eskin_eval$method <- clusterMethod[i]
 # 
@@ -309,7 +304,7 @@ dataSET <- algae_dataSET2
    iof_fit <- fit_nomclust(dataSET, 'iof', clusterMethod[i], cmax)
 #   comparison<-groupfits(iof_fit,"iof",clusterMethod[i])
 # 
-   iof_eval <- melt(iof_fit$eval, id.vars = "cluster")
+   iof_eval <- dplyr::bind_rows(iof_fit$eval)
    iof_eval$distance <- "IOF"
    iof_eval$method <- clusterMethod[i]
 # 
@@ -318,7 +313,7 @@ dataSET <- algae_dataSET2
    of_fit <- fit_nomclust(dataSET, 'of',clusterMethod[i], cmax)
 #   comparison<-groupfits(of_fit,"of",clusterMethod[i])
 # 
-   of_eval <- melt(of_fit$eval, id.vars = "cluster")
+   of_eval <- dplyr::bind_rows(of_fit$eval)
    of_eval$distance <- "OF"
    of_eval$method <- clusterMethod[i]
 # 
@@ -328,7 +323,7 @@ dataSET <- algae_dataSET2
    lin_fit <- fit_nomclust(dataSET, 'lin', clusterMethod[i], cmax)
 #   comparison<-groupfits(lin_fit,"lin",clusterMethod[i])
 # 
-   lin_eval <- melt(lin_fit$eval, id.vars = "cluster")
+   lin_eval <- dplyr::bind_rows(lin_fit$eval)
    lin_eval$distance <- "Lin"
    lin_eval$method <- clusterMethod[i]
 # 
@@ -338,7 +333,7 @@ dataSET <- algae_dataSET2
    lin1_fit <- fit_nomclust(dataSET, 'lin1',clusterMethod[i], cmax)
 #   comparison<-groupfits(lin1_fit,"lin",clusterMethod[i])
 # 
-   lin1_eval <- melt(lin1_fit$eval, id.vars = "cluster")
+   lin1_eval <- dplyr::bind_rows(lin1_fit$eval)
    lin1_eval$distance <- "Lin_1"
    lin1_eval$method <- clusterMethod[i]
 # 
@@ -348,11 +343,11 @@ dataSET <- algae_dataSET2
    sm_fit <- fit_nomclust(dataSET, 'sm', clusterMethod[i], cmax)
 #   comparison<-groupfits(sm_fit,"sm",clusterMethod[i])
 # 
-   sm_eval <- melt(sm_fit$eval, id.vars = "cluster")
+   sm_eval <- dplyr::bind_rows(sm_fit$eval)
    sm_eval$distance <- "Simple matching"
    sm_eval$method <- clusterMethod[i]
 # 
-   evaluation <- rbind(good_eval, good2_eval,
+   algae_eval <- rbind(algae_eval, good_eval, good2_eval,
                        good3_eval, good4_eval,eskin_eval,
                        iof_eval, of_eval, lin_eval,
                        lin1_eval, sm_eval
@@ -360,30 +355,31 @@ dataSET <- algae_dataSET2
 # 
  }
 
-save(evaluation, file = here('output', 'cluster_ks', 'algae_evaluation_2-25.RData'))
+save(algae_eval, file = here('output', 'cluster_ks', 'algae_evaluation_2-25.RData'))
 
-algae_eval <- evaluation
+
 ```
 
 scale, prepare for evaluation
+```{r}
+algae_eval2 <- algae_eval
+algae_eval <- algae_eval2
+```
 
 ```{r}
-algae_eval$distance <- as.factor(algae_eval$distance)
-
-#remove NAs and cluster names
-algae_eval = algae_eval %>%
-  subset(!(L1 == 'names')) %>%
-  na_if(NaN) %>%
+#make long
+algae_eval <- algae_eval %>%
+    na_if('NaN') %>%
+  pivot_longer(cols = c(WCM:BK)) %>%
+  dplyr::rename(clusters = names) %>%
   subset(!(is.na(value)))
 
-#set as numeric
-algae_eval$value <- as.numeric(algae_eval$value)
+#make factors
+algae_eval <- algae_eval %>% 
+  mutate(across(clusters:name, .fns = ~ as.factor(.)))
 
 #scale
 algae_eval$value_scaled <- algae_eval$value/max(algae_eval$value)
-
-unique(algae_eval$L1)
-
 ```
 
 ### validation
@@ -529,6 +525,8 @@ write.csv(animal_matrix2, file = here('data', 'clean', '20210806_animal_matrix.c
 ```{r animal loop}
 
 dataSET <- animal_dataSET2
+animal_eval <- {}
+
 # #heirachical clustering#
  for(i in 1:length(clusterMethod))  {
 # 
@@ -539,7 +537,7 @@ dataSET <- animal_dataSET2
    #comparison<-groupfits(good_fit,"good1",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-   good_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good_eval <- dplyr::bind_rows(good_fit$eval)
    good_eval$distance <- "Goodall"
    good_eval$method <-  clusterMethod[i]
 # 
@@ -549,8 +547,8 @@ dataSET <- animal_dataSET2
    #comparison<-groupfits(good2_fit,"good2",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-  good2_eval <- melt(good_fit$eval, id.vars = "cluster")
-   good2_eval$distance <- "Goodall_3"
+  good2_eval <- dplyr::bind_rows(good2_fit$eval)
+  good2_eval$distance <- "Goodall_3"
   good2_eval$method <-  clusterMethod[i]
 # 
 #   ##---Goodall 3
@@ -558,7 +556,7 @@ dataSET <- animal_dataSET2
 #   comparison<-groupfits(good2_fit,"good3",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-   good3_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good3_eval <- dplyr::bind_rows(good3_fit$eval)
    good3_eval$distance <- "Goodall_3"
    good3_eval$method <-  clusterMethod[i]
 # 
@@ -569,7 +567,7 @@ dataSET <- animal_dataSET2
 #   comparison<-groupfits(good4_fit,"good2",clusterMethod[i])
 # 
 #   #Extract the validation metrics
-   good4_eval <- melt(good_fit$eval, id.vars = "cluster")
+   good4_eval <- dplyr::bind_rows(good4_fit$eval)
    good4_eval$distance <- "Goodall_4"
    good4_eval$method <-  clusterMethod[i]
 # 
@@ -578,7 +576,7 @@ dataSET <- animal_dataSET2
    eskin_fit <- fit_nomclust(dataSET, 'eskin',clusterMethod[i], cmax)
 #   comparison<-groupfits(eskin_fit,"eskin",clusterMethod[i])
 # 
-   eskin_eval <- melt(eskin_fit$eval, id.vars = "cluster")
+   eskin_eval <- dplyr::bind_rows(eskin_fit$eval)
    eskin_eval$distance <- "Eskin"
    eskin_eval$method <- clusterMethod[i]
 # 
@@ -588,7 +586,7 @@ dataSET <- animal_dataSET2
    iof_fit <- fit_nomclust(dataSET, 'iof', clusterMethod[i], cmax)
 #   comparison<-groupfits(iof_fit,"iof",clusterMethod[i])
 # 
-   iof_eval <- melt(iof_fit$eval, id.vars = "cluster")
+   iof_eval <- dplyr::bind_rows(iof_fit$eval)
    iof_eval$distance <- "IOF"
    iof_eval$method <- clusterMethod[i]
 # 
@@ -597,7 +595,7 @@ dataSET <- animal_dataSET2
    of_fit <- fit_nomclust(dataSET, 'of',clusterMethod[i], cmax)
 #   comparison<-groupfits(of_fit,"of",clusterMethod[i])
 # 
-   of_eval <- melt(of_fit$eval, id.vars = "cluster")
+   of_eval <- dplyr::bind_rows(of_fit$eval)
    of_eval$distance <- "OF"
    of_eval$method <- clusterMethod[i]
 # 
@@ -607,7 +605,7 @@ dataSET <- animal_dataSET2
    lin_fit <- fit_nomclust(dataSET, 'lin', clusterMethod[i], cmax)
 #   comparison<-groupfits(lin_fit,"lin",clusterMethod[i])
 # 
-   lin_eval <- melt(lin_fit$eval, id.vars = "cluster")
+   lin_eval <- dplyr::bind_rows(lin_fit$eval)
    lin_eval$distance <- "Lin"
    lin_eval$method <- clusterMethod[i]
 # 
@@ -617,7 +615,7 @@ dataSET <- animal_dataSET2
    lin1_fit <- fit_nomclust(dataSET, 'lin1',clusterMethod[i], cmax)
 #   comparison<-groupfits(lin1_fit,"lin",clusterMethod[i])
 # 
-   lin1_eval <- melt(lin1_fit$eval, id.vars = "cluster")
+   lin1_eval <- dplyr::bind_rows(lin1_fit$eval)
    lin1_eval$distance <- "Lin_1"
    lin1_eval$method <- clusterMethod[i]
 # 
@@ -627,11 +625,11 @@ dataSET <- animal_dataSET2
    sm_fit <- fit_nomclust(dataSET, 'sm', clusterMethod[i], cmax)
 #   comparison<-groupfits(sm_fit,"sm",clusterMethod[i])
 # 
-   sm_eval <- melt(sm_fit$eval, id.vars = "cluster")
+   sm_eval <- dplyr::bind_rows(sm_fit$eval)
    sm_eval$distance <- "Simple matching"
    sm_eval$method <- clusterMethod[i]
 # 
-   evaluation <- rbind(evaluation, good_eval, good2_eval,
+   animal_eval <- rbind(animal_eval, good_eval, good2_eval,
                        good3_eval, good4_eval,eskin_eval,
                        iof_eval, of_eval, lin_eval,
                        lin1_eval, sm_eval
@@ -639,23 +637,23 @@ dataSET <- animal_dataSET2
 # 
  }
 
-save(evaluation, file = here('output', 'cluster_ks', 'animal_evaluation_2-25.RData'))
 
-animal_eval <- evaluation
+save(animal_eval, file = here('output', 'cluster_ks', 'animal_evaluation_2-25.RData'))
+
 ```
 
 
 ```{r}
-animal_eval$distance <- as.factor(animal_eval$distance)
-
-#remove NAs and cluster names
-animal_eval = animal_eval %>%
-  subset(!(L1 == 'names')) %>%
-  na_if(NaN) %>%
+#make long
+animal_eval <- animal_eval %>%
+    na_if('NaN') %>%
+  pivot_longer(cols = c(WCM:BK)) %>%
+  dplyr::rename(clusters = names) %>%
   subset(!(is.na(value)))
 
-#set as numeric
-animal_eval$value <- as.numeric(animal_eval$value)
+#make factors
+animal_eval <- animal_eval %>% 
+  mutate(across(clusters:name, .fns = ~ as.factor(.)))
 
 #scale
 animal_eval$value_scaled <- animal_eval$value/max(animal_eval$value)
