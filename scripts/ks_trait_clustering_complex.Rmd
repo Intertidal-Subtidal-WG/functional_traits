@@ -83,7 +83,10 @@ animal_imp2 <- animal_imp2 %>%
 #set up evaluations
 
 ##list of the possible internal validation measures
-nomclustEvals <- c("WCM", "WCE", "PSTau", "PSU", "PSFM", "PSFE")
+nomclustEvals <- c("PSFM", "PSFE", "BIC", "AIC")
+
+#old version
+#nomclustEvals <- c("WCM", "WCE", "PSTau", "PSU", "PSFM", "PSFE")
 #List of the possible linkage methods
 clusterMethod <- c("average", "complete", "single")
 
@@ -205,6 +208,7 @@ cmax = 25
 algae_dataSET2 <- data.frame(algae_dataSET[,-1], row.names = algae_dataSET[,1])
 
 
+##### this is the older code
 
 #extract groups and rename columns
 algae_groups <- as.data.frame(algae_nomclust_test$mem)
@@ -360,9 +364,12 @@ save(algae_eval, file = here('output', 'cluster_ks', 'algae_evaluation_2-25.RDat
 
 ```
 
-scale, prepare for evaluation
+prepare for evaluation
 ```{r}
+# make backup while troubleshooting
 algae_eval2 <- algae_eval
+
+#reset
 algae_eval <- algae_eval2
 ```
 
@@ -370,13 +377,18 @@ algae_eval <- algae_eval2
 #make long
 algae_eval <- algae_eval %>%
     na_if('NaN') %>%
-  pivot_longer(cols = c(WCM:BK)) %>%
-  dplyr::rename(clusters = names) %>%
+  select(!(c(WCM, WCE, BK))) %>% # these columns are always NaN for some reason?
+  pivot_longer(cols = c(PSFM:AIC)) %>%
+  dplyr::rename(cluster = names) %>%
   subset(!(is.na(value)))
 
 #make factors
 algae_eval <- algae_eval %>% 
-  mutate(across(clusters:name, .fns = ~ as.factor(.)))
+  mutate(across(cluster:name, .fns = ~ as.factor(.)))
+
+#change clusters into numbers!!!!
+algae_eval$cluster <- str_replace_all(c(algae_eval$cluster), "clu\\_", "")
+algae_eval$cluster <- as.numeric(algae_eval$cluster)
 
 #scale
 algae_eval$value_scaled <- algae_eval$value/max(algae_eval$value)
@@ -390,28 +402,28 @@ algae_eval$value_scaled <- algae_eval$value/max(algae_eval$value)
 ## Validation from the nomclust package internal measures. 
 #Sulc (2016) thesis; pg. 31
 
-nomclustEvals <- c("WCM", "WCE",  "PSFM", "PSFE", "BIC", "AIC", "BK")
+nomclustEvals <- c("PSFM", "PSFE", "BIC", "AIC")
 
 evaluation <- algae_eval
 
-EvalPlot <- plotEvals(evaluation, "WCM")
+EvalPlot <- plotEvals(evaluation, "AIC")
 
 EvalPlot
 
 #Plot and export the different measures  
 for(i in 1:length(nomclustEvals)){
-  EvalData <- evaluation[evaluation$L1==nomclustEvals[i],]
+  EvalData <- evaluation[evaluation$name==nomclustEvals[i],]
   EvalPlot <- plotEvals(EvalData, nomclustEvals[i])
   ggsave(EvalPlot, device = "pdf",
-         filename = paste0("/output/cluster_ks/", nomclustEvals[i],"_plot.pdf"))
+         filename = here('output', 'cluster_ks', paste0(nomclustEvals[i],"_plot.pdf")))
 }
 
 
 ###PSFE - higher value indicates better grouping.
-EvalData <- evaluation[evaluation$variable==nomclustEvals[6]&!evaluation$cluster==1,]
+EvalData <- evaluation[evaluation$name=='PSFE'&!evaluation$cluster==1,]
 
 ##If you want to subset further
-EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
 
 EvalPlotPSFE <- ggplot(EvalData, 
                        aes(x = cluster, y = value, color = factor(distance)))+
@@ -420,7 +432,7 @@ EvalPlotPSFE <- ggplot(EvalData,
   ylab("PSFE")+
   xlab("Clusters")+
   scale_x_discrete(limits = c(3:25))+
-  facet_grid(variable~method)+
+  facet_grid(rows = vars(method)) +
   #scale_y_continuous(limits = c(lowylim,highylim))+
   scale_color_manual(values = group.colours)+
   theme(panel.grid.minor.x	= element_line(color = "grey"),
@@ -428,39 +440,91 @@ EvalPlotPSFE <- ggplot(EvalData,
         panel.grid.major.y	= element_line(color = "grey"),
         #axis.text.x = element_blank(),
         legend.title = element_blank(),
-        legend.position = c(0.87, 0.68), # c(0,0) bottom left, c(1,1) top-right.
         legend.background = element_rect(fill = "white", colour = NA),
         plot.background = element_blank())
 
-ggsave(EvalPlotPSFE, filename = paste0(docDir,"documents/figures/EvalPlotPSFE.pdf"),
+
+ggsave(EvalPlotPSFE, filename = here('output', 'cluster_ks', 'EvalPlotPSFE.pdf'),
        width = 9, height = 4)
 
 
-###PSMF - higher value indicates better grouping.
-EvalData <- evaluation[evaluation$variable==nomclustEvals[5]&!evaluation$cluster==1,]
+###PSFM - higher value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='PSFM'&!evaluation$cluster==1,]
 
-EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
-EvalData$distance <- droplevels(EvalData$distance)
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData$distance <- droplevels(EvalData$distance)
 EvalPlotPSFM <- ggplot(EvalData, 
                        aes(x = cluster, y = value, color = factor(distance)))+
   geom_point()+geom_line()+
   theme_base()+
   ylab("PSFM")+
   xlab("Clusters")+
-  scale_x_discrete(limits = c(3:10))+
-  facet_grid(variable~method)+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
   #scale_y_continuous(limits = c(lowylim,highylim))+
   scale_color_manual(values = group.colours)+
   theme(panel.grid.minor.x	= element_line(color = "grey"),
         panel.grid.major.x	= element_line(color = "grey"),
         panel.grid.major.y	= element_line(color = "grey"),
         #axis.text.x = element_blank(),
-        legend.title = element_blank(),
-        legend.position = c(0.87, 0.78), # c(0,0) bottom left, c(1,1) top-right.
+        legend.title = element_blank(), 
         plot.background = element_blank())
 
-ggsave(EvalPlotPSFM, filename = paste0(docDir,"documents/figures/EvalPlotPSFM.pdf"), 
+ggsave(EvalPlotPSFM, filename = here('output', 'cluster_ks', 'EvalPlotPSFM.pdf'), 
        width = 9, height = 4)
+
+
+###AIC -XX value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='AIC'&!evaluation$cluster==1,]
+
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData$distance <- droplevels(EvalData$distance)
+EvalPlotAIC <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("AIC")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(), 
+        plot.background = element_blank())
+
+ggsave(EvalPlotAIC, filename = here('output', 'cluster_ks', 'EvalPlotAIC.pdf'), 
+       width = 9, height = 4)
+
+
+###AIC -XX value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='BIC'&!evaluation$cluster==1,]
+
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData$distance <- droplevels(EvalData$distance)
+EvalPlotBIC <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("BIC")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(), 
+        plot.background = element_blank())
+
+ggsave(EvalPlotBIC, filename = here('output', 'cluster_ks', 'EvalPlotBIC.pdf'), 
+       width = 9, height = 4)
+
 ```
 
 
