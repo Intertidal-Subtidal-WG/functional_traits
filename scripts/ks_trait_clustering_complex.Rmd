@@ -206,30 +206,6 @@ cmax = 25
 
 
 algae_dataSET2 <- data.frame(algae_dataSET[,-1], row.names = algae_dataSET[,1])
-
-
-##### this is the older code
-
-
-#make distance matrix
-algae_matrix <- good2(algae_dataSET2)
-
-
-#legendre dissimilarity matrix
-coldiss(algae_matrix) 
-
-#mds
-algaemds <- metaMDS(algae_matrix)
-
-plot(algaemds)
-coldiss(algae_matrix)
-#save these as graphs for looking at later
-
-#save matrix as R obejct and csv
-algae_matrix2 <- fortify(algae_matrix)
-
-save(algae_matrix, file = here('data','algae_matrix.RData'))
-write.csv(algae_matrix2, file = here('data', 'clean', '20210806_algae_matrix.csv'))
 ```
 
 
@@ -347,7 +323,7 @@ algae_eval <- {}
 # 
  }
 
-save(algae_eval, file = here('output', 'cluster_ks', 'algae_evaluation_2-25.RData'))
+#save(algae_eval, file = here('output', 'cluster_ks', 'algae_evaluation_2-25.RData'))
 
 
 ```
@@ -513,6 +489,30 @@ ggsave(EvalPlotBIC, filename = here('output', 'cluster_ks', 'Algae_EvalPlotBIC.p
 ```
 
 
+```{r}
+##### this is the older code
+
+
+#make distance matrix
+algae_matrix <- good2(algae_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(algae_matrix) 
+
+#mds
+algaemds <- metaMDS(algae_matrix)
+
+plot(algaemds)
+coldiss(algae_matrix)
+#save these as graphs for looking at later
+
+#save matrix as R obejct and csv
+algae_matrix2 <- fortify(algae_matrix)
+
+#save(algae_matrix, file = here('data','algae_matrix.RData'))
+#write.csv(algae_matrix2, file = here('data', 'clean', '20210806_algae_matrix.csv'))
+```
 
 
 
@@ -842,14 +842,14 @@ ggsave(EvalPlotBIC, filename = here('output', 'cluster_ks', 'Animal_EvalPlotBIC.
 
 
 ```{r export graphs}
-png(filename = here('output', '20210806_algae-dissimilarity.png'),
+png(filename = here('output', 'cluster_ks', '20210830_algae-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(algae_matrix)
 dev.off()
 
 
-png(filename = here('output', '20210806_animal-dissimilarity.png'),
+png(filename = here('output', 'cluster_ks', '20210830_animal-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(animal_matrix)
@@ -923,7 +923,7 @@ algae_dendr_plot <- ggplot() +
 
 algae_dendr_plot
 
-ggsave(here('output', '20210806_algae-cluster-dendro.png'), plot = last_plot())
+ggsave(here('output', 'cluster_ks', '20210830_algae-cluster-dendro.png'), plot = last_plot())
 
 ######Animals
 animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
@@ -965,7 +965,7 @@ tsne_algae <- ggplot(tsne_plot_ag, aes(x=x, y=y)) +
 
 tsne_algae
 
-#ggsave(here('output', '20210730_algae-cluster-tsne2.png'), plot = last_plot())
+ggsave(here('output', 'cluster_ks', '20210830_algae-cluster-tsne2.png'), plot = last_plot())
 
 ## animals
 
@@ -986,7 +986,7 @@ tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) +
 
 tsne_animal
 
-ggsave(here('output', '20210806_animal-cluster-tsne.png'), plot = last_plot())
+ggsave(here('output', 'cluster_ks', '20210830_animal-cluster-tsne.png'), plot = last_plot())
 
 ```
 
