@@ -28,6 +28,8 @@ install.packages("factoextra")
 install.packages("ggrepel")
 install.packages("tibble")
 install.packages("funrar") #to calculate functional uniqueness
+install.packages("TPD") #Methods for Measuring Functional Diversity Based on Trait Probability Density
+install.packages("Gifi") # for PCA on categorical data
 
 #libraries 
 
@@ -47,79 +49,105 @@ library(letsR)
 library(reshape)
 library(reshape2)
 library(funrar)#to calculate functional uniqueness
+
+library(Gifi)# to do PCA on categorical data
+library(TPD)
 #library(ts)
 
 loadfonts()
 
 
-#1. Functional space and hypervolume estimation. Code adapted from Cooke et al. 2019 and Gomez et al 2021
-####################################################################################
-
 # Load data ---------------------------------------------------------------
 
-marine_traits<-read.csv("marine_traits.csv")
+traits<-read.csv("20210730_functional_traits_marine.csv",stringsAsFactors=FALSE) # the last version of the data
 
-str(marine_traits)
+traits_algae_imputed<-read.csv("algae_imputed.csv")
+trait_animal_imputed<-read.csv("animal_imputed.csv")
+traits_modified<-read.csv("traits_mod.csv") #traits converted to ordinal values as suggested in "gifi" package
 
-#Scale the data if needed (Applies mosty for numerical traits such us body mass)
-scale_traits <- function(x){
-  (x - mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
-}
+View(traits)
+View(traits_modified)
 
-traits_scaled<-marine_traits %>% 
-  mutate(body_size_scale=scale_traits(body_size))%>%
-  as.data.frame
+#Matrices
 
-traits_scaled<-traits_scaled %>%
-  column_to_rownames(var = "species")
-
+matrix_algae<-read.csv("20210606_algae_matrix.csv")
+View(matrix_algae)
+matrix_algae <- as.matrix(matrix_algae)
+matrix_animals<-read.csv("20210606_animal_matrix.csv")
+matrix_animal <- as.matrix(matrix_animals)
 
 
-# my data frame should only have species name as row names  and morphological traits that I want  as columns
-#Colum to raw names
-traits_scaled<-traits_scaled %>% 
-  select(species, body_size_scale, dietart_preference, thropic_level)%>% 
-  column_to_rownames(var = "species")
+#Compared with the data from Gomez and from Cooke we have categorical and numerical data in out traits.
+#One solution is to use Gifi package: Multivariate Analysis with Optimal Scaling
+#Implements categorical principal component analysis ('PRINCALS'), multiple correspondence analysis ('HOMALS'), monotone regression analysis ('MORALS'). It replaces the 'homals' package.
 
-#### --------------------------------------------------------------
-## PCA ##
-#### --------------------------------------------------------------
+#install.packages("Gifi")
+#library(Gifi)
 
-#Run PCA for the whole comunity
 
-#PCA
+# Functional space --------------------------------------------------------
 
-pca_community <- princomp(traits_scaled, cor = TRUE, scores = TRUE)
-summary(pca_community)
+# If I leave the variables as nominal they do not work, 
+traits_algae_imputed_1<-traits_algae_imputed[,4:11] #restric the variables to traits that are informative (e.g species and class are removed)
+traits_algae_imputed_1<-as.data.frame(traits_algae_imputed_1)
+#recode(traits_algae_imputed1$morphology1)
+#princals(traits_algae_imputed_1,ordinal=FALSE)
+#View(traits_algae_imputed_1)
 
-plot(pca_community)
 
-#Extract the scores
-scoresPCATotal <- as.data.frame(pcaTotal$scores) %>% 
-  tibble::rownames_to_column("binomial")
+# 1.1 Ordinal PCA ---------------------------------------------------------
+# With the animal data base I convert them to ordinal numbers, note that this do not imply that we are doing a regular pca, we are specifying that we are using ordinal variables
+#Some interesting blog about PCA interpretation : http://strata.uga.edu/8370/lecturenotes/principalComponents.html and decisions on number of components to be extracted
 
-scoresPCATotal <- scoresPCATotal %>% 
-  # convert long to wide
-  tidyr::gather(key, value, -binomial) %>% 
-  tidyr::unite(col, key) %>% 
-  tidyr::spread(col, value) 
+View(traits_modified) # File with variables transformed to ordinal numbers
+traits_modified_1<-traits_modified[,2:6] #select columns of interest
 
-ggplot(pca_community, aes(x = Comp.1, y = Comp.2))
+animals<-princals(traits_modified_1,ordinal=TRUE,ndim = 3) #PCA on ordinal data ndim= number of components to be extracted, should be less than the number of variables
+summary(animals)
 
-#######################
+View(animals)
+
+plot(animals, plot.type = "transplot")
+plot(animals, "loadplot", main = "Loadings Plot ABC Data")  ## aspect ratio = 1
+plot(animals, "biplot", labels.scores = TRUE, main = "Biplot ABC Data")
+plot(animals, "screeplot")
+
+
+#Extract the score for each species, I think object score is the way to do it but will be interesting to underestand what scoremat means.
+
+#library (tidyverse)
+scoresanimals <- as.data.frame(animals$objectscores) %>% 
+  tibble::rownames_to_column("species")
+
+# convert long to wide
+#tidyr::gather(key, value, -species) %>% 
+#tidyr::unite(col, key) %>% 
+#tidyr::spread(col, value) 
+
+#TRying to combine this two but I can cause the column species was removed from one and no the other
+#scores_totals_animals<-inner_join(traits_modified,scoresanimals, by = "species")
+#traits_modified
+#write.csv(scoresanimals, file = "scoreanimals.csv", row.names = FALSE)
+
+
+# I combined then manually
+TotalPCA_scores<-read.csv("traits_mod_1.csv")
+View(TotalPCA_scores)
+
+# PCA over time periods -----------------------Still no working----------------------------
+
 
 #Subset for species in each period (Need to define the lenght of this periods)
 
-Y1982 <- traits_scaled %>% 
+#Y1982 <- traits_scaled %>% 
   filter(Y1982 == 1) %>% 
   select(species, body_size_scale, dietart_preference, thropic_level) %>% 
   left_join(scoresPCATotal, by = "species")
 
-Y2002 <- traits_scaled %>% 
+#Y2002 <- traits_scaled %>% 
   filter(Y2002 == 1) %>% 
   select(species, body_size_scale, dietart_preference, thropic_level) %>% 
   left_join(scoresPCATotal, by = "species") 
-
 
 
 # kernel density estimation for each period
@@ -129,102 +157,123 @@ pc_raw_2002 <- Y2002 %>%
   tibble::column_to_rownames(var = "speciesl")
 
 
-
 # save principal component data
 write.csv(Y1982, file = "PCA_1982.csv", row.names = FALSE)
 write.csv(Y2002, file = "PCA_2002.csv", row.names = FALSE)
 
 write.csv(scoresPCATotal, file = "PCA_Total.csv")
-#write.csv(loadingsPCATotal, file = "Loadings_Total.csv", row.names = FALSE)
 
 
-#. Functional Uniqueness and distinctiveness
+#  3. TPD (trait probability density functions) ---------------------------
+
 #####################################################################################
+#Methods for Measuring Functional Diversity Based on Trait Probability Density
+#Tools to calculate trait probability density functions (TPD) at any scale (e.g. populations, species, communities). 
+#TPD functions are used to compute several indices of functional diversity, as well as its partition across scales
 
-library(funrar)
+library(TPD)
 
-# load data
-trait <- read_csv("marine_traits.csv")
+#Create new database for community TPD to compare extirpated, new additions and share specieswith Total PCA scores
+TotalPCA<- TotalPCA_scores %>% 
+  mutate(SD = 1) %>%    #agregamos una variable SD
+  select(species,Comp.1, Comp.2, Comp.3,id,POP,Historical.Abundance, Current.Abundance, SD) #POP = groups of species, A = Extirpated, B = Novel additions, C = Shared species
 
+#PC1
+TRA <- matrix(c(TotalPCA$Comp.1), ncol = 1)
+SD <- matrix(c(TotalPCA$SD), ncol=1)
+POP <- TotalPCA$POP
+ABUN <- TotalPCA %>% 
+  select(species, Current.Abundance,POP) %>% 
+  pivot_wider(names_from = species, values_from = Current.Abundance) %>% 
+  column_to_rownames('POP')
 
-#Species Year Matrix
-data <- read.csv(".csv") 
+ABUN[is.na(ABUN)] <- 0
 
-mat <- dat %>% 
-  pivot_wider(names_from =  species, values_from = COUNT)
+library(TPD)
+tpdmean<- TPDsMean(species = TotalPCA$species, means = TRA, sds=SD, alpha = 1, samples = POP)
 
-dist_mat <- 
+TPDc <- TPDc(TPDs = tpdmean, sampUnit = ABUN )
 
+sapply(TPDc$TPDc$TPDc, sum)
 
-# Compute distinctiveness for each species on each site
-di_df = distinctiveness_stack(com_df = data,  # The site x species table
-                              sp_col = "speciesl",  # Name of the species column
-                              com = "Year",  # Name of the community column
-                              abund = "COUNT",  # Relative abundances column (facultative)
-                              dist_matrix = dist_mat)  # Functional Distance matrix
-
-
-Di_Sum <- di_df %>% 
-  group_by(species) %>%
-  summarise_at(vars(Di), funs(mean(., na.rm=TRUE)))
-
-Di_Sum <- Di_Sum[order(Di_Sum$Di),] %>% 
-  mutate(ID = c(1:233)) %>% 
-  right_join(trait, by = "species")
+plotTPD(TPD = TPDc, nRowCol = c(3,3))
 
 
-############Plots
-# plot 1982
-pca_plot_1982 <- ggplot(dcc_1982, aes(x = Var1, y = Var2)) +
-  # coloured probabilty background
-  geom_raster(aes(fill = value)) +
-  scale_fill_gradientn(colours = rev(col_pal)) +
-  # points for species
-  geom_point(data = Y1982, aes(x = Comp.1, y = Comp.2), size = 0.3, alpha = 0.5, colour = "grey20") +
-  geom_point(data = extir, aes(x = Comp.1, y = Comp.2), size = 1.5, alpha = 0.8, colour = "brown2") +
-  
-  # add arrows
-  geom_segment(data = loadings_sc, aes(x = 0, y = 0, xend = Comp.1, yend = Comp.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  # probability kernels
-  geom_contour(aes(z = value), breaks = cl_50_1911, colour = "grey30", size = 1) +
-  geom_contour(aes(z = value), breaks = cl_95_1911, colour = "grey60", size = 1) +
-  geom_contour(aes(z = value), breaks = cl_99_1911, colour = "grey70", size = 1) +
-  coord_equal() +
-  # add arrows
-  geom_segment(data = loadings_sc, aes(x = 0, y = 0, xend = Comp.1, yend = Comp.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  # add dashed arrows ends
-  geom_segment(data = loadings_sc, aes(x = 0, y = 0, xend = -Comp.1, yend = -Comp.2), lty = 5, colour = "darkgrey") +
-  # add arrow labels
-  geom_text_repel(data = loadings_sc, aes(x = Comp.1, y = Comp.2, label = trait), size = 4, nudge_x = 11, hjust = 0.5, direction = "y", segment.size = 0.5,segment.color = "grey89") +
-  # axis labels - see comp_var
-  labs(x = "PC1 - Body size (55%)", y = "PC2 - Dispersal ability (13%)") +
-  xlim(-5,15) +
-  ylim(-8,8) +
-  # edit plot
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill='white', colour = "black"),
-        axis.text = element_text(colour = "black"),
-        legend.position = "none",
-        text = element_text(size = 25)) + 
-  geom_text(x= 5, y=8, label="1910s", color="black", size = 5)
+##Graphs of TPDs (trait probability density) for PC1, 2 and 3
 
-# display plot
+#Multiply PC2 and 3 by -1 to ease interpretation of increasing values.
+TotalPCA1 <- TotalPCA %>% 
+  mutate(Comp2M = Comp.2 *-1) %>% 
+  mutate(Comp3M = Comp.3 *-1)
+
+#PC1
 windows()
-pca_plot_1982
+p = ggplot(TotalPCA1, aes(x = Comp.1,fill = POP))
+p = p + geom_density(alpha = 0.6) + scale_fill_manual(name = "POP", values = c("orange", "grey", "blue")) 
+p = p + theme_bw(20) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.text=element_text(size=20),axis.title=element_text(size=20), axis.title.x = element_text(margin = unit(c(5, 0, 0, 0), "mm")))
+p <- p + xlab("PC1 - Body size (55%) ") + ylab("Trait prbability density") + ggtitle(" ")
+p = p + theme(legend.position = c(0.75, 0.9))+ geom_text(x = 1, y = 0.40, label = " p = 0.04" , size = 6)+
+  scale_fill_manual(values=c("orange", "grey", "blue"), 
+                    name=NULL,breaks=c("A", "B", "C"),labels=c("Extirpated species", "Novel additions", "Shared species"))
+
+p
+
+#####
+
+## Still Trying to underestand this 
+#Density comparisons with kolmogorov-smirnov test
+library("sm")
+
+A <- subset(TotalPCA1, TotalPCA1$POP == "A")
+B <- subset(TotalPCA1, TotalPCA1$POP == "B")
+C <- subset(TotalPCA1, TotalPCA1$POP == "C")
+
+#KS test
+ks.test(A$Comp.1, B$Comp.1)#P = 0.04
+
+ks.test(A$Comp.2, B$Comp.2)# P = 0.0008
+
+ks.test(A$Comp.3, B$Comp.3)# P = 0.003
 
 
-############Thermal tolerance data cleaning
 
-thermal<-read.csv("GlobalTherm_1.csv")
-thermal2<-read.csv("GlobalTherm_2.csv")
-species_list<-read.csv("species_list.csv")
+###Example from the package to calculate PCA with categorical data
+ABC
+ABC6 <- ABC[,6:11]
 
-thermal_species<-inner_join(thermal, species_list, by = "species")
+fitord <- princals(ABC6) 
 
-View(thermal_species)
+View (ABC6)
 
-write.csv(thermal_species, "thermal_toleraces_selected_species.csv")
+## ordinal PCA
+fitord <- princals(ABC6,ndim =6)  ## ordinal PCA
+fitord
+summary(fitord)
+plot(fitord, plot.type = "transplot")
+plot(fitord, "loadplot", main = "Loadings Plot ABC Data")  ## aspect ratio = 1
+plot(fitord, "biplot", labels.scores = TRUE, main = "Biplot ABC Data")
+plot(fitord, "screeplot")
 
 
-###End of script
+
+scoresfitord <- as.data.frame(fitord$scoremat) %>% 
+  tibble::rownames_to_column("species")
+
+## linear restrictions (mimics standard PCA)
+abc_knots <- knotsGifi(ABC6, "E")     ## 0 interior knotsx
+fitlin <- princals(ABC6, knots = abc_knots, degrees = 1)
+fitlin
+summary(fitlin)
+fitlin$evals
+plot(fitlin, plot.type = "transplot")
+## compare with standard PCA
+ABCnum <- makeNumeric(ABC6)
+fitpca <- prcomp(ABCnum, scale = TRUE)
+fitpca$sdev^2
+
+summary(fitpca)
+## End(Not run)
+
+###### 
+
+
