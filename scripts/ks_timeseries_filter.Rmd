@@ -1,0 +1,123 @@
+---
+title: "ks_trait_timeseries"
+author: "Kate Sheridan"
+date: "9/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(here)
+```
+
+load in observations
+```{r}
+ct <- read.csv(here('data', 'fielddata', 'ct_clean.csv'))
+
+pc <- read.csv(here('data', 'fielddata', 'pc_clean.csv'))
+
+keen <- read.csv(here('data', 'fielddata', 'keen_all_methods_site_merged.csv'))
+
+transect <- read.csv(here('data', 'fielddata', 'transect_info_decimals.csv'))
+
+```
+
+
+extract useful stuff?
+First extract just species, year, and transect (for east west)
+```{r}
+# count and percent cover data
+ct_count <- ct %>%
+  subset(Count > 0) %>%
+  select(Year, Transect, Organism)
+
+
+pc_count <- pc %>%
+  subset(Percent_cover > 0) %>%
+  select(Year, Transect, Organism)
+
+
+# join the two sets for species x year x transect
+pc_ct <- (full_join(pc_count, ct_count))
+pc_ct <- unique(pc_ct)
+
+```
+
+single years for intersting times
+may want to do a range in the fugure. some have very few species
+
+```{r single-year}
+
+sp_1982 <- pc_ct %>%
+  subset(Year == 1982)
+
+sp_1990 <- pc_ct %>%
+  subset(Year == 1990)
+
+sp_1998 <- pc_ct %>%
+  subset(Year = 1998)
+
+sp_2019 <- pc_ct %>%
+  subset(Year == 2019)
+```
+
+
+Make species lists
+```{r single-year-list}
+
+sp_1982 <- unique(sp_1982$Organism)
+sp_1982 <- enframe(sp_1982)
+
+sp_1990 <- unique(sp_1990$Organism)
+sp_1990 <- enframe(sp_1990)
+
+sp_1998 <- unique(sp_1998$Organism)
+sp_1998 <- enframe(sp_1998)
+
+sp_2019 <- unique(sp_2019$Organism)
+sp_2019 <- enframe(sp_2019)
+
+```
+
+# save lists
+
+```{r}
+write_csv(sp_1982, here('data', 'fielddata', 'sp_1982.csv'))
+write_csv(sp_1990, here('data', 'fielddata', 'sp_1990.csv'))
+write_csv(sp_1998, here('data', 'fielddata', 'sp_1998.csv'))
+write_csv(sp_2019, here('data', 'fielddata', 'sp_2019.csv'))
+```
+
+
+multiple years
+
+```{r}
+sp_1982r <- pc_ct %>%
+  subset(Year < 1990 & Year > 1982)
+
+sp_1996r <- pc_ct %>%
+  subset(Year > 1996 & Year < 2007)
+
+sp_2011r <- pc_ct %>%
+  subset(Year < 2011)
+
+```
+
+```{r}
+sp_1982r <- unique(sp_1982r$Organism)
+sp_1982r <- enframe(sp_1982r)
+
+sp_1996r <- unique(sp_1996r$Organism)
+sp_1996r <- enframe(sp_1996r)
+
+sp_2011r <- unique(sp_2011r$Organism)
+sp_2011r <- enframe(sp_2011r)
+
+```
+
+
+```{r}
+write_csv(sp_1982r, here('data', 'fielddata', 'sp_1982r.csv'))
+write_csv(sp_1996r, here('data', 'fielddata', 'sp_1996r.csv'))
+write_csv(sp_2011r, here('data', 'fielddata', 'sp_2011r.csv'))
+```

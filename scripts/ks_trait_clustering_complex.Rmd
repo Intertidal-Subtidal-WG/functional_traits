@@ -45,6 +45,12 @@ animal_imp2 <- animal_imp2 %>%
   mutate(across(.fns = ~ as.factor(.)))
 algae_imp2 <- algae_imp2 %>% 
   mutate(across(.fns = ~ as.factor(.)))
+
+
+# raw if needed
+#be sure to use na.strings or imputation will fail!
+#trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
+#                      na.strings = c("","NA", 'N/A'))
 ```
 
 Ladds et al 2018
@@ -73,6 +79,20 @@ animal_imp2 <- animal_imp2 %>%
                  #epiphytic, epizoic, epifaunal, epilithic, 
                  invasive, intertidal, subtidal)
 
+```
+
+## Step 1.5, filter to specieslists if needed
+```{r}
+sp_list <- read.csv(here('data', 'fielddata', 'sp_1982.csv'))
+
+
+
+
+algae_imp2 <- algae_imp2 %>%
+  subset(species %in% sp_list$value)
+
+animal_imp2 <- animal_imp2 %>%
+  subset(species %in% sp_list$value)
 ```
 
 
@@ -534,7 +554,7 @@ animal_spnames <- animal_imp2[,"species"]
 
 #other variables for matrix
 evaluation <- NULL
-cmax = 25
+cmax = 10
 
 
 animal_dataSET2 <- data.frame(animal_dataSET[,-1], row.names = animal_dataSET[,1])
@@ -545,25 +565,9 @@ animal_dataSET2 <- data.frame(animal_dataSET[,-1], row.names = animal_dataSET[,1
 
  
 #append to dataset
-animal_dataSET3 <- bind_cols(animal_dataSET, animal_groups)
+#animal_dataSET3 <- bind_cols(animal_dataSET, animal_groups)
 
 
-
-#legendre dissimilarity matrix
-coldiss(animal_matrix) 
-
-#mds
-animalmds <- metaMDS(animal_matrix)
-
-plot(animalmds)
-coldiss(animal_matrix)
-#save these as graphs for looking at later
-
-animal_matrix2 <- fortify(animal_matrix)
-
-
-save(animal_matrix, file = here('data','animal_matrix.RData'))
-write.csv(animal_matrix2, file = here('data', 'clean', '20210806_animal_matrix.csv'))
 ```
 
 ```{r animal loop}
@@ -836,20 +840,44 @@ ggsave(EvalPlotBIC, filename = here('output', 'cluster_ks', 'Animal_EvalPlotBIC.
 
 ```
 
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+animal_matrix <- good3(animal_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(animal_matrix) 
+
+#mds
+animalmds <- metaMDS(animal_matrix)
+
+plot(animalmds)
+coldiss(animal_matrix)
+#save these as graphs for looking at later
+
+animal_matrix2 <- fortify(animal_matrix)
+
+
+save(animal_matrix, file = here('data','animal_matrix.RData'))
+write.csv(animal_matrix2, file = here('data', 'clean', '20210806_animal_matrix.csv'))
+```
+
+
+
 
 
 
 
 
 ```{r export graphs}
-png(filename = here('output', 'cluster_ks', '20210830_algae-dissimilarity.png'),
+png(filename = here('output', 'cluster_ks', '20210910_algae-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(algae_matrix)
 dev.off()
 
 
-png(filename = here('output', 'cluster_ks', '20210830_animal-dissimilarity.png'),
+png(filename = here('output', 'cluster_ks', '20210910_animal-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(animal_matrix)
@@ -896,7 +924,7 @@ for(j in c(seq(3,9,2))){
 }
 ```
 
-
+set number of clusters based on previous evaluations
 
 ```{r dendrograms}
 #define options for heirarchcal clustering 
@@ -927,7 +955,7 @@ ggsave(here('output', 'cluster_ks', '20210830_algae-cluster-dendro.png'), plot =
 
 ######Animals
 animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
-animal_clust <- cutree(animal_fit, 8)  # change number of clusters
+animal_clust <- cutree(animal_fit, 3)  # change number of clusters
 
 animal_dendr <- dendro_data(animal_fit, type="rectangle") 
 
@@ -943,7 +971,7 @@ animal_dendr_plot <- ggplot() +
 
 animal_dendr_plot
 
-ggsave(here('output', '20210806_animal-cluster-dendro.png'), plot = last_plot())
+ggsave(here('output', '20210910_animal-cluster-dendro.png'), plot = last_plot())
 ```
 
 to do, probably figure out other coloring methods, if i can set k with rtsne, etc
@@ -973,6 +1001,9 @@ animal_phyla <- trait_raw %>%
   subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
   dplyr:::select(species, phylum)
 
+animal_phyla <- animal_phyla %>%
+  subset(species %in% sp_list$value)
+
 tsne_obj_an <- Rtsne(animal_matrix, is_distance = TRUE, perplexity = 5)
 plot(tsne_obj_an$Y)
 
@@ -986,7 +1017,7 @@ tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) +
 
 tsne_animal
 
-ggsave(here('output', 'cluster_ks', '20210830_animal-cluster-tsne.png'), plot = last_plot())
+ggsave(here('output', 'cluster_ks', '20210910_animal-cluster-tsne_1982.png'), plot = last_plot())
 
 ```
 
