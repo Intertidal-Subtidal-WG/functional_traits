@@ -53,9 +53,9 @@ trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'),
 
 ```{r}
 #uncomment the one you need
-#sp_list <- read.csv(here('data', 'fielddata', 'sp_1982r.csv'))
+sp_list <- read.csv(here('data', 'fielddata', 'sp_1982r.csv'))
 #sp_list <- read.csv(here('data', 'fielddata', 'sp_1996r.csv'))
-sp_list <- read.csv(here('data', 'fielddata', 'sp_2011r.csv'))
+#sp_list <- read.csv(here('data', 'fielddata', 'sp_2011r.csv'))
 
 algae_imp2 <- algae_imp2 %>%
   subset(species %in% sp_list$value)
@@ -469,6 +469,9 @@ ggsave(EvalPlotAIC, filename = here('output', 'cluster_ks', 'Animal_EvalPlotAIC-
 
 ggsave(EvalPlotBIC, filename = here('output', 'cluster_ks', 'Animal_EvalPlotBIC-2011r.pdf'), 
        width = 9, height = 4)
+
+
+#ggsave(here('output', 'cluster_ks', 'animal-cluster-evalplotaic-1982r.png'), plot = EvalPlotAIC)
 ```
 
 ```{r}
@@ -525,13 +528,13 @@ animal_dendr_plot <- ggplot() +
 
 animal_dendr_plot
 
-ggsave(here('output', 'animal-cluster-dendro-2011r.png'), plot = last_plot())
+ggsave(here('output', 'animal-cluster-dendro-1982r.png'), plot = last_plot())
 
 # also make csv lists of animals in those years
 animal_clust_l <- animal_labs %>%
   select(label, cluster)
 
-write.csv(animal_clust_l, here('output', 'cluster_ks', 'animal-clusters-2011r.csv'))
+write.csv(animal_clust_l, here('output', 'cluster_ks', 'animal-clusters-1982r.csv'))
 ```
 
 ## tsne
@@ -554,13 +557,13 @@ tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2],
 
 tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
   #geom_point(aes(color = common_name_division_bgr)) +
-  #geom_point(aes(color = phylum)) +
-  geom_point(aes(color = cluster)) +
+  geom_point(aes(color = phylum)) +
+  #geom_point(aes(color = cluster)) +
   theme_classic()
 
 tsne_animal
 
-ggsave(here('output', 'cluster_ks', 'animal-cluster-tsne_2011r.png'), plot = last_plot())
+ggsave(here('output', 'cluster_ks', 'animal-cluster-tsne_1982r-phy.png'), plot = last_plot())
 
 ```
 

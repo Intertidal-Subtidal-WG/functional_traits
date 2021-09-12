@@ -49,8 +49,8 @@ algae_imp2 <- algae_imp2 %>%
 
 # raw if needed
 #be sure to use na.strings or imputation will fail!
-#trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
-#                      na.strings = c("","NA", 'N/A'))
+trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
+                      na.strings = c("","NA", 'N/A'))
 ```
 
 Ladds et al 2018
@@ -933,7 +933,7 @@ methodsClust <- c("single", "complete", "average")
 ######Algae  
 #build the model and select the number of clusters
 algae_fit <- hclust(algae_matrix, method = methodsClust[3])  #change cluster method
-algae_clust <- cutree(algae_fit, 4)  # change number of clusters
+algae_clust <- cutree(algae_fit, 12)  # change number of clusters
 
 #make into dendro data for plotting
 algae_dendr <- dendro_data(algae_fit, type="rectangle") 
