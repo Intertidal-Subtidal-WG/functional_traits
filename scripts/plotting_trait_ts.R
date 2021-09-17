@@ -3,6 +3,7 @@
 
 # PACKAGES and DATA #===========================================================
 library(tidyverse)
+library(patchwork)
 
 # count and cover data from the intertidal
 count_data <- read_csv("data/fielddata/ct_clean.csv")
@@ -128,23 +129,202 @@ cover_year_all <- cover_avg_by_year %>%
 
 # PLOTTING #====================================================================
 
-# COUNT DATA BY TRANSECT
+# RELATIVE ABUNDANCE: COUNT DATA BY YEAR
+
+# group
+(plot1 <- count_year_all %>% 
+   group_by(Year, Position, group) %>%
+   summarise(Sum = sum(Rel_abund_by_side)) %>% 
+   ggplot(aes(x = Year, y = Sum, color = group)) +
+   geom_point() +
+   geom_line() +
+   facet_wrap(~ Position, nrow = 2) + 
+   theme_bw())
+
+# body_size_avg_bin
+(plot2 <- count_year_all %>% 
+    group_by(Year, Position, body_size_avg_bin) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    drop_na() %>% 
+    ggplot(aes(x = Year, y = Sum, color = body_size_avg_bin)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
 
 # morphology
-plot1 <- count_transect_all %>% 
-  group_by(Year, morphology1) %>%
-  summarise(Sum = sum(Avg_abund_per_level)) %>% 
-  ggplot(aes(x = Year, y = Sum, color = morphology1)) +
-  geom_point() +
-  geom_line() +
-  theme_bw()
-  
+(plot3 <- count_year_all %>% 
+    group_by(Year, Position, morphology1) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = morphology1)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
 # trophic level
-plot2 <- count_transect_all %>% 
-  group_by(Year, trophic_level) %>%
-  summarise(Sum = sum(Avg_abund_per_level)) %>% 
-  ggplot(aes(x = Year, y = Sum, color = trophic_level)) +
-  geom_point() +
-  geom_line() +
-  scale_y_log10() +
-  theme_bw()
+(plot4 <- count_year_all %>% 
+    group_by(Year, Position, trophic_level) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = trophic_level)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# dietary_pref
+(plot5 <- count_year_all %>% 
+    group_by(Year, Position, dietary_pref_c) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = dietary_pref_c)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# motility_adult
+(plot6 <- count_year_all %>% 
+    group_by(Year, Position, motility_adult) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = motility_adult)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# epibiotic
+(plot7 <- count_year_all %>% 
+    group_by(Year, Position, epibiotic) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = epibiotic)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# benthic
+(plot8 <- count_year_all %>% 
+    group_by(Year, Position, benthic) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = benthic)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# invasive
+(plot9 <- count_year_all %>% 
+    group_by(Year, Position, invasive) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    drop_na() %>% 
+    ggplot(aes(x = Year, y = Sum, color = invasive)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+count_rel_abund_plots <- (plot1 + plot2 + plot3) / 
+  (plot4 + plot5 + plot6) / 
+  (plot7 + plot8 + plot9) +
+  plot_annotation(title = "Relative Abundance (Count)")
+#ggsave("plots/count_rel_abund_plots.png")
+
+# RELATIVE ABUNDANCE: COVER DATA
+
+# group
+(plot1 <- cover_year_all %>% 
+    group_by(Year, Position, group) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = group)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# body_size_avg_bin
+(plot2 <- cover_year_all %>% 
+    group_by(Year, Position, body_size_avg_bin) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    drop_na() %>% 
+    ggplot(aes(x = Year, y = Sum, color = body_size_avg_bin)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# morphology
+(plot3 <- cover_year_all %>% 
+    group_by(Year, Position, morphology1) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = morphology1)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# trophic level
+(plot4 <- cover_year_all %>% 
+    group_by(Year, Position, trophic_level) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = trophic_level)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# dietary_pref
+(plot5 <- cover_year_all %>% 
+    group_by(Year, Position, dietary_pref_c) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = dietary_pref_c)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# motility_adult
+(plot6 <- cover_year_all %>% 
+    group_by(Year, Position, motility_adult) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = motility_adult)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# epibiotic
+(plot7 <- cover_year_all %>% 
+    group_by(Year, Position, epibiotic) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = epibiotic)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# benthic
+(plot8 <- cover_year_all %>% 
+    group_by(Year, Position, benthic) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    ggplot(aes(x = Year, y = Sum, color = benthic)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+# invasive
+(plot9 <- cover_year_all %>% 
+    group_by(Year, Position, invasive) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+    drop_na() %>% 
+    ggplot(aes(x = Year, y = Sum, color = invasive)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw())
+
+cover_rel_abund_plots <- (plot1 + plot2 + plot3) / 
+  (plot4 + plot5 + plot6) / 
+  (plot7 + plot8 + plot9) +
+  plot_annotation(title = "Relative Abundance (Cover)")
+#ggsave("plots/cover_rel_abund_plots.png")
