@@ -26,10 +26,10 @@ count <-  count_data %>%
   select(Year, Transect, Level, Replicate, Data_taken, Organism, Count) %>% 
   # remove rows where data was not collected
   filter(Data_taken != "no") %>%
-  # remove parentheticals from organism names
+  # remove parenthetical from organism names
   mutate(Organism = stringr::str_replace(Organism, " \\s*\\([^\\)]+\\)", "")) %>% 
   group_by(Year, Transect, Level, Replicate, Organism) %>% 
-  # avg any replicates so each Year/Trantsect/Level/Org combo has one value
+  # avg any replicates so each Year/Transect/Level/Org combo has one value
   summarise(Count = mean(Count)) %>% 
   ungroup() %>% 
   select(-Replicate) %>% 
