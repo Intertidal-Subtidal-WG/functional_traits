@@ -98,6 +98,7 @@ cover_avg_by_year <- cover %>%
   left_join(., cover %>% group_by(Year, Position) %>% 
               summarize(Total_abund = sum(Cover))) %>% 
   mutate(Rel_abund_by_side = Abund / Total_abund)
+#write_csv(cover_avg_by_year, "data/clean/relative_abund_cover.csv")
 
 # MERGE DATASETS #==============================================================
 
