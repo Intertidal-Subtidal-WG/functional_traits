@@ -10,8 +10,7 @@ cover_data <- read_csv("data/fielddata/pc_clean.csv")
 
 # transects and quadrants
 transects <- read_csv("data/fielddata/transect_info.csv") %>% 
-  rename(Transect = INTERTIDAL_TRANSECT, Site = SITE, KEEN_transect = TRANSECT) %>% 
-  distinct()
+  select(Transect, Position)
 
 # cleaned traits data (not imputed)
 algae <- read_csv("data/clean/algae_clean.csv")
@@ -29,11 +28,12 @@ count <-  count_data %>%
   group_by(Year, Transect, Level, Replicate, Organism) %>% 
   summarise(Count = mean(Count)) %>% 
   ungroup() %>% 
-  select(-Replicate)
+  select(-Replicate) %>% 
+  left_join(., transects)
 
 # get average count per plot for each transect (by year)
 count_avg_by_transect <- count %>%
-  group_by(Year, Transect, Organism) %>%
+  group_by(Year, Transect, Organism, Position) %>%
   summarise(Abund = sum(Count)) %>% 
   left_join(., count %>% 
               group_by(Year, Transect) %>% 
@@ -42,13 +42,17 @@ count_avg_by_transect <- count %>%
 
 # get average count per plot/transect per year
 count_avg_by_year <- count %>% 
-  group_by(Year, Organism) %>% 
+  group_by(Year, Organism, Position) %>% 
   summarise(Abund = sum(Count)) %>% 
-  left_join(., count %>% group_by(Year) %>% 
+  left_join(., count %>% group_by(Year, Position) %>% 
               summarise(n_transect = n_distinct(Transect))) %>% 
-  mutate(Avg_abund_per_transect = Abund / n_transect)
+  mutate(Avg_abund_per_transect = Abund / n_transect) %>% 
+  # calculate relative abundance
+  left_join(., count %>% group_by(Year, Position) %>% 
+              summarize(Total_abund = sum(Count))) %>% 
+  mutate(Rel_abund_by_side = Abund / Total_abund)
   
-# Cover Date #
+# Cover Data #
 
 # average any replicates and remove rows where no data was collected
 cover <-  cover_data %>% 
@@ -57,11 +61,12 @@ cover <-  cover_data %>%
   group_by(Year, Transect, Level, Replicate, Organism) %>% 
   summarise(Cover = mean(Percent_cover)) %>% 
   ungroup() %>% 
-  select(-Replicate)
+  select(-Replicate) %>% 
+  left_join(., transects)
 
 # get average cover per plot for each transect (by year)
 cover_avg_by_transect <- cover %>%
-  group_by(Year, Transect, Organism) %>%
+  group_by(Year, Transect, Organism, Position) %>%
   summarise(Abund = sum(Cover)) %>% 
   left_join(., cover %>% 
               group_by(Year, Transect) %>% 
@@ -70,11 +75,15 @@ cover_avg_by_transect <- cover %>%
 
 # get average cover per plot/transect per year
 cover_avg_by_year <- cover %>% 
-  group_by(Year, Organism) %>% 
+  group_by(Year, Organism, Position) %>% 
   summarise(Abund = sum(Cover)) %>% 
-  left_join(., cover %>% group_by(Year) %>% 
+  left_join(., cover %>% group_by(Year, Position) %>% 
               summarise(n_transect = n_distinct(Transect))) %>% 
-  mutate(Avg_abund_per_transect = Abund / n_transect)
+  mutate(Avg_abund_per_transect = Abund / n_transect) %>% 
+  # calculate relative abundance
+  left_join(., cover %>% group_by(Year, Position) %>% 
+              summarize(Total_abund = sum(Cover))) %>% 
+  mutate(Rel_abund_by_side = Abund / Total_abund)
 
 # MERGE DATASETS #==============================================================
 
@@ -129,4 +138,5 @@ troph <- count_transect_all %>%
 
 ggplot(troph, aes(x = Year, y = Sum, color = trophic_level)) +
   geom_point() +
-  geom_line()
+  geom_line() +
+  scale_y_log10()
