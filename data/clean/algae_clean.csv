@@ -1,0 +1,39 @@
+species,group,common_name_division_bgr,turf_subcanopy_canopy_algae,Steneck_Dethier_morphology_algae,body_size_avg_bin,morphology1,benthic,epibiotic,intertidal,subtidal
+Agarum clathratum,Algae,Brown Algae,Canopy,leathery macrophyte,very large,Canopy,yes,no,no,yes
+Alaria esculenta,Algae,Brown Algae,Canopy,leathery macrophyte,very large,Canopy,no,yes,yes,yes
+Ascophyllum nodosum,Algae,Brown Algae,Canopy,leathery macrophyte,large,Canopy,no,yes,yes,yes
+Colpomenia peregrina,Algae,Brown Algae,Turf,corticated foliose,small-medium,Turf,yes,yes,yes,yes
+Desmarestia aculeata,Algae,Brown Algae,Subcanopy,corticated macrophyte,large,Subcanopy,yes,no,no,yes
+Desmarestia viridis,Algae,Brown Algae,Subcanopy,corticated macrophyte,large,Subcanopy,yes,no,no,yes
+Elachista fucicola,Algae,Brown Algae,Turf,filamentous,small-medium,Turf,no,yes,yes,no
+Halosiphon tomentosus,Algae,Brown Algae,Subcanopy,filamentous,very small,Subcanopy,yes,no,no,yes
+Laminaria digitata,Algae,Brown Algae,Canopy,leathery macrophyte,large,Canopy,yes,yes,no,yes
+Saccharina latissima,Algae,Brown Algae,Canopy,leathery macrophyte,very large,Canopy,yes,yes,yes,yes
+Saccorhiza dermatodea,Algae,Brown Algae,Canopy,leathery macrophyte,very large,Canopy,yes,no,yes,yes
+Codium fragile,Algae,Green Algae,Subcanopy,corticated foliose,medium-large,Subcanopy,yes,no,yes,yes
+Prasiola stipitata,Algae,Green Algae,Turf,foliose algae,small-medium,Turf,yes,no,yes,no
+Ulva lactuca,Algae,Green Algae,Turf,foliose algae,medium-large,Turf,yes,yes,yes,no
+Bonnemaisonia hamifera,Algae,Red Algae,Turf,filamentous,medium-large,Turf,yes,yes,yes,yes
+Ceramium,Algae,Red Algae,Canopy,filamentous,medium-large,Canopy,yes,yes,no,yes
+Chondrus crispus,Algae,Red Algae,Subcanopy,corticated macrophyte,medium,Subcanopy,yes,no,yes,yes
+Clathromorphum circumscriptum,Algae,Red Algae,Turf,crustose algae,unknown,Turf,yes,no,yes,yes
+Coccotylus truncatus,Algae,Red Algae,Turf,corticated foliose,medium,Turf,yes,no,no,yes
+Corallina officinalis,Algae,Red Algae,Turf,articulated coralline,medium,Turf,yes,yes,yes,no
+Cystoclonium purpureum,Algae,Red Algae,Subcanopy,corticated macrophyte,large,Subcanopy,yes,no,yes,yes
+Dasysiphonia japonica,Algae,Red Algae,Turf,filamentous,large,Turf,yes,no,no,yes
+Dumontia contorta,Algae,Red Algae,Subcanopy,corticated macrophyte,medium,Subcanopy,no,yes,no,yes
+Euthora cristata,Algae,Red Algae,Subcanopy,corticated macrophyte,small-medium,Subcanopy,yes,yes,yes,yes
+Hildenbrandia rubra,Algae,Red Algae,Turf,crustose algae,medium,Turf,yes,no,yes,yes
+Leptophytum acervatum,Algae,Red Algae,Turf,crustose algae,medium,Turf,yes,yes,no,yes
+Lithophyllum ,Algae,Red Algae,Turf,crustose algae,medium,Turf,yes,no,no,yes
+Lithothamnion,Algae,Red Algae,Turf,crustose algae,medium,Turf,yes,no,no,yes
+Mastocarpus stellatus,Algae,Red Algae,Subcanopy,corticated macrophyte,medium,Subcanopy,yes,no,yes,yes
+Palmaria palmata,Algae,Red Algae,Subcanopy,corticated foliose,medium-large,Subcanopy,yes,yes,yes,yes
+Phycodrys rubens,Algae,Red Algae,Subcanopy,foliose algae,medium,Subcanopy,yes,no,no,yes
+Phymatolithon lenormandii,Algae,Red Algae,Turf,crustose algae,medium,Turf,yes,yes,yes,no
+Polyides rotunda,Algae,Red Algae,Turf,corticated macrophyte,medium,Turf,yes,no,no,yes
+Polysiphonia,Algae,Red Algae,Turf,filamentous,medium-large,Turf,yes,yes,yes,yes
+Porphyra,Algae,Red Algae,Turf,foliose algae,large,Turf,yes,no,yes,yes
+Ptilota serrata,Algae,Red Algae,Subcanopy,corticated macrophyte,medium-large,Subcanopy,yes,no,yes,yes
+Spermothamnion repens,Algae,Red Algae,Turf,filamentous,small-medium,Turf,yes,yes,no,yes
+Titanoderma,Algae,Red Algae,Turf,crustose algae,small,Turf,NA,no,no,yes
