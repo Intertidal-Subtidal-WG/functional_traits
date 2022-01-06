@@ -1,0 +1,150 @@
+---
+title: "ks_cluster_visuals"
+author: "Kate Sheridan"
+date: "1/6/2022"
+output: html_document
+---
+
+## copypasta from jenny
+
+```{r setup, include=FALSE}
+
+#libraries 
+
+library(pacman)
+pacman::p_load(dplyr, plyr, readr, tbible, FD, ade4, cowplot, mice, reshape2, tidyr, ks, hypervolume, alphallhu, purrr, TTR, plotrix, agricolae, psych)
+
+library(factoextra)
+library(ggrepel)
+library(tibble)
+library(tidyverse)
+library(ggplot2)
+library(data.table)
+library(extrafont)
+library(visreg)
+library(lubridate)
+library(letsR)
+library(reshape)
+library(reshape2)
+library(funrar)#to calculate functional uniqueness
+
+library(Gifi)# to do PCA on categorical data
+library(TPD)# 
+library(FactoMineR)
+#library(ts)
+
+library(here)
+
+loadfonts()
+```
+
+
+
+```{r}
+
+traits<-read.csv(here('data', "20210730_ShoalsFunctionalTraits.csv"),stringsAsFactors=FALSE) # the last version of the data
+
+traits_algae_imputed<-read.csv(here('data','clean',"20210806_algae_imputed.csv"))
+trait_animal_imputed<-read.csv(here('data','clean',"20210806_animal_imputed.csv"))
+
+
+### where is this ???
+traits_modified_algae<-read.csv("traits_mod_algae.csv") #traits modified in algae converted to ordinal values as suggested in "gifi" package
+traits_modified_animals<-read.csv("traits_modified_animals.csv")
+
+
+
+
+#Matrices
+
+matrix_algae<-read.csv(here('data','clean',"20210806_algae_matrix.csv"))
+matrix_algae <- as.matrix(matrix_algae)
+matrix_animals<-read.csv(here('data','clean',"20210806_animal_matrix.csv"))
+matrix_animal <- as.matrix(matrix_animals)
+
+
+#Compared with the data from Gomez and from Cooke we have categorical and numerical data in out traits.
+#One solution is to use Gifi package: Multivariate Analysis with Optimal Scaling
+#Implements categorical principal component analysis ('PRINCALS'), multiple correspondence analysis ('HOMALS'), monotone regression analysis ('MORALS'). It replaces the 'homals' package.
+
+```
+
+
+```{r}
+# Functional space ------------------------------------------------------reducing the dimensionality--
+
+# If I leave the variables as nominal they do not work, 
+traits_algae_imputed_1<-traits_algae_imputed[,4:11] #restric the variables to traits that are informative (e.g species and class are removed)
+traits_algae_imputed_1<-as.data.frame(traits_algae_imputed_1)
+#recode(traits_algae_imputed1$morphology1)
+#princals(traits_algae_imputed_1,ordinal=FALSE)
+#View(traits_algae_imputed_1)
+```
+
+
+
+
+```{r}
+traits_algae_imputed1<-traits_algae_imputed[,4:14]
+
+traits_modified_animal_sel<-traits_modified_animals[,4:14] #select columns of interest
+
+mca1 = MCA(traits_algae_imputed, graph = FALSE)
+
+# table of eigenvalues
+mca1$eig
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###Example from the package to calculate PCA with categorical data
+ABC
+ABC6 <- ABC[,6:11]
+
+fitord <- princals(ABC6) 
+
+View (ABC6)
+
+## ordinal PCA
+fitord <- princals(ABC6,ndim =6)  ## ordinal PCA
+fitord
+summary(fitord)
+plot(fitord, plot.type = "transplot")
+plot(fitord, "loadplot", main = "Loadings Plot ABC Data")  ## aspect ratio = 1
+plot(fitord, "biplot", labels.scores = TRUE, main = "Biplot ABC Data")
+plot(fitord, "screeplot")
+
+
+
+scoresfitord <- as.data.frame(fitord$scoremat) %>% 
+  tibble::rownames_to_column("species")
+
+## linear restrictions (mimics standard PCA)
+abc_knots <- knotsGifi(ABC6, "E")     ## 0 interior knotsx
+fitlin <- princals(ABC6, knots = abc_knots, degrees = 1)
+fitlin
+summary(fitlin)
+fitlin$evals
+plot(fitlin, plot.type = "transplot")
+## compare with standard PCA
+ABCnum <- makeNumeric(ABC6)
+fitpca <- prcomp(ABCnum, scale = TRUE)
+fitpca$sdev^2
+
+summary(fitpca)
+```
+
