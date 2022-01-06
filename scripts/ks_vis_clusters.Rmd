@@ -4,6 +4,18 @@ author: "Kate Sheridan"
 date: "1/6/2022"
 output: html_document
 ---
+notes on reduction ; this should be done at an earlier stage
+Algae (Laura’s thoughts):
+Pared down list of traits for algae (7): species, common name division (brown, green, red), layer (turf, subcanopy, canopy), Steneck_Dethier morphology, body size, intertidal, subtidal
+More pared down (5):  
+species, common name division (brown, green, red), layer (turf, subcanopy, canopy), intertidal, subtidal
+
+Animal (Laura’s thoughts):
+More pared down for animals (6): 
+species, common name division (fish, etc.), trophic level, adult motility, intertidal, subtidal
+
+
+
 
 ## copypasta from jenny
 
@@ -18,6 +30,7 @@ library(factoextra)
 library(ggrepel)
 library(tibble)
 library(tidyverse)
+library(dplyr)
 library(ggplot2)
 library(data.table)
 library(extrafont)
@@ -42,72 +55,80 @@ loadfonts()
 
 ```{r}
 
-traits<-read.csv(here('data', "20210730_ShoalsFunctionalTraits.csv"),stringsAsFactors=FALSE) # the last version of the data
-
-traits_algae_imputed<-read.csv(here('data','clean',"20210806_algae_imputed.csv"))
-trait_animal_imputed<-read.csv(here('data','clean',"20210806_animal_imputed.csv"))
+#traits<-read.csv(here('data', "20210730_ShoalsFunctionalTraits.csv"),stringsAsFactors=FALSE) # the last version of the data
 
 
-### where is this ???
-traits_modified_algae<-read.csv("traits_mod_algae.csv") #traits modified in algae converted to ordinal values as suggested in "gifi" package
-traits_modified_animals<-read.csv("traits_modified_animals.csv")
+traits_algae_imputed<-read_csv(here('data','clean',"20210806_algae_imputed.csv"))
+traits_algae_imputed <- traits_algae_imputed %>%
+    dplyr::select(!('...1'))
 
 
+traits_animal_imputed<-read_csv(here('data','clean',"20210806_animal_imputed.csv"))
+traits_animal_imputed <- traits_animal_imputed %>%
+    dplyr::select(!('...1'))
 
 
 #Matrices
 
 matrix_algae<-read.csv(here('data','clean',"20210806_algae_matrix.csv"))
 matrix_algae <- as.matrix(matrix_algae)
-matrix_animals<-read.csv(here('data','clean',"20210806_animal_matrix.csv"))
-matrix_animal <- as.matrix(matrix_animals)
+matrix_animal<-read.csv(here('data','clean',"20210806_animal_matrix.csv"))
+matrix_animal <- as.matrix(matrix_animal)
 
 
 #Compared with the data from Gomez and from Cooke we have categorical and numerical data in out traits.
 #One solution is to use Gifi package: Multivariate Analysis with Optimal Scaling
 #Implements categorical principal component analysis ('PRINCALS'), multiple correspondence analysis ('HOMALS'), monotone regression analysis ('MORALS'). It replaces the 'homals' package.
 
+
+
+### where is this ???
+traits_modified_algae <- read_csv("traits_mod_algae.csv") #traits modified in algae converted to ordinal values as suggested in "gifi" package
+traits_modified_animals<-read.csv("traits_modified_animals.csv")
+
 ```
 
 
-```{r}
-# Functional space ------------------------------------------------------reducing the dimensionality--
+# MCA
 
-# If I leave the variables as nominal they do not work, 
-traits_algae_imputed_1<-traits_algae_imputed[,4:11] #restric the variables to traits that are informative (e.g species and class are removed)
-traits_algae_imputed_1<-as.data.frame(traits_algae_imputed_1)
-#recode(traits_algae_imputed1$morphology1)
-#princals(traits_algae_imputed_1,ordinal=FALSE)
-#View(traits_algae_imputed_1)
+MCA with FactoMineR specifically is for categorical variables. 
+
+
+## algae
+
+This is just all of them, not specifically at a time point.
+
+```{r}
+algae_reduced <- traits_algae_imputed %>%
+  dplyr::select(species, common_name_division_bgr, turf_subcanopy_canopy_algae,
+         intertidal, subtidal) %>%
+  column_to_rownames('species')
+
+
+algae_mca <- MCA(algae_reduced)
+
+
+#misc from vignette to test
+
+plot.MCA(algae_mca)
+
+
+dimdesc(algae_mca)
+
+plotellipses(algae_mca)
+
 ```
 
-:)
-
+## animals
 
 ```{r}
-traits_algae_imputed1<-traits_algae_imputed[,4:14]
-
-traits_modified_animal_sel<-traits_modified_animals[,4:14] #select columns of interest
-
-mca1 = MCA(traits_algae_imputed, graph = FALSE)
-
-# table of eigenvalues
-mca1$eig
+#traits_modified_animal_sel<-traits_modified_animals[,4:14] #select columns of interest
+```
 
 
+## package example
 
-
-
-
-
-
-
-
-
-
-
-
-
+```{r}
 
 
 
@@ -147,4 +168,5 @@ fitpca$sdev^2
 
 summary(fitpca)
 ```
+
 
