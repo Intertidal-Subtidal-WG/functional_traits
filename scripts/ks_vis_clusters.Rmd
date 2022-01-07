@@ -19,8 +19,8 @@ species, common name division (fish, etc.), trophic level, adult motility, inter
 
 ## copypasta from jenny
 
-```{r setup, include=FALSE}
 
+```{r}
 #libraries 
 
 library(pacman)
@@ -52,20 +52,27 @@ loadfonts()
 ```
 
 
+My narrowed down packages list?
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(FactoMineR)
+library(here)
+
+library(ggrepel)
+
+```
+
+
 
 ```{r}
+traits_algae_imputed<-read_csv(here::here('data','clean',"20210806_algae_imputed.csv"), 
+                               col_select = !1)
 
-#traits<-read.csv(here('data', "20210730_ShoalsFunctionalTraits.csv"),stringsAsFactors=FALSE) # the last version of the data
+traits_animal_imputed<-read_csv(here::here('data','clean',"20210806_animal_imputed.csv"), 
+                                col_select = !1)
 
-
-traits_algae_imputed<-read_csv(here('data','clean',"20210806_algae_imputed.csv"))
-traits_algae_imputed <- traits_algae_imputed %>%
-    dplyr::select(!('...1'))
-
-
-traits_animal_imputed<-read_csv(here('data','clean',"20210806_animal_imputed.csv"))
-traits_animal_imputed <- traits_animal_imputed %>%
-    dplyr::select(!('...1'))
 
 
 #Matrices
@@ -87,6 +94,33 @@ traits_modified_algae <- read_csv("traits_mod_algae.csv") #traits modified in al
 traits_modified_animals<-read.csv("traits_modified_animals.csv")
 
 ```
+## Time series
+
+```{r}
+# load in 
+## single years
+sp_1982 <- read_csv(here::here('data', 'fielddata', 'sp_1982.csv'), 
+                    col_select = !1)
+sp_1990 <- read_csv(here::here('data', 'fielddata', 'sp_1990.csv'), 
+                    col_select = !1)
+sp_1998 <- read_csv(here::here('data', 'fielddata', 'sp_1998.csv'), 
+                    col_select = !1)
+sp_2019 <- read_csv(here::here('data', 'fielddata', 'sp_2019.csv'), 
+                    col_select = !1)
+
+
+## ranges
+sp_1982r <- read_csv(here::here('data', 'fielddata', 'sp_1982-1995.csv'), 
+                    col_select = !1)
+sp_1996r <- read_csv(here::here('data', 'fielddata', 'sp_1996-2006.csv'), 
+                    col_select = !1)
+sp_2011r <- read_csv(here::here('data', 'fielddata', 'sp_2011-end.csv'), 
+                    col_select = !1)
+
+
+
+
+```
 
 
 # MCA
@@ -99,23 +133,80 @@ MCA with FactoMineR specifically is for categorical variables.
 This is just all of them, not specifically at a time point.
 
 ```{r}
+#misc from vignette to test
+#algae_mca <- MCA(algae_reduced)
+
+#dimdesc(algae_mca)
+
+#plot.MCA(algae_mca)
+#plotellipses(algae_mca)
+
+# fewer traits
 algae_reduced <- traits_algae_imputed %>%
   dplyr::select(species, common_name_division_bgr, turf_subcanopy_canopy_algae,
          intertidal, subtidal) %>%
   column_to_rownames('species')
 
+## by year
+algae_reduced1982 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1982$value))
+algae_reduced1990 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1990$value))
+algae_reduced1998 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1998$value))
+algae_reduced2019 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_2019$value))
 
-algae_mca <- MCA(algae_reduced)
+# run MCAs
+algae_mca1982 <- MCA(algae_reduced1982)
+algae_mca1990 <- MCA(algae_reduced1990)
+algae_mca1998 <- MCA(algae_reduced1998)
+algae_mca2019 <- MCA(algae_reduced2019)
 
 
-#misc from vignette to test
+# plots
+plot.MCA(algae_mca1982)
+plotellipses(algae_mca1982)
 
-plot.MCA(algae_mca)
+plot.MCA(algae_mca1990)
+plotellipses(algae_mca1990)
+
+plot.MCA(algae_mca1998)
+plotellipses(algae_mca1998)
+
+plot.MCA(algae_mca2019)
+plotellipses(algae_mca2019)
 
 
-dimdesc(algae_mca)
+## date ranges
+algae_reduced1982r <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1982r$value))
+algae_reduced1996r <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1996r$value))
+algae_reduced2011r <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_2011r$value))
 
-plotellipses(algae_mca)
+
+
+# MCAs
+algae_mca1982r <- MCA(algae_reduced1982r)
+algae_mca1996r <- MCA(algae_reduced1996r)
+algae_mca2011r <- MCA(algae_reduced2011r)
+
+
+# plots
+plot.MCA(algae_mca1982r)
+plotellipses(algae_mca1982r)
+
+plot.MCA(algae_mca1996r)
+plotellipses(algae_mca1996r)
+
+plot.MCA(algae_mca2011r)
+plotellipses(algae_mca2011r)
+
+
+
+
 
 ```
 
