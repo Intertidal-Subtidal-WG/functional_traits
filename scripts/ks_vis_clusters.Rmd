@@ -142,9 +142,9 @@ This is just all of them, not specifically at a time point.
 #plotellipses(algae_mca)
 
 # fewer traits
+# lauras list from research: species, division, turf/canopy, intertidal/subtidal
 algae_reduced <- traits_algae_imputed %>%
-  dplyr::select(species, common_name_division_bgr, turf_subcanopy_canopy_algae,
-         intertidal, subtidal) %>%
+  dplyr::select(species, common_name_division_bgr, turf_subcanopy_canopy_algae) %>%
   column_to_rownames('species')
 
 ## by year
@@ -214,6 +214,72 @@ plotellipses(algae_mca2011r)
 
 ```{r}
 #traits_modified_animal_sel<-traits_modified_animals[,4:14] #select columns of interest
+
+
+# fewer traits
+# list from laura's research: species, division, trophic level,
+## adult motility, intertidal/subtidal
+animal_reduced <- traits_animal_imputed %>%
+  dplyr::select(species, common_name_division_bgr, 
+                trophic_level, motility_adult) %>%
+  column_to_rownames('species')
+
+## by year
+animal_reduced1982 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1982$value))
+animal_reduced1990 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1990$value))
+animal_reduced1998 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1998$value))
+animal_reduced2019 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_2019$value))
+
+# run MCAs
+animal_mca1982 <- MCA(animal_reduced1982)
+animal_mca1990 <- MCA(animal_reduced1990)
+animal_mca1998 <- MCA(animal_reduced1998)
+animal_mca2019 <- MCA(animal_reduced2019)
+
+
+# plots
+plot.MCA(animal_mca1982)
+plotellipses(animal_mca1982)
+
+plot.MCA(animal_mca1990)
+plotellipses(animal_mca1990)
+
+plot.MCA(animal_mca1998)
+plotellipses(animal_mca1998)
+
+plot.MCA(animal_mca2019)
+plotellipses(animal_mca2019)
+
+
+## date ranges
+animal_reduced1982r <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1982r$value))
+animal_reduced1996r <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1996r$value))
+animal_reduced2011r <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_2011r$value))
+
+
+
+# MCAs
+animal_mca1982r <- MCA(animal_reduced1982r)
+animal_mca1996r <- MCA(animal_reduced1996r)
+animal_mca2011r <- MCA(animal_reduced2011r)
+
+
+# plots
+plot.MCA(animal_mca1982r)
+plotellipses(animal_mca1982r)
+
+plot.MCA(animal_mca1996r)
+plotellipses(animal_mca1996r)
+
+plot.MCA(animal_mca2011r)
+plotellipses(animal_mca2011r)
 ```
 
 
