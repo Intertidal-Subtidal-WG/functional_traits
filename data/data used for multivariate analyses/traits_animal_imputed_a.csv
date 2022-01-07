@@ -1,0 +1,71 @@
+,species,group,common_name_division_bgr,body_size_avg_bin,morphology1,dietary_pref_c,trophic_level,motility_juv,motility_adult,benthic,epibiotic,invasive,intertidal,subtidal,id_species
+42,Urticina felina,Invertebrate,Anemone,medium,soft,predator,secondary consumer,motile,sessile,yes,yes,no,no,yes,1
+43,Semibalanus balanoides,Invertebrate,Barnacle,small,calcareous,filter-suspension,primary consumer,motile,sessile,no,yes,no,yes,no,2
+44,Anomia simplex,Invertebrate,Bivalve,small,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes,no,3
+45,Hiatella arctica,Invertebrate,Bivalve,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes,no,4
+46,Modiolus modiolus,Invertebrate,Bivalve,medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes,yes,5
+47,Mytilus edulis,Invertebrate,Bivalve,medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes,yes,6
+48,Ostrea edulis,Invertebrate,Bivalve,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,no,yes,yes,yes,yes,7
+49,Placopecten magellanicus,Invertebrate,Bivalve,medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,8
+50,Bugulina spicata,Invertebrate,Bryozoan,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no,yes,9
+51,Crisia eburnea,Invertebrate,Bryozoan,small,calcareous,filter-suspension,primary producer,motile,sessile,yes,yes,no,no,yes,10
+52,Crisularia turrita,Invertebrate,Bryozoan,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,11
+53,Dendrobeania murrayana,Invertebrate,Bryozoan,medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,12
+54,Membranipora membranacea,Invertebrate,Bryozoan,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes,yes,13
+55,Patinella verrucaria,Invertebrate,Bryozoan,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,14
+56,Schizoporella unicornis,Invertebrate,Bryozoan,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes,yes,15
+57,Tricellaria inopinata,Invertebrate,Bryozoan,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no,yes,16
+58,Boreochiton ruber,Invertebrate,Chiton,small,calcareous,herbivore,primary consumer,motile,motile,yes,yes,no,no,yes,17
+59,Stenosemus albus,Invertebrate,Chiton,small,calcareous,herbivore,primary consumer,motile,motile,yes,no,no,no,yes,18
+60,Metridium senile,Invertebrate,Cnidarian,medium-large,soft,filter-suspension,secondary consumer,motile,sessile,yes,yes,no,yes,no,19
+61,Pachycerianthus borealis,Invertebrate,Cnidarian,medium-large,soft,filter-suspension,secondary consumer,motile,sessile,yes,no,no,no,yes,20
+63,Amphipoda,Invertebrate,Crustacean,small,calcareous,filter-suspension,secondary consumer,motile,motile,yes,yes,no,yes,no,21
+64,Cancer borealis,Invertebrate,Crustacean,small-medium,calcareous,omnivore,secondary consumer,motile,motile,yes,no,no,yes,yes,22
+65,Cancer irroratus,Invertebrate,Crustacean,small-medium,calcareous,omnivore,secondary consumer,motile,motile,yes,no,no,yes,yes,23
+66,Carcinus maenus,Invertebrate,Crustacean,small-medium,calcareous,omnivore,secondary consumer,motile,motile,yes,yes,yes,yes,no,24
+67,Homarus americanus,Invertebrate,Crustacean,medium-large,calcareous,predator,secondary consumer,motile,motile,yes,no,no,no,yes,25
+68,Isopoda,Invertebrate,Crustacean,small,calcareous,herbivore,primary consumer,motile,motile,yes,no,no,yes,no,26
+69,Cucumaria frondosa,Invertebrate,Echinoderm,medium-large,calcareous,deposit feeder,decomposer,motile,motile,yes,no,no,no,yes,27
+70,Echinarachnius parma,Invertebrate,Echinoderm,small-medium,calcareous,deposit feeder,decomposer,motile,motile,yes,no,no,no,yes,28
+71,Ophiopholis aculeata,Invertebrate,Echinoderm,medium,calcareous,scavenger,secondary consumer,motile,motile,yes,no,no,no,yes,29
+72,Strongylocentrotus droebachiensis,Invertebrate,Echinoderm,small-medium,calcareous,herbivore,primary consumer,motile,motile,yes,yes,no,yes,yes,30
+73,Buccinum undatum,Invertebrate,Gastropod,small-medium,calcareous,predator,secondary consumer,motile,motile,yes,yes,no,no,yes,31
+74,Crepidula fornicata,Invertebrate,Gastropod,small-medium,calcareous,filter-suspension,primary consumer,sessile,sessile,yes,yes,no,yes,yes,32
+75,Lacuna vincta,Invertebrate,Gastropod,small,calcareous,filter-suspension,primary consumer,motile,motile,no,yes,no,yes,no,33
+76,Littorina littorea,Invertebrate,Gastropod,small-medium,calcareous,herbivore,primary consumer,motile,motile,no,yes,yes,yes,no,34
+77,Littorina obtusata,Invertebrate,Gastropod,small,calcareous,herbivore,primary consumer,motile,motile,no,yes,no,yes,no,35
+78,Littorina saxatilis,Invertebrate,Gastropod,small-medium,calcareous,herbivore,primary consumer,motile,motile,yes,no,no,yes,no,36
+79,Nucella lapillus,Invertebrate,Gastropod,small-medium,calcareous,predator,secondary consumer,motile,motile,no,yes,no,yes,no,37
+80,Tectura testudinalis,Invertebrate,Gastropod,small,calcareous,herbivore,primary consumer,motile,motile,yes,no,no,yes,no,38
+81,Testudinalia testudinalis,Invertebrate,Gastropod,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,39
+82,Thylacodes,Invertebrate,Gastropod,small-medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,40
+83,Obelia,Invertebrate,Hydrozoan,medium-large,soft,filter-suspension,primary consumer,sessile,both,yes,yes,no,no,yes,41
+84,Spirorbis,Invertebrate,Polychaete,very small,calcareous,filter-suspension,primary consumer,motile,sessile,no,yes,no,yes,no,42
+85,Asterias forbesi,Invertebrate,Sea Stars,small-medium,calcareous,predator,secondary consumer,motile,motile,yes,no,no,yes,yes,43
+86,Asterias rubens,Invertebrate,Sea Stars,medium-large,calcareous,predator,secondary consumer,motile,motile,yes,no,no,yes,yes,44
+87,Henricia sanguinolenta,Invertebrate,Sea Stars,small-medium,calcareous,filter-suspension,primary consumer,motile,motile,yes,no,no,yes,yes,45
+88,Halichondria panicea,Invertebrate,Sponge,medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,46
+89,Halisarca dujardinii,Invertebrate,Sponge,medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,47
+90,Hymedesmia,Invertebrate,Sponge,medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,48
+91,Leucosolenia,Invertebrate,Sponge,medium,calcareous,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,49
+92,Aplidium pallidum,Invertebrate,Tunicate,small-medium,soft,filter-suspension,primary consumer,errant,errant,no,no,no,no,yes,50
+93,Boltenia echinata,Invertebrate,Tunicate,small,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,51
+94,Boltenia ovifera,Invertebrate,Tunicate,small-medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,52
+95,Botrylloides violaceus,Invertebrate,Tunicate,medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no,yes,53
+96,Botryllus schlosseri,Invertebrate,Tunicate,medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes,yes,54
+97,Ciona intestinalis,Invertebrate,Tunicate,small-medium,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no,yes,55
+98,Ciona savignyi,Invertebrate,Tunicate,medium,soft,filter-suspension,primary consumer,sessile,sessile,no,yes,yes,no,yes,56
+99,Dendrodoa carnea,Invertebrate,Tunicate,small,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,57
+100,Didemnum albidum,Invertebrate,Tunicate,small,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,no,no,yes,58
+101,Didemnum vexillum,Invertebrate,Tunicate,small,soft,filter-suspension,primary consumer,sessile,sessile,yes,yes,yes,yes,yes,59
+102,Diplosoma listerianum,Invertebrate,Tunicate,very small,soft,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no,yes,60
+103,Cyclopterus lumpus,Vertebrate,Fish,large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,61
+104,Morone saxatilis,Vertebrate,Fish,very large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,62
+105,Myoxocephalus octodecemspinosus,Vertebrate,Fish,medium-large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,63
+106,Myoxocephalus scorpius,Vertebrate,Fish,large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,64
+107,Pholis gunnellus,Vertebrate,Fish,medium,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,65
+108,Pollachius virens,Vertebrate,Fish,very large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,66
+109,Pseudopleuronectes americanus,Vertebrate,Fish,large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,67
+110,Tautoga onitis,Vertebrate,Fish,large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,68
+111,Tautogolabrus adspersus,Vertebrate,Fish,medium-large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,69
+112,Urophycis regia,Vertebrate,Fish,medium-large,soft,predator,secondary consumer,errant,motile,yes,no,no,no,yes,70
