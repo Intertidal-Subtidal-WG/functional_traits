@@ -1,15 +1,59 @@
 name,value
-1,Littorina saxatilis
-2,Littorina littorea
-3,Littorina obtusata
-4,Nucella lapillus
-5,Carcinus maenus
-6,Anurida maritima
-7,Mytilus edulis
-8,Semibalanus balanoides
-9,Modiolus modiolus
-10,Isopods
-11,Amphipoda
-12,Hiatella arctica
-13,Halacarus
-14,Hemigrapsus sanguineus
+1,Bare rock
+2,Black zone
+3,Fucus vesiculosus
+4,Chondrus crispus
+5,Coralline (crust)
+6,Fucus
+7,Hildenbrandia rubra
+8,Ascophyllum nodosum
+9,Semibalanus balanoides
+10,Dynamena pumila
+11,Modiolus modiolus
+12,Phymatolithon lenormandii
+13,Vertebrata lanosa
+14,Diadumene lineata
+15,Elachista fucicola
+16,Fucus distichus
+17,Mastocarpus stellatus
+18,Shell hash
+19,Cryptosula pallasiana
+20,Electra pilosa
+21,Fucus spiralis
+22,Verrucaria
+23,Bonnemaisonia hamifera (Trailiella phase)
+24,Mastocarpus stellatus (crust)
+25,Ceramium virgatum (cprimary)
+26,Chaetomorpha
+27,Ulva lactuca
+28,Ceramium virgatum
+29,Corallina officinalis
+30,Leathesia marina
+31,Rhizoclonium tortuosum
+32,Tricellaria inopinata
+33,Polysiphonia
+34,Prasiola stipitata
+35,Metridium senile
+36,Didemnum vexillum
+37,Palmaria palmata
+38,Plumaria plumosa
+39,Ectocarpus
+40,Mytilus edulis
+41,Tricellaria
+42,Cladostephus spongiosus
+43,Colpomenia peregrina
+44,Botrylloides violaceus
+45,Hiatella arctica
+46,Ralfsia
+47,Chordaria flagelliformis
+48,Spongomorpha aeruginosa
+49,Littorina saxatilis
+50,Littorina littorea
+51,Littorina obtusata
+52,Nucella lapillus
+53,Carcinus maenus
+54,Anurida maritima
+55,Isopods
+56,Amphipoda
+57,Halacarus
+58,Hemigrapsus sanguineus

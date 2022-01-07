@@ -6,7 +6,9 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(tidyverse)
 library(dplyr)
+library(stringr)
 library(here)
 ```
 
@@ -16,9 +18,9 @@ ct <- read.csv(here('data', 'fielddata', 'ct_clean.csv'))
 
 pc <- read.csv(here('data', 'fielddata', 'pc_clean.csv'))
 
-keen <- read.csv(here('data', 'fielddata', 'keen_all_methods_site_merged.csv'))
+#keen <- read.csv(here('data', 'fielddata', 'keen_all_methods_site_merged.csv'))
 
-transect <- read.csv(here('data', 'fielddata', 'transect_info_decimals.csv'))
+#transect <- read.csv(here('data', 'fielddata', 'transect_info_decimals.csv'))
 
 ```
 
@@ -29,22 +31,34 @@ First extract just species, year, and transect (for east west)
 # count and percent cover data
 ct_count <- ct %>%
   subset(Count > 0) %>%
-  select(Year, Transect, Organism)
+  dplyr::select(Year, Transect, Organism)
 
 
 pc_count <- pc %>%
   subset(Percent_cover > 0) %>%
-  select(Year, Transect, Organism)
+  dplyr::select(Year, Transect, Organism)
 
 
 # join the two sets for species x year x transect
 pc_ct <- (full_join(pc_count, ct_count))
 pc_ct <- unique(pc_ct)
 
+
+
+# update pc_ct to remove unnecessary characters from names
+pc_ct <- pc_ct %>%
+  mutate(Organism = str_replace_all(Organism, c(" \\(canopy\\)"= "",
+                                             " \\(primary\\)" = "")))
+
+
+
+
+
+
 ```
 
 single years for intersting times
-may want to do a range in the fugure. some have very few species
+may want to do a range in the future. some have very few species
 
 ```{r single-year}
 
@@ -93,13 +107,13 @@ multiple years
 
 ```{r}
 sp_1982r <- pc_ct %>%
-  subset(Year < 1990 & Year > 1982)
+  subset(Year < 1990 & Year >= 1982)
 
 sp_1996r <- pc_ct %>%
-  subset(Year > 1996 & Year < 2007)
+  subset(Year >= 1996 & Year < 2007)
 
 sp_2011r <- pc_ct %>%
-  subset(Year < 2011)
+  subset(Year <= 2011)
 
 ```
 
@@ -117,7 +131,7 @@ sp_2011r <- enframe(sp_2011r)
 
 
 ```{r}
-write_csv(sp_1982r, here('data', 'fielddata', 'sp_1982r.csv'))
-write_csv(sp_1996r, here('data', 'fielddata', 'sp_1996r.csv'))
-write_csv(sp_2011r, here('data', 'fielddata', 'sp_2011r.csv'))
+write_csv(sp_1982r, here('data', 'fielddata', 'sp_1982-1995.csv'))
+write_csv(sp_1996r, here('data', 'fielddata', 'sp_1996-2006.csv'))
+write_csv(sp_2011r, here('data', 'fielddata', 'sp_2011-end.csv'))
 ```
