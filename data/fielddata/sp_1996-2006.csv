@@ -1,102 +1,94 @@
 name,value
-1,Bare rock
-2,Cyanobacteria
-3,Verrucaria
-4,Arthopyrenia
-5,Prasiola stipitata
-6,Hildenbrandia rubra
-7,Fucus
-8,Fucus spiralis
-9,Ascophyllum nodosum
-10,Coralline (crust)
-11,Semibalanus balanoides
-12,Shell hash
-13,Chordaria flagelliformis
-14,Fucus vesiculosus
-15,Chondrus crispus
-16,Mastocarpus stellatus
-17,Ralfsia
-18,Codium fragile
-19,Black zone
-20,Chaetomorpha
-21,Cladophora
-22,Fucus distichus
-23,Mytilus edulis
-24,Metridium senile
-25,Dynamena pumila
-26,Modiolus modiolus
-27,Ulva lactuca
-28,Polysiphonia
-29,Elachista fucicola
-30,Leathesia marina
-31,Mastocarpus stellatus (crust)
-32,Rhizoclonium tortuosum
-33,Porphyra
-34,Ceramium virgatum
-35,Alaria esculenta
-36,Ulva intestinalis
-37,Corallina officinalis
-38,Cryptosula pallasiana
-39,Schizoporella unicornis
-40,Dumontia concortum
-41,Scytosiphon lomentaria
-42,Bonnemaisonia hamifera (Trailiella phase)
-43,Diadumene lineata
-44,Anomia simplex
-45,Halichondria
-46,Phymatolithon lenormandii
-47,Clathromorphum circumscriptum
-48,Botrylloides violaceus
-49,Ahnfeltia plicata
-50,Hiatella arctica
-51,Membranipora membranacea
-52,Electra pilosa
-53,Botryllus schlosseri
-54,Diplosoma
-55,Semibalanus balanoides (dead)
-56,Monostroma
-57,Acrosiphonia
-58,Plumaria plumosa
-59,Antithamnion
-60,Saccharina latissima
-61,Spongomorpha aeruginosa
-62,Pylaiella littoralis
-63,Diatom
-64,Brown ground
-65,Cystoclonium purpureum
-66,Tectura testudinalis
-67,Amphipoda
-68,Annelid
-69,Anurida maritima
-70,Asterias forbesi
-71,Asterias rubens
-72,Cancer borealis
-73,Cancer irroratus
-74,Carcinus maenus
-75,Crepidula fornicata
-76,platyhelminthes
-77,Halacarus
-78,Hemigrapsus sanguineus
-79,Henricia sanguinolenta
-80,Idotea baltica
-81,Isopods
-82,Lacuna vincta
-83,Lepidonotus
-84,Littorina littorea
-85,Littorina obtusata
-86,Littorina saxatilis
-87,Lycastopsis
-88,Nematodes
-89,Nemertean
-90,Nucella lapillus
-91,Nudibranchia
-92,Ophiopholis
-93,Pagurus acadianus
-94,Polychaeta
-95,Spirorbis
-96,Strongylocentrotus droebachiensis
-97,Tonicella rubra
-98,Turbellarid
-99,Nucella lapillus (egg case)
-100,Littorina obtusata (egg case)
-101,Molgula
+1,Cyanobacteria
+2,Verrucaria 
+3,Arthopyrenia
+4,Prasiola stipitata
+5,Hildenbrandia rubra
+6,Fucus 
+7,Fucus vesiculosus var. spiralis
+8,Ascophyllum nodosum
+9,Corallina 
+10,Semibalanus balanoides
+11,Chordaria flagelliformis
+12,Fucus vesiculosus
+13,Chondrus crispus
+14,Mastocarpus stellatus
+15,Ralfsia 
+16,Codium fragile
+17,Chaetomorpha
+18,Cladophora
+19,Fucus distichus
+20,Mytilus edulis
+21,Metridium dianthus
+22,Dynamena pumila
+23,Modiolus modiolus
+24,Ulva lactuca
+25,Polysiphonia
+26,Elachista fucicola
+27,Leathesia marina
+28,Chaetomorpha ligustica
+29,Porphyra
+30,Ceramium virgatum
+31,Alaria esculenta
+32,Ulva intestinalis
+33,Corallina officinalis
+34,Cryptosula pallasiana
+35,Schizoporella unicornis
+36,Dumontia contorta
+37,Scytosiphon lomentaria 
+38,Bonnemaisonia hamifera
+39,Diadumene lineata
+40,Anomia simplex
+41,Halichondria
+42,Phymatolithon lenormandii
+43,Clathromorphum circumscriptum
+44,Botrylloides violaceus
+45,Ahnfeltia plicata
+46,Hiatella arctica
+47,Membranipora membranacea
+48,Electra pilosa
+49,Botryllus schlosseri
+50,Diplosoma 
+51,Monostroma
+52,Acrosiphonia
+53,Plumaria plumosa
+54,Antithamnion
+55,Saccharina latissima
+56,Spongomorpha aeruginosa
+57,Pylaiella littoralis
+58,Diatoma
+59,Cystoclonium purpureum
+60,Testudinalia testudinalis
+61,Amphipoda
+62,Annelida
+63,Anurida maritima
+64,Asterias forbesi
+65,Asterias rubens
+66,Cancer borealis
+67,Cancer irroratus
+68,Carcinus maenus
+69,Crepidula fornicata
+70,Platyhelminthes
+71,Halacarus
+72,Hemigrapsus sanguineus
+73,Henricia sanguinolenta
+74,Idotea balthica
+75,Isopoda
+76,Lacuna vincta
+77,Lepidonotus
+78,Littorina littorea
+79,Littorina obtusata
+80,Littorina saxatilis
+81,Namanereis
+82,Nematodes
+83,Nemertea
+84,Nucella lapillus
+85,Nudibranchia
+86,Ophiopholis
+87,Pagurus acadianus
+88,Polychaeta (class in Lophotrochozoa)
+89,Spirorbis
+90,Strongylocentrotus droebachiensis
+91,Boreochiton ruber
+92,Turbellaria
+93,Molgula

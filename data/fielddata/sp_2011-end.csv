@@ -1,152 +1,139 @@
 name,value
 1,Cryptosula pallasiana
 2,Phymatolithon lenormandii
-3,Black zone
-4,Prasiola stipitata
-5,Ascophyllum nodosum
-6,Fucus
-7,Hildenbrandia rubra
-8,Semibalanus balanoides
-9,Ectocarpus
-10,Little round green things
-11,Verrucaria
-12,Fucus vesiculosus
-13,Mastocarpus stellatus
-14,Chondrus crispus
-15,Saccharina latissima
-16,Ulva lactuca
-17,Coralline (crust)
-18,Corallina officinalis
-19,Ralfsia
-20,Fucus distichus
-21,Mytilus edulis
-22,Modiolus modiolus
-23,Cyanobacteria
-24,Ceramium virgatum
-25,Clathromorphum circumscriptum
-26,Fucus spiralis
-27,Ulva intestinalis
-28,Plumaria plumosa
-29,Palmaria palmata
-30,Mastocarpus stellatus (crust)
-31,Sphacelaria cirrosa
-32,Giffordia granulosa
-33,Alaria esculenta
-34,Polysiphonia
-35,Porphyra
-36,Ahnfeltia plicata
-37,Chaetomorpha
-38,Cladophora
-39,Rhizoclonium tortuosum
-40,Brown lichen
-41,Erythrotrichia carnea
-42,Pylaiella littoralis
-43,Leathesia marina
-44,Spongomorpha aeruginosa
-45,Lithophyllum
-46,Audouinella
-47,Bare rock
-48,Halichondria
-49,Metridium senile
-50,Anomia simplex
-51,Arthopyrenia
-52,Elachista fucicola
-53,Scytosiphon lomentaria
-54,Diatom
-55,Shell hash
-56,Monostroma
-57,Ptilota serrata
-58,Cystoclonium purpureum
-59,Chordaria flagelliformis
-60,Bonnemaisonia hamifera (Trailiella phase)
-61,Codium fragile
-62,Sphacelaria
-63,Electra pilosa
-64,Euthora cristata
-65,Vertebrata lanosa
-66,Hiatella arctica
-67,Saccorhiza dermatodea
-68,Semibalanus balanoides (dead)
-69,Antithamnion
-70,Chorda filum
-71,Bangia atropurpurea
-72,Devaleraea ramentacea
-73,Petalonia fascia
-74,Nemalion helminthoides
-75,Dynamena pumila
-76,Schizoporella unicornis
-77,Dumontia concortum
-78,Diadumene lineata
-79,Botrylloides violaceus
-80,Membranipora membranacea
-81,Botryllus schlosseri
-82,Diplosoma
-83,Acrosiphonia
-84,Brown ground
-85,Feather
-86,Didemnum vexillum
-87,Spirorbis
-88,Bonnemaisonia hamifera
-89,Unknown green crust
-90,Protectocarpus speciosus
-91,Bugula neritina
-92,Tectura testudinalis
-93,Amphipoda
-94,Annelid
-95,Anurida maritima
-96,Asterias forbesi
-97,Asterias rubens
-98,Cancer borealis
-99,Cancer irroratus
-100,Carcinus maenus
-101,Crepidula fornicata
-102,platyhelminthes
-103,Halacarus
-104,Hemigrapsus sanguineus
-105,Henricia sanguinolenta
-106,Idotea baltica
-107,Isopods
-108,Lacuna vincta
-109,Lepidonotus
-110,Littorina littorea
-111,Littorina obtusata
-112,Littorina saxatilis
-113,Lycastopsis
-114,Micrura affinis
-115,Nematodes
-116,Nemertean
-117,Nucella lapillus
-118,Nudibranchia
-119,Oligochaete
-120,Ophiopholis
-121,Pagurus acadianus
-122,Polychaeta
-123,Strongylocentrotus droebachiensis
-124,Tonicella rubra
-125,Notoplana
-126,Acoela
-127,Turbellarid
-128,Mussel
-129,Colus stimpsoni
-130,copepods
-131,Euplana
-132,Nicolea
-133,Hippothoa hyalina
-134,Aplidium
-135,Mya arenaria
-136,Nucella lapillus (egg case)
-137,Littorina obtusata (egg case)
-138,Cirratulus
-139,Molgula
-140,Culicoides
-141,Praunus
-142,Dendrodoa
-143,Cancer
-144,Coryphella
-145,Foviella
-146,Thelepus cincinnatus
-147,Skeneopsis planorbis
-148,Onchidoris
-149,Gammarid
-150,Dendronotus
-151,Cerianthus
+3,Prasiola stipitata
+4,Ascophyllum nodosum
+5,Fucus 
+6,Hildenbrandia rubra
+7,Semibalanus balanoides
+8,Ectocarpus
+9,Verrucaria 
+10,Fucus vesiculosus
+11,Mastocarpus stellatus
+12,Chondrus crispus
+13,Saccharina latissima
+14,Ulva lactuca
+15,Corallina 
+16,Corallina officinalis
+17,Ralfsia 
+18,Fucus distichus
+19,Mytilus edulis
+20,Modiolus modiolus
+21,Cyanobacteria
+22,Ceramium virgatum
+23,Clathromorphum circumscriptum
+24,Fucus vesiculosus var. spiralis
+25,Ulva intestinalis
+26,Plumaria plumosa
+27,Palmaria palmata
+28,Sphacelaria cirrosa 
+29,Hincksia granulosa
+30,Alaria esculenta
+31,Polysiphonia
+32,Porphyra
+33,Ahnfeltia plicata
+34,Chaetomorpha
+35,Cladophora
+36,Chaetomorpha ligustica
+37,Erythrotrichia carnea
+38,Pylaiella littoralis
+39,Leathesia marina
+40,Spongomorpha aeruginosa
+41,Lithophyllum
+42,Audouinella 
+43,Halichondria
+44,Metridium dianthus
+45,Anomia simplex
+46,Arthopyrenia
+47,Elachista fucicola
+48,Scytosiphon lomentaria 
+49,Diatoma
+50,Monostroma
+51,Ptilota serrata
+52,Cystoclonium purpureum
+53,Chordaria flagelliformis
+54,Bonnemaisonia hamifera
+55,Codium fragile
+56,Sphacelaria
+57,Electra pilosa
+58,Euthora cristata
+59,Vertebrata lanosa
+60,Hiatella arctica
+61,Saccorhiza dermatodea
+62,Antithamnion
+63,Chorda filum
+64,Bangia atropurpurea
+65,Devaleraea ramentacea
+66,Petalonia fascia
+67,Nemalion helminthoides
+68,Dynamena pumila
+69,Schizoporella unicornis
+70,Dumontia contorta
+71,Diadumene lineata
+72,Botrylloides violaceus
+73,Membranipora membranacea
+74,Botryllus schlosseri
+75,Diplosoma 
+76,Acrosiphonia
+77,Didemnum vexillum
+78,Spirorbis
+79,Protectocarpus speciosus
+80,Bugula neritina
+81,Testudinalia testudinalis
+82,Amphipoda
+83,Annelida
+84,Anurida maritima
+85,Asterias forbesi
+86,Asterias rubens
+87,Cancer borealis
+88,Cancer irroratus
+89,Carcinus maenus
+90,Crepidula fornicata
+91,Platyhelminthes
+92,Halacarus
+93,Hemigrapsus sanguineus
+94,Henricia sanguinolenta
+95,Idotea balthica
+96,Isopoda
+97,Lacuna vincta
+98,Lepidonotus
+99,Littorina littorea
+100,Littorina obtusata
+101,Littorina saxatilis
+102,Namanereis
+103,Micrura affinis
+104,Nematodes
+105,Nemertea
+106,Nucella lapillus
+107,Nudibranchia
+108,Oligochaeta 
+109,Ophiopholis
+110,Pagurus acadianus
+111,Polychaeta (class in Lophotrochozoa)
+112,Strongylocentrotus droebachiensis
+113,Boreochiton ruber
+114,Notoplana
+115,Acoela
+116,Turbellaria
+117,Gaidropsarus
+118,Colus stimpsoni
+119,Copepoda
+120,Euplana
+121,Nicolea
+122,Celleporella hyalina
+123,Aplidium
+124,Mya arenaria
+125,Cirratulus
+126,Molgula
+127,Culicoides
+128,Praunus
+129,Dendrodoa
+130,Cancer
+131,Flabellina 
+132,Foviella
+133,Thelepus cincinnatus
+134,Skeneopsis planorbis
+135,Onchidoris
+136,Grammaria
+137,Dendronotus
+138,Cerianthus

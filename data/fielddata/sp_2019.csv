@@ -1,59 +1,211 @@
-name,value
-1,Bare rock
-2,Black zone
-3,Fucus vesiculosus
-4,Chondrus crispus
-5,Coralline (crust)
-6,Fucus
-7,Hildenbrandia rubra
-8,Ascophyllum nodosum
-9,Semibalanus balanoides
-10,Dynamena pumila
-11,Modiolus modiolus
-12,Phymatolithon lenormandii
-13,Vertebrata lanosa
-14,Diadumene lineata
-15,Elachista fucicola
-16,Fucus distichus
-17,Mastocarpus stellatus
-18,Shell hash
-19,Cryptosula pallasiana
-20,Electra pilosa
-21,Fucus spiralis
-22,Verrucaria
-23,Bonnemaisonia hamifera (Trailiella phase)
-24,Mastocarpus stellatus (crust)
-25,Ceramium virgatum (cprimary)
-26,Chaetomorpha
-27,Ulva lactuca
-28,Ceramium virgatum
-29,Corallina officinalis
-30,Leathesia marina
-31,Rhizoclonium tortuosum
-32,Tricellaria inopinata
-33,Polysiphonia
-34,Prasiola stipitata
-35,Metridium senile
-36,Didemnum vexillum
-37,Palmaria palmata
-38,Plumaria plumosa
-39,Ectocarpus
-40,Mytilus edulis
-41,Tricellaria
-42,Cladostephus spongiosus
-43,Colpomenia peregrina
-44,Botrylloides violaceus
-45,Hiatella arctica
-46,Ralfsia
-47,Chordaria flagelliformis
-48,Spongomorpha aeruginosa
-49,Littorina saxatilis
-50,Littorina littorea
-51,Littorina obtusata
-52,Nucella lapillus
-53,Carcinus maenus
-54,Anurida maritima
-55,Isopods
-56,Amphipoda
-57,Halacarus
-58,Hemigrapsus sanguineus
+Year,Transect,Organism
+2019,5,Fucus vesiculosus
+2019,5,Chondrus crispus
+2019,5,Corallina 
+2019,5,Fucus 
+2019,5,Hildenbrandia rubra
+2019,5,Ascophyllum nodosum
+2019,5,Ascophyllum nodosum
+2019,5,Semibalanus balanoides
+2019,5,Dynamena pumila
+2019,5,Fucus 
+2019,5,Modiolus modiolus
+2019,5,Phymatolithon lenormandii
+2019,5,Vertebrata lanosa
+2019,5,Diadumene lineata
+2019,5,Elachista fucicola
+2019,5,Fucus distichus
+2019,5,Mastocarpus stellatus
+2019,5,Mastocarpus stellatus
+2019,5,Fucus vesiculosus
+2019,5,Cryptosula pallasiana
+2019,5,Electra pilosa
+2019,5,Fucus vesiculosus var. spiralis
+2019,5,Verrucaria 
+2019,5,Bonnemaisonia hamifera
+2019,5,Mastocarpus stellatus
+2019,5,Ceramium virgatum
+2019,5,Chaetomorpha
+2019,5,Ulva lactuca
+2019,5,Ceramium virgatum
+2019,5,Chondrus crispus
+2019,5,Corallina officinalis
+2019,5,Leathesia marina
+2019,5,Chaetomorpha ligustica
+2019,5,Tricellaria inopinata
+2019,5,Polysiphonia
+2019,7,Prasiola stipitata
+2019,7,Fucus vesiculosus var. spiralis
+2019,7,Ascophyllum nodosum
+2019,7,Ascophyllum nodosum
+2019,7,Corallina 
+2019,7,Diadumene lineata
+2019,7,Dynamena pumila
+2019,7,Metridium dianthus
+2019,7,Semibalanus balanoides
+2019,7,Vertebrata lanosa
+2019,7,Elachista fucicola
+2019,7,Fucus 
+2019,7,Fucus vesiculosus
+2019,7,Hildenbrandia rubra
+2019,7,Mastocarpus stellatus
+2019,7,Mastocarpus stellatus
+2019,7,Chondrus crispus
+2019,7,Verrucaria 
+2019,7,Phymatolithon lenormandii
+2019,7,Ulva lactuca
+2019,7,Chondrus crispus
+2019,7,Didemnum vexillum
+2019,7,Electra pilosa
+2019,7,Palmaria palmata
+2019,7,Plumaria plumosa
+2019,7,Corallina officinalis
+2019,7,Ectocarpus
+2019,7,Mytilus edulis
+2019,7,Cryptosula pallasiana
+2019,7,Chaetomorpha ligustica
+2019,7,Tricellaria
+2019,7,Chaetomorpha
+2019,7,Mastocarpus stellatus
+2019,7,Cladostephus spongiosus 
+2019,7,Colpomenia peregrina
+2019,7,Botrylloides violaceus
+2019,7,Ceramium virgatum
+2019,7,Hiatella arctica
+2019,7,Leathesia marina
+2019,15,Semibalanus balanoides
+2019,15,Fucus 
+2019,15,Fucus vesiculosus
+2019,15,Hildenbrandia rubra
+2019,15,Mytilus edulis
+2019,15,Fucus distichus
+2019,15,Fucus distichus
+2019,15,Fucus vesiculosus
+2019,15,Ceramium virgatum
+2019,15,Ceramium virgatum
+2019,15,Chondrus crispus
+2019,15,Chondrus crispus
+2019,15,Mastocarpus stellatus
+2019,15,Mastocarpus stellatus
+2019,15,Modiolus modiolus
+2019,15,Electra pilosa
+2019,15,Ulva lactuca
+2019,15,Mastocarpus stellatus
+2019,20,Semibalanus balanoides
+2019,20,Hildenbrandia rubra
+2019,20,Fucus vesiculosus
+2019,20,Fucus 
+2019,20,Fucus vesiculosus
+2019,20,Fucus distichus
+2019,20,Fucus vesiculosus var. spiralis
+2019,20,Fucus distichus
+2019,20,Mastocarpus stellatus
+2019,20,Mastocarpus stellatus
+2019,20,Ralfsia 
+2019,20,Fucus 
+2019,20,Mytilus edulis
+2019,20,Ceramium virgatum
+2019,20,Chondrus crispus
+2019,20,Chondrus crispus
+2019,20,Ceramium virgatum
+2019,22,Semibalanus balanoides
+2019,22,Hildenbrandia rubra
+2019,22,Mytilus edulis
+2019,22,Fucus 
+2019,22,Fucus 
+2019,22,Fucus distichus
+2019,22,Fucus vesiculosus
+2019,22,Fucus distichus
+2019,22,Ceramium virgatum
+2019,22,Ceramium virgatum
+2019,22,Fucus vesiculosus
+2019,22,Mastocarpus stellatus
+2019,22,Mastocarpus stellatus
+2019,22,Ascophyllum nodosum
+2019,22,Elachista fucicola
+2019,22,Electra pilosa
+2019,22,Metridium dianthus
+2019,22,Chondrus crispus
+2019,22,Ulva lactuca
+2019,22,Chondrus crispus
+2019,22,Chordaria flagelliformis
+2019,26,Ascophyllum nodosum
+2019,26,Ascophyllum nodosum
+2019,26,Diadumene lineata
+2019,26,Didemnum vexillum
+2019,26,Dynamena pumila
+2019,26,Elachista fucicola
+2019,26,Fucus vesiculosus
+2019,26,Fucus vesiculosus
+2019,26,Hildenbrandia rubra
+2019,26,Mytilus edulis
+2019,26,Semibalanus balanoides
+2019,26,Vertebrata lanosa
+2019,26,Fucus 
+2019,26,Corallina officinalis
+2019,26,Mastocarpus stellatus
+2019,26,Phymatolithon lenormandii
+2019,26,Chondrus crispus
+2019,26,Chondrus crispus
+2019,26,Fucus 
+2019,26,Cladostephus spongiosus 
+2019,26,Cryptosula pallasiana
+2019,26,Corallina 
+2019,26,Electra pilosa
+2019,26,Mastocarpus stellatus
+2019,26,Fucus distichus
+2019,26,Mastocarpus stellatus
+2019,26,Chaetomorpha
+2019,26,Tricellaria
+2019,26,Spongomorpha aeruginosa
+2019,26,Metridium dianthus
+2019,26,Chaetomorpha ligustica
+2019,5,Littorina saxatilis
+2019,5,Littorina littorea
+2019,5,Littorina obtusata
+2019,5,Nucella lapillus
+2019,5,Carcinus maenus
+2019,5,Anurida maritima
+2019,5,Mytilus edulis
+2019,5,Isopoda
+2019,5,Amphipoda
+2019,7,Littorina saxatilis
+2019,7,Littorina littorea
+2019,7,Littorina obtusata
+2019,7,Nucella lapillus
+2019,7,Carcinus maenus
+2019,7,Anurida maritima
+2019,7,Modiolus modiolus
+2019,7,Isopoda
+2019,7,Amphipoda
+2019,7,Halacarus
+2019,7,Hemigrapsus sanguineus
+2019,15,Littorina saxatilis
+2019,15,Littorina littorea
+2019,15,Littorina obtusata
+2019,15,Anurida maritima
+2019,15,Isopoda
+2019,15,Halacarus
+2019,20,Littorina saxatilis
+2019,20,Littorina littorea
+2019,20,Littorina obtusata
+2019,20,Anurida maritima
+2019,20,Modiolus modiolus
+2019,20,Isopoda
+2019,20,Halacarus
+2019,22,Littorina saxatilis
+2019,22,Littorina littorea
+2019,22,Nucella lapillus
+2019,22,Anurida maritima
+2019,22,Modiolus modiolus
+2019,22,Isopoda
+2019,22,Amphipoda
+2019,22,Halacarus
+2019,26,Littorina littorea
+2019,26,Littorina obtusata
+2019,26,Nucella lapillus
+2019,26,Carcinus maenus
+2019,26,Anurida maritima
+2019,26,Modiolus modiolus
+2019,26,Isopoda
+2019,26,Hemigrapsus sanguineus
