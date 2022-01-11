@@ -1,71 +1,67 @@
 name,value
-1,Mytilus edulis
-2,Coralline (crust)
-3,Phymatolithon lenormandii
-4,Prasiola stipitata
-5,Hildenbrandia rubra
-6,Semibalanus balanoides
-7,Ulva intestinalis
-8,Ralfsia
-9,Cryptosula pallasiana
-10,Little round green things
-11,Ulva lactuca
-12,Modiolus modiolus
-13,Cyanobacteria
-14,Corallina officinalis
-15,Ascophyllum nodosum (canopy)
-16,Chondrus crispus (canopy)
-17,Fucus (primary)
-18,Verrucaria
-19,Black zone
-20,Fucus vesiculosus (canopy)
-21,Fucus (canopy)
-22,Mastocarpus stellatus (canopy)
-23,Ceramium virgatum (canopy)
-24,Clathromorphum circumscriptum
-25,Ectocarpus
-26,Fucus distichus (canopy)
-27,Ascophyllum nodosum (primary)
-28,Fucus spiralis (canopy)
-29,Saccharina latissima (canopy)
-30,Tectura testudinalis
-31,Amphipoda
-32,Anomia simplex
-33,Anurida maritima
-34,Asterias forbesi
-35,Asterias rubens
-36,Cancer borealis
-37,Cancer irroratus
-38,Carcinus maenus
-39,platyhelminthes
-40,Hiatella arctica
-41,Isopods
-42,Lepidonotus
-43,Littorina littorea
-44,Littorina obtusata
-45,Littorina saxatilis
-46,Metridium senile
-47,Nematodes
-48,Nemertean
-49,Nucella lapillus
-50,Nudibranchia
-51,Oligochaete
-52,Ophiopholis
-53,Pagurus acadianus
-54,Polychaeta
-55,Spirorbis
-56,Strongylocentrotus droebachiensis
-57,Tonicella rubra
-58,Notoplana
-59,Acoela
-60,Euplana
-61,Nicolea
-62,Halichondria
-63,Aplidium
-64,Mya arenaria
-65,Cirratulus
-66,Culicoides
-67,Praunus
-68,Dendrodoa
-69,Cancer
-70,Coryphella
+1,Cryptosula pallasiana
+2,Phymatolithon lenormandii
+3,Prasiola stipitata
+4,Ascophyllum nodosum
+5,Fucus 
+6,Hildenbrandia rubra
+7,Semibalanus balanoides
+8,Ectocarpus
+9,Verrucaria 
+10,Fucus vesiculosus
+11,Mastocarpus stellatus
+12,Chondrus crispus
+13,Saccharina latissima
+14,Ulva lactuca
+15,Corallina 
+16,Corallina officinalis
+17,Ralfsia 
+18,Fucus distichus
+19,Mytilus edulis
+20,Modiolus modiolus
+21,Cyanobacteria
+22,Ceramium virgatum
+23,Clathromorphum circumscriptum
+24,Fucus vesiculosus var. spiralis
+25,Ulva intestinalis
+26,Testudinalia testudinalis
+27,Amphipoda
+28,Anomia simplex
+29,Anurida maritima
+30,Asterias forbesi
+31,Asterias rubens
+32,Cancer borealis
+33,Cancer irroratus
+34,Carcinus maenus
+35,Platyhelminthes
+36,Hiatella arctica
+37,Isopoda
+38,Lepidonotus
+39,Littorina littorea
+40,Littorina obtusata
+41,Littorina saxatilis
+42,Metridium dianthus
+43,Nematodes
+44,Nemertea
+45,Nucella lapillus
+46,Nudibranchia
+47,Oligochaeta 
+48,Ophiopholis
+49,Pagurus acadianus
+50,Polychaeta (class in Lophotrochozoa)
+51,Spirorbis
+52,Strongylocentrotus droebachiensis
+53,Boreochiton ruber
+54,Notoplana
+55,Acoela
+56,Euplana
+57,Nicolea
+58,Halichondria
+59,Aplidium
+60,Mya arenaria
+61,Cirratulus
+62,Culicoides
+63,Praunus
+64,Dendrodoa
+65,Cancer
+66,Flabellina 

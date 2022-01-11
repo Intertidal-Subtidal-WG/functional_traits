@@ -1,0 +1,39 @@
+﻿species,body_size_avg_bin,morphology1,benthic,epibiotic,intertidal,subtidal,id,POP,Historical.Abundance,Current.Abundance
+Agarum clathratum,0,1,1,0,0,1,1,A,0.2,0.1
+Alaria esculenta,0,1,2,1,1,1,2,B,0.1,0.1
+Ascophyllum nodosum,1,1,2,1,1,1,3,B,0.6,0.15
+Colpomenia peregrina,2,0,1,1,1,1,4,A,0.6,0.2
+Desmarestia aculeata,1,2,1,0,0,1,5,B,0.1,0.22
+Desmarestia viridis,1,2,1,0,0,1,6,B,0.2,0.1
+Elachista fucicola,2,0,2,1,1,0,7,B,0.1,0.3
+Halosiphon tomentosus,3,2,1,0,0,1,8,B,0.6,0.3
+Laminaria digitata,1,1,1,1,0,1,9,B,0.6,0.3
+Saccharina latissima,0,1,1,1,1,1,10,B,0.1,0.4
+Saccorhiza dermatodea,0,1,1,0,1,1,11,A,0.41,0.4
+Codium fragile,4,2,1,0,1,1,12,B,0.44,0.2
+Prasiola stipitata,2,0,1,0,1,0,13,B,0.47,0.25
+Ulva lactuca,4,0,1,1,1,0,14,B,0.5,0.361538462
+Bonnemaisonia hamifera,4,0,1,1,1,1,15,A,0.53,0.38
+Ceramium,4,1,1,1,0,1,16,B,0.56,0.398461538
+Chondrus crispus,5,2,1,0,1,1,17,B,0.59,0.416923077
+Clathromorphum circumscriptum,6,0,1,0,1,1,18,C,0.62,0.435384615
+Coccotylus truncatus,5,0,1,0,0,1,19,C,0.65,0.453846154
+Corallina officinalis,5,0,1,1,1,0,20,A,0.68,0.472307692
+Cystoclonium purpureum,1,2,1,0,1,1,21,C,0.71,0.490769231
+Dasysiphonia japonica,1,0,1,0,0,1,22,C,0.74,0.509230769
+Dumontia contorta,5,2,2,1,0,1,23,C,0.77,0.527692308
+Euthora cristata,2,2,1,1,1,1,24,C,0.8,0.546153846
+Hildenbrandia rubra,5,0,1,0,1,1,25,C,0.83,0.564615385
+Leptophytum acervatum,5,0,1,1,0,1,26,C,0.6,0.583076923
+Lithophyllum ,5,0,1,0,0,1,27,C,0.1,0.601538462
+Lithothamnion,5,0,1,0,0,1,28,C,0.2,0.62
+Mastocarpus stellatus,5,2,1,0,1,1,29,C,0.1,0.638461538
+Palmaria palmata,4,2,1,1,1,1,30,C,0.6,0.656923077
+Phycodrys rubens,5,2,1,0,0,1,31,C,0.6,0.675384615
+Phymatolithon lenormandii,5,0,1,1,1,0,32,C,0.1,0.693846154
+Polyides rotunda,5,0,1,0,0,1,33,C,0.41,0.712307692
+Polysiphonia,4,0,1,1,1,1,34,C,0.1,0.730769231
+Porphyra,1,0,1,0,1,1,35,C,0.6,0.749230769
+Ptilota serrata,4,2,1,0,1,1,36,C,0.6,0.767692308
+Spermothamnion repens,2,0,1,1,0,1,37,C,0.1,0.786153846
+Titanoderma,7,0,1,0,0,1,38,C,0.41,0.804615385

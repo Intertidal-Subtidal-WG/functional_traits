@@ -79,68 +79,61 @@ name,value
 78,Spirorbis
 79,Protectocarpus speciosus
 80,Bugula neritina
-81,Colpomenia peregrina
-82,Cladostephus spongiosus 
-83,Tricellaria
-84,Tricellaria inopinata
-85,Testudinalia testudinalis
-86,Amphipoda
-87,Annelida
-88,Anurida maritima
-89,Asterias forbesi
-90,Asterias rubens
-91,Cancer borealis
-92,Cancer irroratus
-93,Carcinus maenus
-94,Crepidula fornicata
-95,Platyhelminthes
-96,Halacarus
-97,Hemigrapsus sanguineus
-98,Henricia sanguinolenta
-99,Idotea balthica
-100,Isopoda
-101,Lacuna vincta
-102,Lepidonotus
-103,Littorina littorea
-104,Littorina obtusata
-105,Littorina saxatilis
-106,Namanereis
-107,Micrura affinis
-108,Nematodes
-109,Nemertea
-110,Nucella lapillus
-111,Nudibranchia
-112,Oligochaeta 
-113,Ophiopholis
-114,Pagurus acadianus
-115,Polychaeta (class in Lophotrochozoa)
-116,Strongylocentrotus droebachiensis
-117,Boreochiton ruber
-118,Notoplana
-119,Acoela
-120,Turbellaria
-121,Gaidropsarus
-122,Colus stimpsoni
-123,Copepoda
-124,Euplana
-125,Nicolea
-126,Celleporella hyalina
-127,Aplidium
-128,Mya arenaria
-129,Cirratulus
-130,Molgula
-131,Culicoides
-132,Praunus
-133,Dendrodoa
-134,Cancer
-135,Flabellina 
-136,Foviella
-137,Thelepus cincinnatus
-138,Skeneopsis planorbis
-139,Onchidoris
-140,Grammaria
-141,Dendronotus
-142,Cerianthus
-143,Astyris lunata
-144,Ostrea edulis
-145,Flustrellidra hispida
+81,Testudinalia testudinalis
+82,Amphipoda
+83,Annelida
+84,Anurida maritima
+85,Asterias forbesi
+86,Asterias rubens
+87,Cancer borealis
+88,Cancer irroratus
+89,Carcinus maenus
+90,Crepidula fornicata
+91,Platyhelminthes
+92,Halacarus
+93,Hemigrapsus sanguineus
+94,Henricia sanguinolenta
+95,Idotea balthica
+96,Isopoda
+97,Lacuna vincta
+98,Lepidonotus
+99,Littorina littorea
+100,Littorina obtusata
+101,Littorina saxatilis
+102,Namanereis
+103,Micrura affinis
+104,Nematodes
+105,Nemertea
+106,Nucella lapillus
+107,Nudibranchia
+108,Oligochaeta 
+109,Ophiopholis
+110,Pagurus acadianus
+111,Polychaeta (class in Lophotrochozoa)
+112,Strongylocentrotus droebachiensis
+113,Boreochiton ruber
+114,Notoplana
+115,Acoela
+116,Turbellaria
+117,Gaidropsarus
+118,Colus stimpsoni
+119,Copepoda
+120,Euplana
+121,Nicolea
+122,Celleporella hyalina
+123,Aplidium
+124,Mya arenaria
+125,Cirratulus
+126,Molgula
+127,Culicoides
+128,Praunus
+129,Dendrodoa
+130,Cancer
+131,Flabellina 
+132,Foviella
+133,Thelepus cincinnatus
+134,Skeneopsis planorbis
+135,Onchidoris
+136,Grammaria
+137,Dendronotus
+138,Cerianthus

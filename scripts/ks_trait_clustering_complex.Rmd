@@ -33,12 +33,9 @@ library(here)
 ## Load in data
 ```{r load-in}
 #load in imputed data
-animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))
-algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))
+animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))[,-1]
+algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))[,-1]
 
-#remove x column
-animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
-algae_imp2 <- algae_imp2[,2:ncol(algae_imp2),]
 
 #make factors
 animal_imp2 <- animal_imp2 %>% 

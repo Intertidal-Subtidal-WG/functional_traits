@@ -1,0 +1,442 @@
+---
+title: "ks_cluster_visuals"
+author: "Kate Sheridan"
+date: "1/6/2022"
+output: html_document
+---
+notes on reduction ; this should be done at an earlier stage
+Algae (Laura’s thoughts):
+Pared down list of traits for algae (7): species, common name division (brown, green, red), layer (turf, subcanopy, canopy), Steneck_Dethier morphology, body size, intertidal, subtidal
+More pared down (5):  
+species, common name division (brown, green, red), layer (turf, subcanopy, canopy), intertidal, subtidal
+
+Animal (Laura’s thoughts):
+More pared down for animals (6): 
+species, common name division (fish, etc.), trophic level, adult motility, intertidal, subtidal
+
+
+
+
+## copypasta from jenny
+
+
+```{r}
+#libraries 
+
+library(pacman)
+pacman::p_load(dplyr, plyr, readr, tbible, FD, ade4, cowplot, mice, reshape2, tidyr, ks, hypervolume, alphallhu, purrr, TTR, plotrix, agricolae, psych)
+
+library(factoextra)
+library(ggrepel)
+library(tibble)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(data.table)
+library(extrafont)
+library(visreg)
+library(lubridate)
+library(letsR)
+library(reshape)
+library(reshape2)
+library(funrar)#to calculate functional uniqueness
+
+library(Gifi)# to do PCA on categorical data
+library(TPD)# 
+library(FactoMineR)
+#library(ts)
+
+library(here)
+
+loadfonts()
+```
+
+
+My narrowed down packages list?
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(FactoMineR)
+library(here)
+
+library(ggrepel)
+
+```
+
+
+
+```{r}
+traits_algae_imputed<-read_csv(here::here('data','clean',"20210806_algae_imputed.csv"), 
+                               col_select = !1)
+
+traits_animal_imputed<-read_csv(here::here('data','clean',"20210806_animal_imputed.csv"), 
+                                col_select = !1)
+
+
+
+#Matrices
+
+matrix_algae<-read.csv(here('data','clean',"20210806_algae_matrix.csv"))
+matrix_algae <- as.matrix(matrix_algae)
+matrix_animal<-read.csv(here('data','clean',"20210806_animal_matrix.csv"))
+matrix_animal <- as.matrix(matrix_animal)
+
+
+#Compared with the data from Gomez and from Cooke we have categorical and numerical data in out traits.
+#One solution is to use Gifi package: Multivariate Analysis with Optimal Scaling
+#Implements categorical principal component analysis ('PRINCALS'), multiple correspondence analysis ('HOMALS'), monotone regression analysis ('MORALS'). It replaces the 'homals' package.
+
+
+
+
+```
+## Time series
+
+```{r}
+# load in 
+## single years
+sp_1982 <- read_csv(here::here('data', 'fielddata', 'sp_1982.csv'), 
+                    col_select = !1)
+sp_1990 <- read_csv(here::here('data', 'fielddata', 'sp_1990.csv'), 
+                    col_select = !1)
+sp_1998 <- read_csv(here::here('data', 'fielddata', 'sp_1998.csv'), 
+                    col_select = !1)
+sp_2019 <- read_csv(here::here('data', 'fielddata', 'sp_2019.csv'), 
+                    col_select = !1)
+
+
+## ranges
+sp_1982r <- read_csv(here::here('data', 'fielddata', 'sp_1982-1995.csv'), 
+                    col_select = !1)
+sp_1996r <- read_csv(here::here('data', 'fielddata', 'sp_1996-2006.csv'), 
+                    col_select = !1)
+sp_2011r <- read_csv(here::here('data', 'fielddata', 'sp_2011-end.csv'), 
+                    col_select = !1)
+
+
+
+
+```
+
+
+# MCA
+
+MCA with FactoMineR specifically is for categorical variables. 
+
+
+## algae
+
+This is just all of them, not specifically at a time point.
+
+```{r}
+#misc from vignette to test
+#algae_mca <- MCA(algae_reduced)
+
+#dimdesc(algae_mca)
+
+#plot.MCA(algae_mca)
+#plotellipses(algae_mca)
+
+# fewer traits
+# lauras list from research: species, division, turf/canopy, intertidal/subtidal
+algae_reduced <- traits_algae_imputed %>%
+  dplyr::select(species, common_name_division_bgr, turf_subcanopy_canopy_algae,
+                subtidal) %>%
+  column_to_rownames('species')
+
+## by year
+algae_reduced1982 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1982$value))
+algae_reduced1990 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1990$value))
+algae_reduced1998 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1998$value))
+algae_reduced2019 <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_2019$value))
+
+# run MCAs
+algae_mca1982 <- MCA(algae_reduced1982)
+algae_mca1990 <- MCA(algae_reduced1990)
+algae_mca1998 <- MCA(algae_reduced1998)
+algae_mca2019 <- MCA(algae_reduced2019)
+
+
+# plots
+plot.MCA(algae_mca1982)
+plotellipses(algae_mca1982)
+
+plot.MCA(algae_mca1990)
+plotellipses(algae_mca1990)
+
+plot.MCA(algae_mca1998)
+plotellipses(algae_mca1998)
+
+plot.MCA(algae_mca2019)
+plotellipses(algae_mca2019)
+
+
+## date ranges
+algae_reduced1982r <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1982r$value))
+algae_reduced1996r <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_1996r$value))
+algae_reduced2011r <- algae_reduced %>%
+  subset(rownames(algae_reduced) %in% c(sp_2011r$value))
+
+
+
+# MCAs
+algae_mca1982r <- MCA(algae_reduced1982r)
+algae_mca1996r <- MCA(algae_reduced1996r)
+algae_mca2011r <- MCA(algae_reduced2011r)
+
+
+# plots
+plot.MCA(algae_mca1982r)
+plotellipses(algae_mca1982r)
+
+plot.MCA(algae_mca1996r)
+plotellipses(algae_mca1996r)
+
+plot.MCA(algae_mca2011r)
+plotellipses(algae_mca2011r)
+
+
+
+
+
+```
+
+```{r}
+str(traits_algae_imputed)
+#traits_algae_imputed_sel<-traits_algae_imputed[,6:11] #select columns of interest
+#cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+#cats
+
+
+
+str(traits_algae_imputed_sel)
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(body_size_avg_bin, morphology1, benthic,epibiotic, intertidal, subtidal), list(as.factor)) 
+
+mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
+summary (mca2)
+mca2$eig
+mca2$var
+mca2$ind
+
+variables_scores_algae<-mca1$var$eta2 
+str(variables_scores_algae) 
+head(mca2$var$coord)
+mca2
+plot(mca2)
+
+str(traits_algae_imputed_sel)
+
+
+
+View(algae_mca1982_vars_df)
+
+
+```
+
+```{r}
+#If there is a variable with no actual variation, this will fail
+# variable must be removed before MCA is run
+cats=apply(algae_reduced, 2, function(x) nlevels(as.factor(x)))
+cats
+
+algae_mca1982_vars_df = data.frame(algae_mca1982$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+algae_mca1982_obs_df = data.frame(algae_mca1982$ind$coord)
+
+# basic plot
+ggplot(data = algae_mca1982_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(algae_mca1982_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
+
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+## this one will draw the ellipses if there are sufficient variables
+ggplot(data = algae_mca1982_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                   colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                   alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = algae_mca1982_vars_df, 
+                                                                                                                                                                                                                aes(x = Dim.1, y = Dim.2, label = rownames(algae_mca1982_vars_df), colour = Variable)) + 
+  ggtitle("Algae, MCA plot of variables using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = algae_mca1982_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab ("  Dim 1 Morphology, Body size  15.45%")+ ylab(" Body size-small 13 %")
+
+
+plotellipses(algae_mca1982)
+```
+
+
+
+## animals
+
+```{r}
+#traits_modified_animal_sel<-traits_modified_animals[,4:14] #select columns of interest
+
+
+# fewer traits
+# list from laura's research: species, division, trophic level,
+## adult motility, intertidal/subtidal
+animal_reduced <- traits_animal_imputed %>%
+  dplyr::select(species, common_name_division_bgr, 
+                trophic_level, motility_adult) %>%
+  column_to_rownames('species')
+
+## by year
+animal_reduced1982 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1982$value))
+animal_reduced1990 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1990$value))
+animal_reduced1998 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1998$value))
+animal_reduced2019 <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_2019$value))
+
+# run MCAs
+animal_mca1982 <- MCA(animal_reduced1982)
+animal_mca1990 <- MCA(animal_reduced1990)
+animal_mca1998 <- MCA(animal_reduced1998)
+animal_mca2019 <- MCA(animal_reduced2019)
+
+
+# plots
+plot.MCA(animal_mca1982)
+plotellipses(animal_mca1982)
+
+plot.MCA(animal_mca1990)
+plotellipses(animal_mca1990)
+
+plot.MCA(animal_mca1998)
+plotellipses(animal_mca1998)
+
+plot.MCA(animal_mca2019)
+plotellipses(animal_mca2019)
+
+
+## date ranges
+animal_reduced1982r <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1982r$value))
+animal_reduced1996r <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_1996r$value))
+animal_reduced2011r <- animal_reduced %>%
+  subset(rownames(animal_reduced) %in% c(sp_2011r$value))
+
+
+
+# MCAs
+animal_mca1982r <- MCA(animal_reduced1982r)
+animal_mca1996r <- MCA(animal_reduced1996r)
+animal_mca2011r <- MCA(animal_reduced2011r)
+
+
+# plots
+plot.MCA(animal_mca1982r)
+plotellipses(animal_mca1982r)
+
+plot.MCA(animal_mca1996r)
+plotellipses(animal_mca1996r)
+
+plot.MCA(animal_mca2011r)
+plotellipses(animal_mca2011r)
+```
+
+
+
+
+
+## from Jenny
+
+```{r}
+mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
+summary (mca2)
+mca2$eig
+mca2$var
+mca2$ind
+
+variables_scores_algae<-mca1$var$eta2 
+str(variables_scores_algae) 
+head(mca2$var$coord)
+mca2
+plot(mca2)
+
+str(traits_algae_imputed_sel)
+
+#dimdesc(mca2)
+######## Variable needed for the plot extracted from mca2
+mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca2_obs_df = data.frame(mca2$ind$coord)
+
+View(mca2_vars_df )
+
+# plot of variable categories
+ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                   colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                   alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca2_vars_df, 
+                                                                                                                                                                                                                aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
+  ggtitle("Algae, MCA plot of variables using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab ("  Dim 1 Morphology, Body size  15.45%")+ ylab(" Body size-small 13 %")
+
+
+plotellipses(mca2,keepvar=c(2:12))
+
+```
+
+
+
+
+
+## package example
+
+```{r}
+
+
+
+###Example from the package to calculate PCA with categorical data
+ABC
+ABC6 <- ABC[,6:11]
+
+fitord <- princals(ABC6) 
+
+View (ABC6)
+
+## ordinal PCA
+fitord <- princals(ABC6,ndim =6)  ## ordinal PCA
+fitord
+summary(fitord)
+plot(fitord, plot.type = "transplot")
+plot(fitord, "loadplot", main = "Loadings Plot ABC Data")  ## aspect ratio = 1
+plot(fitord, "biplot", labels.scores = TRUE, main = "Biplot ABC Data")
+plot(fitord, "screeplot")
+
+
+
+scoresfitord <- as.data.frame(fitord$scoremat) %>% 
+  tibble::rownames_to_column("species")
+
+## linear restrictions (mimics standard PCA)
+abc_knots <- knotsGifi(ABC6, "E")     ## 0 interior knotsx
+fitlin <- princals(ABC6, knots = abc_knots, degrees = 1)
+fitlin
+summary(fitlin)
+fitlin$evals
+plot(fitlin, plot.type = "transplot")
+## compare with standard PCA
+ABCnum <- makeNumeric(ABC6)
+fitpca <- prcomp(ABCnum, scale = TRUE)
+fitpca$sdev^2
+
+summary(fitpca)
+```
+
+

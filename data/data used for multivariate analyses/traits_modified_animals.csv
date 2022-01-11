@@ -1,0 +1,71 @@
+species,group,common_name_division_bgr,body_size_avg_bin,morphology1,dietary_pref_c,trophic_level,motility_juv,motility_adult,benthic,epibiotic,invasive,intertidal,subtidal,species_id
+Urticina felina,Invertebrate,Anemone,4,1,5,4,3,2,2,2,1,1,2,1
+Semibalanus balanoides,Invertebrate,Barnacle,2,2,1,3,3,1,1,2,1,2,1,2
+Anomia simplex,Invertebrate,Bivalve,2,2,1,3,3,1,2,2,1,2,1,3
+Hiatella arctica,Invertebrate,Bivalve,3,2,1,3,3,1,2,2,1,2,1,4
+Modiolus modiolus,Invertebrate,Bivalve,4,2,1,3,3,1,2,2,1,2,2,5
+Mytilus edulis,Invertebrate,Bivalve,4,2,1,3,3,1,2,2,1,2,2,6
+Ostrea edulis,Invertebrate,Bivalve,3,2,1,3,3,1,1,2,2,2,2,7
+Placopecten magellanicus,Invertebrate,Bivalve,4,2,1,3,3,1,2,2,1,1,2,8
+Bugulina spicata,Invertebrate,Bryozoan,3,2,1,3,3,1,2,2,2,1,2,9
+Crisia eburnea,Invertebrate,Bryozoan,2,2,1,2,3,1,2,2,1,1,2,10
+Crisularia turrita,Invertebrate,Bryozoan,3,2,1,3,3,1,2,2,1,1,2,11
+Dendrobeania murrayana,Invertebrate,Bryozoan,4,2,1,3,3,1,2,2,1,1,2,12
+Membranipora membranacea,Invertebrate,Bryozoan,3,2,1,3,3,1,2,2,2,2,2,13
+Patinella verrucaria,Invertebrate,Bryozoan,3,2,1,3,3,1,2,2,1,1,2,14
+Schizoporella unicornis,Invertebrate,Bryozoan,3,2,1,3,3,1,2,2,1,2,2,15
+Tricellaria inopinata,Invertebrate,Bryozoan,3,2,1,3,3,1,2,2,2,1,2,16
+Boreochiton ruber,Invertebrate,Chiton,2,2,3,3,3,3,2,2,1,1,2,17
+Stenosemus albus,Invertebrate,Chiton,2,2,3,3,3,4,2,1,1,1,2,18
+Metridium senile,Invertebrate,Cnidarian,5,1,1,4,3,1,2,2,1,2,1,19
+Pachycerianthus borealis,Invertebrate,Cnidarian,5,1,1,4,3,1,2,1,1,1,2,20
+Amphipoda,Invertebrate,Crustacean,2,2,1,4,3,3,2,2,1,2,1,21
+Cancer borealis,Invertebrate,Crustacean,3,2,4,4,3,3,2,1,1,2,2,22
+Cancer irroratus,Invertebrate,Crustacean,3,2,4,4,3,3,2,1,1,2,2,23
+Carcinus maenus,Invertebrate,Crustacean,3,2,4,4,3,3,2,2,2,2,1,24
+Homarus americanus,Invertebrate,Crustacean,5,2,5,4,3,3,2,1,1,1,2,25
+Isopoda,Invertebrate,Crustacean,2,2,3,3,3,3,2,1,1,2,1,26
+Cucumaria frondosa,Invertebrate,Echinoderm,5,2,2,1,3,3,2,1,1,1,2,27
+Echinarachnius parma,Invertebrate,Echinoderm,3,2,2,1,3,3,2,1,1,1,2,28
+Ophiopholis aculeata,Invertebrate,Echinoderm,4,2,6,4,3,3,2,1,1,1,2,29
+Strongylocentrotus droebachiensis,Invertebrate,Echinoderm,3,2,3,3,3,3,2,2,1,2,2,30
+Buccinum undatum,Invertebrate,Gastropod,3,2,5,4,3,3,2,2,1,1,2,31
+Crepidula fornicata,Invertebrate,Gastropod,3,2,1,3,1,1,2,2,1,2,2,32
+Lacuna vincta,Invertebrate,Gastropod,2,2,1,3,3,3,1,2,1,2,1,33
+Littorina littorea,Invertebrate,Gastropod,3,2,3,3,3,3,1,2,2,2,1,34
+Littorina obtusata,Invertebrate,Gastropod,2,2,3,3,3,3,1,2,1,2,1,35
+Littorina saxatilis,Invertebrate,Gastropod,3,2,3,3,3,3,2,1,1,2,1,36
+Nucella lapillus,Invertebrate,Gastropod,3,2,5,4,3,3,1,2,1,2,1,37
+Tectura testudinalis,Invertebrate,Gastropod,2,2,3,3,3,3,2,1,1,2,1,38
+Testudinalia testudinalis,Invertebrate,Gastropod,3,2,1,3,3,1,2,2,1,1,2,39
+Thylacodes,Invertebrate,Gastropod,3,2,1,3,3,1,2,2,1,1,2,40
+Obelia,Invertebrate,Hydrozoan,5,1,1,3,1,4,2,2,1,1,2,41
+Spirorbis,Invertebrate,Polychaete,1,2,1,3,3,1,1,2,1,2,1,42
+Asterias forbesi,Invertebrate,Sea Stars,3,2,5,4,3,3,2,1,1,2,2,43
+Asterias rubens,Invertebrate,Sea Stars,5,2,5,4,3,3,2,1,1,2,2,44
+Henricia sanguinolenta,Invertebrate,Sea Stars,3,2,1,3,3,3,2,1,1,2,2,45
+Halichondria panicea,Invertebrate,Sponge,4,1,1,3,3,1,2,2,1,1,2,46
+Halisarca dujardinii,Invertebrate,Sponge,4,1,1,3,3,1,2,2,1,1,2,47
+Hymedesmia,Invertebrate,Sponge,4,1,1,3,3,1,2,2,1,1,2,48
+Leucosolenia,Invertebrate,Sponge,4,2,1,3,3,1,2,2,1,1,2,49
+Aplidium pallidum,Invertebrate,Tunicate,3,1,1,3,2,2,1,1,1,1,2,50
+Boltenia echinata,Invertebrate,Tunicate,2,1,1,3,3,1,2,2,1,1,2,51
+Boltenia ovifera,Invertebrate,Tunicate,3,1,1,3,3,1,2,2,1,1,2,52
+Botrylloides violaceus,Invertebrate,Tunicate,4,1,1,3,3,1,2,2,2,1,2,53
+Botryllus schlosseri,Invertebrate,Tunicate,4,1,1,3,3,1,2,2,2,2,2,54
+Ciona intestinalis,Invertebrate,Tunicate,3,1,1,3,3,1,2,2,2,1,2,55
+Ciona savignyi,Invertebrate,Tunicate,4,1,1,3,1,1,1,2,2,1,2,56
+Dendrodoa carnea,Invertebrate,Tunicate,2,1,1,3,3,1,2,2,1,1,2,57
+Didemnum albidum,Invertebrate,Tunicate,2,1,1,3,3,1,2,2,1,1,2,58
+Didemnum vexillum,Invertebrate,Tunicate,2,1,1,3,1,1,2,2,2,2,2,59
+Diplosoma listerianum,Invertebrate,Tunicate,1,1,1,3,3,1,2,2,2,1,2,60
+Cyclopterus lumpus,Vertebrate,Fish,7,1,5,4,2,3,2,1,1,1,2,61
+Morone saxatilis,Vertebrate,Fish,7,1,5,4,2,3,2,1,1,1,2,62
+Myoxocephalus octodecemspinosus,Vertebrate,Fish,5,1,5,4,2,3,2,1,1,1,2,63
+Myoxocephalus scorpius,Vertebrate,Fish,6,1,5,4,2,3,2,1,1,1,2,64
+Pholis gunnellus,Vertebrate,Fish,4,1,5,4,2,3,2,1,1,1,2,65
+Pollachius virens,Vertebrate,Fish,7,1,5,4,2,3,2,1,1,1,2,66
+Pseudopleuronectes americanus,Vertebrate,Fish,6,1,5,4,2,3,2,1,1,1,2,67
+Tautoga onitis,Vertebrate,Fish,6,1,5,4,2,3,2,1,1,1,2,68
+Tautogolabrus adspersus,Vertebrate,Fish,5,1,5,4,2,3,2,1,1,1,2,69
+Urophycis regia,Vertebrate,Fish,5,1,5,4,2,3,2,1,1,1,2,70

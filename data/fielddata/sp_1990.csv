@@ -1,71 +1,61 @@
 name,value
-1,Prasiola stipitata
-2,Fucus (primary)
-3,Mastocarpus stellatus (primary)
-4,Semibalanus balanoides
-5,Corallina officinalis
-6,Elachista fucicola
-7,Fucus distichus (canopy)
-8,Ulva lactuca
-9,Codium fragile (canopy)
-10,Hildenbrandia rubra
-11,Modiolus modiolus
-12,Chondrus crispus (canopy)
-13,Arthopyrenia
-14,Black zone
-15,Mytilus edulis
-16,Porphyra
-17,Alaria esculenta (primary)
-18,Chondrus crispus (primary)
-19,Halichondria
-20,Verrucaria
-21,Rhizoclonium tortuosum
-22,Coralline (crust)
+1,Cyanobacteria
+2,Arthopyrenia
+3,Fucus vesiculosus var. spiralis
+4,Ascophyllum nodosum
+5,Hildenbrandia rubra
+6,Chaetomorpha ligustica
+7,Semibalanus balanoides
+8,Verrucaria 
+9,Mastocarpus stellatus
+10,Fucus 
+11,Ralfsia 
+12,Corallina 
+13,Elachista fucicola
+14,Fucus vesiculosus
+15,Polysiphonia
+16,Clathromorphum circumscriptum
+17,Ulva intestinalis
+18,Ulva lactuca
+19,Chondrus crispus
+20,Cladophora
+21,Fucus distichus
+22,Prasiola stipitata
 23,Leathesia marina
-24,Ulva intestinalis
-25,Saccharina latissima (primary)
-26,Ceramium virgatum (canopy)
-27,Alaria esculenta (canopy)
-28,Mastocarpus stellatus (canopy)
-29,Fucus (canopy)
-30,Ceramium virgatum (primary)
-31,Metridium senile
-32,Ascophyllum nodosum (canopy)
-33,Polysiphonia (canopy)
-34,Cladophora
-35,Ectocarpus
-36,Ascophyllum nodosum (primary)
-37,Cyanobacteria
-38,Bare rock
-39,Saccharina latissima (canopy)
-40,Palmaria palmata
-41,Fucus spiralis (canopy)
-42,Chaetomorpha
-43,Ralfsia
-44,Electra pilosa
-45,Clathromorphum circumscriptum
-46,Fucus vesiculosus (canopy)
-47,Shell hash
-48,Spongomorpha aeruginosa
-49,Tectura testudinalis
-50,Amphipoda
-51,Annelid
-52,Anurida maritima
-53,Asterias forbesi
-54,Asterias rubens
-55,Carcinus maenus
-56,Crepidula fornicata
-57,platyhelminthes
-58,Henricia sanguinolenta
-59,Isopods
-60,Littorina littorea
-61,Littorina obtusata
-62,Littorina saxatilis
-63,Nematodes
-64,Nemertean
-65,Nucella lapillus
-66,Nudibranchia
-67,Polychaeta
-68,Strongylocentrotus droebachiensis
-69,Spirorbis
-70,Hiatella arctica
+24,Ceramium virgatum
+25,Codium fragile
+26,Corallina officinalis
+27,Chaetomorpha
+28,Saccharina latissima
+29,Mytilus edulis
+30,Ectocarpus
+31,Modiolus modiolus
+32,Palmaria palmata
+33,Porphyra
+34,Alaria esculenta
+35,Spongomorpha aeruginosa
+36,Metridium dianthus
+37,Electra pilosa
+38,Halichondria
+39,Testudinalia testudinalis
+40,Amphipoda
+41,Annelida
+42,Anurida maritima
+43,Asterias forbesi
+44,Asterias rubens
+45,Carcinus maenus
+46,Crepidula fornicata
+47,Platyhelminthes
+48,Henricia sanguinolenta
+49,Isopoda
+50,Littorina littorea
+51,Littorina obtusata
+52,Littorina saxatilis
+53,Nematodes
+54,Nemertea
+55,Nucella lapillus
+56,Nudibranchia
+57,Polychaeta (class in Lophotrochozoa)
+58,Strongylocentrotus droebachiensis
+59,Spirorbis
+60,Hiatella arctica
