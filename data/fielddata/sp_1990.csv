@@ -1,333 +1,61 @@
-Year,Transect,Organism
-1990,1,Cyanobacteria
-1990,1,Arthopyrenia
-1990,1,Fucus vesiculosus var. spiralis
-1990,1,Ascophyllum nodosum
-1990,1,Hildenbrandia rubra
-1990,1,Chaetomorpha ligustica
-1990,1,Semibalanus balanoides
-1990,1,Verrucaria 
-1990,1,Mastocarpus stellatus
-1990,1,Fucus 
-1990,1,Ralfsia 
-1990,1,Corallina 
-1990,1,Elachista fucicola
-1990,1,Mastocarpus stellatus
-1990,1,Fucus vesiculosus
-1990,1,Polysiphonia
-1990,1,Clathromorphum circumscriptum
-1990,1,Ulva intestinalis
-1990,1,Ulva lactuca
-1990,1,Chondrus crispus
-1990,1,Cladophora
-1990,1,Fucus distichus
-1990,2,Prasiola stipitata
-1990,2,Semibalanus balanoides
-1990,2,Ascophyllum nodosum
-1990,2,Fucus 
-1990,2,Fucus 
-1990,2,Hildenbrandia rubra
-1990,2,Fucus distichus
-1990,2,Mastocarpus stellatus
-1990,2,Mastocarpus stellatus
-1990,2,Ascophyllum nodosum
-1990,2,Fucus vesiculosus
-1990,2,Verrucaria 
-1990,2,Chondrus crispus
-1990,2,Chondrus crispus
-1990,2,Ulva intestinalis
-1990,2,Ulva lactuca
-1990,2,Leathesia marina
-1990,2,Chaetomorpha ligustica
-1990,2,Ceramium virgatum
-1990,2,Codium fragile
-1990,2,Corallina officinalis
-1990,2,Corallina 
-1990,5,Fucus 
-1990,5,Ascophyllum nodosum
-1990,5,Corallina 
-1990,5,Hildenbrandia rubra
-1990,5,Verrucaria 
-1990,5,Chondrus crispus
-1990,5,Fucus distichus
-1990,5,Fucus vesiculosus
-1990,5,Mastocarpus stellatus
-1990,5,Codium fragile
-1990,5,Chaetomorpha ligustica
-1990,5,Ulva lactuca
-1990,5,Chaetomorpha
-1990,5,Saccharina latissima
-1990,7,Prasiola stipitata
-1990,7,Ascophyllum nodosum
-1990,7,Ascophyllum nodosum
-1990,7,Corallina 
-1990,7,Hildenbrandia rubra
-1990,7,Mytilus edulis
-1990,7,Polysiphonia
-1990,7,Semibalanus balanoides
-1990,7,Elachista fucicola
-1990,7,Fucus distichus
-1990,7,Mastocarpus stellatus
-1990,7,Ulva lactuca
-1990,7,Fucus 
-1990,7,Ectocarpus
-1990,7,Mastocarpus stellatus
-1990,7,Chondrus crispus
-1990,7,Corallina officinalis
-1990,7,Verrucaria 
-1990,7,Ralfsia 
-1990,7,Chondrus crispus
-1990,7,Codium fragile
-1990,7,Saccharina latissima
-1990,7,Saccharina latissima
-1990,13,Cyanobacteria
-1990,13,Arthopyrenia
-1990,13,Verrucaria 
-1990,13,Elachista fucicola
-1990,13,Fucus 
-1990,13,Hildenbrandia rubra
-1990,13,Modiolus modiolus
-1990,13,Mytilus edulis
-1990,13,Semibalanus balanoides
-1990,13,Ulva lactuca
-1990,13,Mastocarpus stellatus
-1990,13,Ascophyllum nodosum
-1990,13,Chondrus crispus
-1990,13,Clathromorphum circumscriptum
-1990,13,Polysiphonia
-1990,13,Ceramium virgatum
-1990,13,Corallina 
-1990,13,Leathesia marina
-1990,13,Saccharina latissima
-1990,13,Palmaria palmata
-1990,13,Porphyra
-1990,15,Arthopyrenia
-1990,15,Prasiola stipitata
-1990,15,Semibalanus balanoides
-1990,15,Hildenbrandia rubra
-1990,15,Mytilus edulis
-1990,15,Fucus distichus
-1990,15,Leathesia marina
-1990,15,Porphyra
-1990,15,Ceramium virgatum
-1990,15,Chondrus crispus
-1990,15,Fucus 
-1990,15,Mastocarpus stellatus
-1990,15,Alaria esculenta
-1990,15,Modiolus modiolus
-1990,15,Saccharina latissima
-1990,19,Cyanobacteria
-1990,19,Semibalanus balanoides
-1990,19,Arthopyrenia
-1990,19,Ascophyllum nodosum
-1990,19,Ascophyllum nodosum
-1990,19,Fucus 
-1990,19,Hildenbrandia rubra
-1990,19,Ulva lactuca
-1990,19,Verrucaria 
-1990,19,Fucus 
-1990,19,Mytilus edulis
-1990,19,Ceramium virgatum
-1990,19,Mastocarpus stellatus
-1990,19,Alaria esculenta
-1990,19,Leathesia marina
-1990,19,Porphyra
-1990,19,Mastocarpus stellatus
-1990,19,Chondrus crispus
-1990,19,Alaria esculenta
-1990,19,Chondrus crispus
-1990,19,Modiolus modiolus
-1990,20,Arthopyrenia
-1990,20,Semibalanus balanoides
-1990,20,Fucus 
-1990,20,Hildenbrandia rubra
-1990,20,Mytilus edulis
-1990,20,Porphyra
-1990,20,Fucus 
-1990,20,Verrucaria 
-1990,20,Fucus distichus
-1990,20,Spongomorpha aeruginosa
-1990,20,Ceramium virgatum
-1990,20,Ceramium virgatum
-1990,20,Chondrus crispus
-1990,20,Chondrus crispus
-1990,20,Mastocarpus stellatus
-1990,20,Mastocarpus stellatus
-1990,20,Ulva intestinalis
-1990,20,Alaria esculenta
-1990,20,Alaria esculenta
-1990,22,Arthopyrenia
-1990,22,Semibalanus balanoides
-1990,22,Hildenbrandia rubra
-1990,22,Mytilus edulis
-1990,22,Fucus 
-1990,22,Verrucaria 
-1990,22,Fucus distichus
-1990,22,Chondrus crispus
-1990,22,Porphyra
-1990,22,Alaria esculenta
-1990,24,Arthopyrenia
-1990,24,Semibalanus balanoides
-1990,24,Ascophyllum nodosum
-1990,24,Corallina 
-1990,24,Fucus vesiculosus var. spiralis
-1990,24,Fucus vesiculosus
-1990,24,Hildenbrandia rubra
-1990,24,Mytilus edulis
-1990,24,Chondrus crispus
-1990,24,Fucus 
-1990,24,Metridium dianthus
-1990,24,Porphyra
-1990,24,Ulva lactuca
-1990,24,Verrucaria 
-1990,24,Chaetomorpha
-1990,24,Electra pilosa
-1990,24,Mastocarpus stellatus
-1990,24,Fucus distichus
-1990,24,Ceramium virgatum
-1990,24,Modiolus modiolus
-1990,24,Corallina officinalis
-1990,24,Codium fragile
-1990,26,Arthopyrenia
-1990,26,Ascophyllum nodosum
-1990,26,Ascophyllum nodosum
-1990,26,Fucus 
-1990,26,Fucus 
-1990,26,Hildenbrandia rubra
-1990,26,Semibalanus balanoides
-1990,26,Chondrus crispus
-1990,26,Modiolus modiolus
-1990,26,Mytilus edulis
-1990,26,Chondrus crispus
-1990,26,Corallina 
-1990,26,Verrucaria 
-1990,26,Fucus vesiculosus
-1990,26,Mastocarpus stellatus
-1990,26,Mastocarpus stellatus
-1990,26,Chaetomorpha ligustica
-1990,26,Ulva lactuca
-1990,26,Corallina officinalis
-1990,28,Prasiola stipitata
-1990,28,Fucus vesiculosus var. spiralis
-1990,28,Halichondria
-1990,28,Mytilus edulis
-1990,28,Semibalanus balanoides
-1990,28,Fucus distichus
-1990,28,Mastocarpus stellatus
-1990,28,Ascophyllum nodosum
-1990,28,Corallina 
-1990,28,Verrucaria 
-1990,28,Chaetomorpha ligustica
-1990,28,Ulva lactuca
-1990,28,Modiolus modiolus
-1990,28,Fucus 
-1990,28,Chondrus crispus
-1990,28,Saccharina latissima
-1990,2,Testudinalia testudinalis
-1990,5,Testudinalia testudinalis
-1990,7,Testudinalia testudinalis
-1990,15,Testudinalia testudinalis
-1990,20,Testudinalia testudinalis
-1990,28,Testudinalia testudinalis
-1990,2,Amphipoda
-1990,5,Amphipoda
-1990,7,Amphipoda
-1990,15,Amphipoda
-1990,20,Amphipoda
-1990,24,Amphipoda
-1990,28,Amphipoda
-1990,26,Annelida
-1990,5,Anurida maritima
-1990,7,Anurida maritima
-1990,15,Anurida maritima
-1990,22,Anurida maritima
-1990,24,Anurida maritima
-1990,26,Anurida maritima
-1990,5,Asterias forbesi
-1990,7,Asterias forbesi
-1990,24,Asterias forbesi
-1990,7,Asterias rubens
-1990,24,Asterias rubens
-1990,28,Asterias rubens
-1990,2,Carcinus maenus
-1990,7,Carcinus maenus
-1990,24,Carcinus maenus
-1990,24,Crepidula fornicata
-1990,15,Platyhelminthes
-1990,7,Henricia sanguinolenta
-1990,5,Isopoda
-1990,7,Isopoda
-1990,24,Isopoda
-1990,28,Isopoda
-1990,2,Littorina littorea
-1990,5,Littorina littorea
-1990,7,Littorina littorea
-1990,26,Littorina littorea
-1990,2,Littorina obtusata
-1990,5,Littorina obtusata
-1990,7,Littorina obtusata
-1990,15,Littorina obtusata
-1990,20,Littorina obtusata
-1990,24,Littorina obtusata
-1990,26,Littorina obtusata
-1990,28,Littorina obtusata
-1990,7,Littorina saxatilis
-1990,15,Littorina saxatilis
-1990,20,Littorina saxatilis
-1990,24,Littorina saxatilis
-1990,2,Metridium dianthus
-1990,5,Metridium dianthus
-1990,7,Metridium dianthus
-1990,26,Metridium dianthus
-1990,28,Metridium dianthus
-1990,2,Modiolus modiolus
-1990,5,Modiolus modiolus
-1990,2,Mytilus edulis
-1990,5,Mytilus edulis
-1990,5,Nematodes
-1990,15,Nematodes
-1990,20,Nematodes
-1990,5,Nemertea
-1990,2,Nucella lapillus
-1990,5,Nucella lapillus
-1990,7,Nucella lapillus
-1990,15,Nucella lapillus
-1990,20,Nucella lapillus
-1990,22,Nucella lapillus
-1990,24,Nucella lapillus
-1990,26,Nucella lapillus
-1990,28,Nucella lapillus
-1990,24,Nudibranchia
-1990,24,Polychaeta (class in Lophotrochozoa)
-1990,5,Semibalanus balanoides
-1990,28,Strongylocentrotus droebachiensis
-1990,1,Testudinalia testudinalis
-1990,1,Amphipoda
-1990,1,Anurida maritima
-1990,1,Asterias rubens
-1990,1,Carcinus maenus
-1990,1,Littorina littorea
-1990,1,Littorina obtusata
-1990,1,Littorina saxatilis
-1990,1,Metridium dianthus
-1990,1,Mytilus edulis
-1990,1,Nematodes
-1990,1,Spirorbis
-1990,13,Amphipoda
-1990,13,Anurida maritima
-1990,13,Hiatella arctica
-1990,13,Isopoda
-1990,13,Littorina obtusata
-1990,13,Littorina saxatilis
-1990,13,Nematodes
-1990,13,Nucella lapillus
-1990,19,Testudinalia testudinalis
-1990,19,Amphipoda
-1990,19,Anurida maritima
-1990,19,Hiatella arctica
-1990,19,Isopoda
-1990,19,Littorina littorea
-1990,19,Littorina obtusata
-1990,19,Littorina saxatilis
-1990,19,Nucella lapillus
-1990,19,Polychaeta (class in Lophotrochozoa)
+name,value
+1,Cyanobacteria
+2,Arthopyrenia
+3,Fucus vesiculosus var. spiralis
+4,Ascophyllum nodosum
+5,Hildenbrandia rubra
+6,Chaetomorpha ligustica
+7,Semibalanus balanoides
+8,Verrucaria 
+9,Mastocarpus stellatus
+10,Fucus 
+11,Ralfsia 
+12,Corallina 
+13,Elachista fucicola
+14,Fucus vesiculosus
+15,Polysiphonia
+16,Clathromorphum circumscriptum
+17,Ulva intestinalis
+18,Ulva lactuca
+19,Chondrus crispus
+20,Cladophora
+21,Fucus distichus
+22,Prasiola stipitata
+23,Leathesia marina
+24,Ceramium virgatum
+25,Codium fragile
+26,Corallina officinalis
+27,Chaetomorpha
+28,Saccharina latissima
+29,Mytilus edulis
+30,Ectocarpus
+31,Modiolus modiolus
+32,Palmaria palmata
+33,Porphyra
+34,Alaria esculenta
+35,Spongomorpha aeruginosa
+36,Metridium dianthus
+37,Electra pilosa
+38,Halichondria
+39,Testudinalia testudinalis
+40,Amphipoda
+41,Annelida
+42,Anurida maritima
+43,Asterias forbesi
+44,Asterias rubens
+45,Carcinus maenus
+46,Crepidula fornicata
+47,Platyhelminthes
+48,Henricia sanguinolenta
+49,Isopoda
+50,Littorina littorea
+51,Littorina obtusata
+52,Littorina saxatilis
+53,Nematodes
+54,Nemertea
+55,Nucella lapillus
+56,Nudibranchia
+57,Polychaeta (class in Lophotrochozoa)
+58,Strongylocentrotus droebachiensis
+59,Spirorbis
+60,Hiatella arctica

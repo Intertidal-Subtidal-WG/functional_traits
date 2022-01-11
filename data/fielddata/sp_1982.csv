@@ -1,311 +1,67 @@
-Year,Transect,Organism
-1982,1,Cryptosula pallasiana
-1982,1,Phymatolithon lenormandii
-1982,2,Prasiola stipitata
-1982,2,Ascophyllum nodosum
-1982,2,Fucus 
-1982,2,Hildenbrandia rubra
-1982,2,Semibalanus balanoides
-1982,2,Ectocarpus
-1982,2,Verrucaria 
-1982,2,Fucus vesiculosus
-1982,2,Mastocarpus stellatus
-1982,2,Ascophyllum nodosum
-1982,2,Fucus 
-1982,2,Chondrus crispus
-1982,2,Cryptosula pallasiana
-1982,2,Saccharina latissima
-1982,2,Ulva lactuca
-1982,5,Hildenbrandia rubra
-1982,5,Corallina 
-1982,5,Phymatolithon lenormandii
-1982,5,Cryptosula pallasiana
-1982,5,Corallina officinalis
-1982,5,Ralfsia 
-1982,7,Prasiola stipitata
-1982,7,Ascophyllum nodosum
-1982,7,Chondrus crispus
-1982,7,Fucus distichus
-1982,7,Hildenbrandia rubra
-1982,7,Mytilus edulis
-1982,7,Ulva lactuca
-1982,7,Verrucaria 
-1982,7,Mastocarpus stellatus
-1982,7,Modiolus modiolus
-1982,7,Corallina 
-1982,7,Phymatolithon lenormandii
-1982,8,Cyanobacteria
-1982,8,Hildenbrandia rubra
-1982,8,Phymatolithon lenormandii
-1982,8,Semibalanus balanoides
-1982,8,Cryptosula pallasiana
-1982,10,Semibalanus balanoides
-1982,10,Ceramium virgatum
-1982,10,Hildenbrandia rubra
-1982,10,Chondrus crispus
-1982,10,Phymatolithon lenormandii
-1982,10,Cryptosula pallasiana
-1982,10,Ulva lactuca
-1982,10,Mastocarpus stellatus
-1982,10,Modiolus modiolus
-1982,10,Corallina officinalis
-1982,11,Cyanobacteria
-1982,11,Prasiola stipitata
-1982,11,Semibalanus balanoides
-1982,11,Mytilus edulis
-1982,11,Ascophyllum nodosum
-1982,11,Chondrus crispus
-1982,11,Mastocarpus stellatus
-1982,11,Clathromorphum circumscriptum
-1982,13,Cyanobacteria
-1982,13,Prasiola stipitata
-1982,13,Semibalanus balanoides
-1982,13,Fucus vesiculosus var. spiralis
-1982,13,Hildenbrandia rubra
-1982,13,Mytilus edulis
-1982,13,Phymatolithon lenormandii
-1982,13,Ascophyllum nodosum
-1982,13,Mastocarpus stellatus
-1982,13,Chondrus crispus
-1982,15,Semibalanus balanoides
-1982,15,Hildenbrandia rubra
-1982,15,Mytilus edulis
-1982,17,Cyanobacteria
-1982,17,Fucus vesiculosus var. spiralis
-1982,17,Fucus vesiculosus
-1982,17,Hildenbrandia rubra
-1982,17,Mytilus edulis
-1982,17,Chondrus crispus
-1982,17,Mastocarpus stellatus
-1982,17,Phymatolithon lenormandii
-1982,18,Cyanobacteria
-1982,18,Mytilus edulis
-1982,18,Hildenbrandia rubra
-1982,18,Ralfsia 
-1982,18,Phymatolithon lenormandii
-1982,20,Prasiola stipitata
-1982,20,Fucus distichus
-1982,22,Semibalanus balanoides
-1982,22,Mytilus edulis
-1982,22,Modiolus modiolus
-1982,24,Ascophyllum nodosum
-1982,24,Fucus vesiculosus var. spiralis
-1982,24,Hildenbrandia rubra
-1982,24,Semibalanus balanoides
-1982,24,Chondrus crispus
-1982,24,Fucus 
-1982,24,Fucus 
-1982,24,Fucus distichus
-1982,24,Corallina officinalis
-1982,24,Corallina 
-1982,24,Phymatolithon lenormandii
-1982,26,Hildenbrandia rubra
-1982,26,Verrucaria 
-1982,26,Cryptosula pallasiana
-1982,28,Prasiola stipitata
-1982,28,Ulva intestinalis
-1982,28,Hildenbrandia rubra
-1982,28,Semibalanus balanoides
-1982,28,Corallina 
-1982,28,Phymatolithon lenormandii
-1982,28,Ralfsia 
-1982,28,Cryptosula pallasiana
-1982,5,Testudinalia testudinalis
-1982,20,Testudinalia testudinalis
-1982,28,Testudinalia testudinalis
-1982,2,Amphipoda
-1982,5,Amphipoda
-1982,15,Amphipoda
-1982,20,Amphipoda
-1982,24,Amphipoda
-1982,26,Amphipoda
-1982,28,Amphipoda
-1982,28,Anomia simplex
-1982,7,Anurida maritima
-1982,24,Anurida maritima
-1982,2,Asterias forbesi
-1982,24,Asterias forbesi
-1982,2,Asterias rubens
-1982,5,Asterias rubens
-1982,7,Asterias rubens
-1982,22,Asterias rubens
-1982,24,Asterias rubens
-1982,26,Asterias rubens
-1982,28,Asterias rubens
-1982,15,Cancer borealis
-1982,7,Cancer irroratus
-1982,22,Cancer irroratus
-1982,26,Cancer irroratus
-1982,28,Cancer irroratus
-1982,2,Carcinus maenus
-1982,5,Carcinus maenus
-1982,7,Carcinus maenus
-1982,24,Carcinus maenus
-1982,28,Carcinus maenus
-1982,15,Platyhelminthes
-1982,20,Platyhelminthes
-1982,22,Platyhelminthes
-1982,15,Hiatella arctica
-1982,24,Hiatella arctica
-1982,22,Isopoda
-1982,24,Isopoda
-1982,2,Lepidonotus
-1982,22,Lepidonotus
-1982,28,Lepidonotus
-1982,2,Littorina littorea
-1982,5,Littorina littorea
-1982,7,Littorina littorea
-1982,26,Littorina littorea
-1982,28,Littorina littorea
-1982,2,Littorina obtusata
-1982,5,Littorina obtusata
-1982,7,Littorina obtusata
-1982,15,Littorina obtusata
-1982,20,Littorina obtusata
-1982,24,Littorina obtusata
-1982,26,Littorina obtusata
-1982,28,Littorina obtusata
-1982,5,Littorina saxatilis
-1982,22,Littorina saxatilis
-1982,24,Littorina saxatilis
-1982,7,Metridium dianthus
-1982,22,Metridium dianthus
-1982,24,Metridium dianthus
-1982,28,Metridium dianthus
-1982,2,Modiolus modiolus
-1982,5,Modiolus modiolus
-1982,15,Modiolus modiolus
-1982,24,Modiolus modiolus
-1982,28,Modiolus modiolus
-1982,20,Mytilus edulis
-1982,24,Mytilus edulis
-1982,26,Mytilus edulis
-1982,2,Nematodes
-1982,20,Nematodes
-1982,24,Nematodes
-1982,15,Nemertea
-1982,22,Nemertea
-1982,2,Nucella lapillus
-1982,5,Nucella lapillus
-1982,7,Nucella lapillus
-1982,15,Nucella lapillus
-1982,20,Nucella lapillus
-1982,24,Nucella lapillus
-1982,26,Nucella lapillus
-1982,28,Nucella lapillus
-1982,22,Nudibranchia
-1982,20,Oligochaeta 
-1982,2,Ophiopholis
-1982,5,Ophiopholis
-1982,15,Ophiopholis
-1982,24,Ophiopholis
-1982,26,Ophiopholis
-1982,28,Ophiopholis
-1982,2,Pagurus acadianus
-1982,5,Pagurus acadianus
-1982,20,Polychaeta (class in Lophotrochozoa)
-1982,22,Polychaeta (class in Lophotrochozoa)
-1982,24,Polychaeta (class in Lophotrochozoa)
-1982,28,Polychaeta (class in Lophotrochozoa)
-1982,5,Semibalanus balanoides
-1982,7,Semibalanus balanoides
-1982,2,Spirorbis
-1982,2,Strongylocentrotus droebachiensis
-1982,5,Strongylocentrotus droebachiensis
-1982,7,Strongylocentrotus droebachiensis
-1982,15,Strongylocentrotus droebachiensis
-1982,22,Strongylocentrotus droebachiensis
-1982,26,Strongylocentrotus droebachiensis
-1982,28,Strongylocentrotus droebachiensis
-1982,2,Boreochiton ruber
-1982,15,Notoplana
-1982,20,Notoplana
-1982,22,Notoplana
-1982,20,Acoela
-1982,22,Euplana
-1982,22,Nicolea
-1982,7,Halichondria
-1982,2,Aplidium
-1982,7,Aplidium
-1982,22,Mya arenaria
-1982,2,Cirratulus
-1982,1,Testudinalia testudinalis
-1982,1,Anurida maritima
-1982,1,Cancer irroratus
-1982,1,Carcinus maenus
-1982,1,Culicoides
-1982,1,Littorina littorea
-1982,1,Littorina obtusata
-1982,1,Mytilus edulis
-1982,1,Nematodes
-1982,1,Pagurus acadianus
-1982,1,Praunus
-1982,1,Semibalanus balanoides
-1982,1,Spirorbis
-1982,1,Boreochiton ruber
-1982,8,Amphipoda
-1982,8,Asterias rubens
-1982,8,Carcinus maenus
-1982,8,Lepidonotus
-1982,8,Littorina littorea
-1982,8,Littorina obtusata
-1982,8,Nematodes
-1982,8,Nucella lapillus
-1982,8,Ophiopholis
-1982,8,Spirorbis
-1982,8,Pagurus acadianus
-1982,10,Amphipoda
-1982,10,Anurida maritima
-1982,10,Littorina obtusata
-1982,10,Nucella lapillus
-1982,10,Ophiopholis
-1982,11,Testudinalia testudinalis
-1982,11,Amphipoda
-1982,11,Carcinus maenus
-1982,11,Littorina littorea
-1982,11,Littorina obtusata
-1982,11,Nucella lapillus
-1982,11,Spirorbis
-1982,11,Strongylocentrotus droebachiensis
-1982,13,Testudinalia testudinalis
-1982,13,Amphipoda
-1982,13,Asterias rubens
-1982,13,Cancer irroratus
-1982,13,Hiatella arctica
-1982,13,Isopoda
-1982,13,Littorina littorea
-1982,13,Littorina obtusata
-1982,13,Modiolus modiolus
-1982,13,Nemertea
-1982,13,Nucella lapillus
-1982,13,Oligochaeta 
-1982,13,Polychaeta (class in Lophotrochozoa)
-1982,13,Spirorbis
-1982,13,Lepidonotus
-1982,13,Dendrodoa
-1982,13,Anomia simplex
-1982,17,Testudinalia testudinalis
-1982,17,Amphipoda
-1982,17,Carcinus maenus
-1982,17,Lepidonotus
-1982,17,Littorina littorea
-1982,17,Littorina obtusata
-1982,17,Pagurus acadianus
-1982,17,Semibalanus balanoides
-1982,17,Strongylocentrotus droebachiensis
-1982,18,Testudinalia testudinalis
-1982,18,Anurida maritima
-1982,18,Asterias forbesi
-1982,18,Cancer
-1982,18,Carcinus maenus
-1982,18,Flabellina 
-1982,18,Lepidonotus
-1982,18,Littorina littorea
-1982,18,Littorina obtusata
-1982,18,Littorina saxatilis
-1982,18,Mya arenaria
-1982,18,Notoplana
-1982,18,Nucella lapillus
-1982,18,Oligochaeta 
-1982,18,Polychaeta (class in Lophotrochozoa)
-1982,18,Semibalanus balanoides
+name,value
+1,Cryptosula pallasiana
+2,Phymatolithon lenormandii
+3,Prasiola stipitata
+4,Ascophyllum nodosum
+5,Fucus 
+6,Hildenbrandia rubra
+7,Semibalanus balanoides
+8,Ectocarpus
+9,Verrucaria 
+10,Fucus vesiculosus
+11,Mastocarpus stellatus
+12,Chondrus crispus
+13,Saccharina latissima
+14,Ulva lactuca
+15,Corallina 
+16,Corallina officinalis
+17,Ralfsia 
+18,Fucus distichus
+19,Mytilus edulis
+20,Modiolus modiolus
+21,Cyanobacteria
+22,Ceramium virgatum
+23,Clathromorphum circumscriptum
+24,Fucus vesiculosus var. spiralis
+25,Ulva intestinalis
+26,Testudinalia testudinalis
+27,Amphipoda
+28,Anomia simplex
+29,Anurida maritima
+30,Asterias forbesi
+31,Asterias rubens
+32,Cancer borealis
+33,Cancer irroratus
+34,Carcinus maenus
+35,Platyhelminthes
+36,Hiatella arctica
+37,Isopoda
+38,Lepidonotus
+39,Littorina littorea
+40,Littorina obtusata
+41,Littorina saxatilis
+42,Metridium dianthus
+43,Nematodes
+44,Nemertea
+45,Nucella lapillus
+46,Nudibranchia
+47,Oligochaeta 
+48,Ophiopholis
+49,Pagurus acadianus
+50,Polychaeta (class in Lophotrochozoa)
+51,Spirorbis
+52,Strongylocentrotus droebachiensis
+53,Boreochiton ruber
+54,Notoplana
+55,Acoela
+56,Euplana
+57,Nicolea
+58,Halichondria
+59,Aplidium
+60,Mya arenaria
+61,Cirratulus
+62,Culicoides
+63,Praunus
+64,Dendrodoa
+65,Cancer
+66,Flabellina 

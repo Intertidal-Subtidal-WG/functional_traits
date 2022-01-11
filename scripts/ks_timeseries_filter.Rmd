@@ -80,7 +80,7 @@ pc_ct2 <- pc_ct2 %>%
 
 # replace pc_ct with the new values and rerun splits
 pc_ct <- pc_ct2 %>%
-  select((c(Year, Transect, unique_name))) %>%
+  select((c(Year, unique_name))) %>%
   rename(Organism = unique_name)
 ```
 
