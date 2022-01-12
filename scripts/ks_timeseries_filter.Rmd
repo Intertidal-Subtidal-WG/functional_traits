@@ -185,14 +185,17 @@ pc_ct_sp <- pc_ct %>%
 not_in <- pc_ct_sp %>%
   filter(!(Organism %in% c(all_sp$species)))
 
+#write.csv(not_in, here('data', 'fielddata', 'not-in.csv'))
 
+# extract higher taxonomy
+pc_ct_sp_tax3 <- get_gbifid_(not_in$Organism, rows = 1, method = 'backbone')
 
-pc_ct_sp2 <- pc_ct2 %>%
-  select(unique_name) %>%
-  distinct()
+pc_ct_sp_tax3 <- dplyr::bind_rows(pc_ct_sp_tax3, .id = "query")
 
-not_in2 <- pc_ct_sp2 %>%
-  filter(!(unique_name %in% c(all_sp$species)))
+pc_ct_sp_tax2 <- pc_ct_sp_tax3 %>%
+  select(query, kingdom, phylum, class, order)
+
+write.csv(pc_ct_sp_tax2, here('data', 'fielddata', 'not-in-higher.csv'))
 ```
 
 
