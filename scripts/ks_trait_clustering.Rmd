@@ -29,7 +29,7 @@ library(ggfortify)
 Load in data
 ```{r load-in}
 #be sure to use na.strings or imputation will fail!
-trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
+trait_raw <- read.csv(here("data", '20220117_ShoalsFunctionalTraits.csv'), 
                       na.strings = c("","NA", 'N/A'))
 
 #or load in imputed data to skip ahead
@@ -53,10 +53,10 @@ Filtering relevant traits for imputation only
 algae_raw <- trait_raw %>%
   subset(group == 'Algae') %>%
     dplyr:::select(species, group, common_name_division_bgr,
-                   turf_subcanopy_canopy_algae, Steneck_Dethier_morphology_algae, 
-                   body_size_avg_bin, morphology1, benthic, epibiotic,
+                   turf_subcanopy_canopy_algae, steneck_dethier_morphology_algae, # note 20220117 column names in lowercase
+                   body_size_avg_bin, benthic, epibiotic,
                    #epiphytic, epizoic, epifaunal, epilithic, 
-                   #invasive, 
+                   #invasive, #morphology1
                  intertidal, subtidal)
 
 animal_raw <- trait_raw %>%
@@ -73,8 +73,8 @@ glimpse(animal_raw)
 # DATA CLEANING #
 # all columns are character, must be factor.
 algae_clean <- algae_raw %>% 
-  mutate(Steneck_Dethier_morphology_algae = replace(Steneck_Dethier_morphology_algae, 
-                                                    Steneck_Dethier_morphology_algae == 'corticated macrophytes',
+  mutate(steneck_dethier_morphology_algae = replace(steneck_dethier_morphology_algae, 
+                                                    steneck_dethier_morphology_algae == 'corticated macrophytes',
                                                     'corticated macrophyte')) %>% 
   mutate(across(.fns = ~ as.factor(.)))
 # motility_adult has a "both" in there that should probably be fixed
@@ -83,31 +83,31 @@ animal_clean <- animal_raw %>%
          invasive = replace(invasive, invasive == 'no?', 'no'),
          invasive = replace(invasive, invasive == 'yes (controversial)', 'yes')) %>% 
   mutate(across(.fns = ~ as.factor(.)))
-# write_csv(algae_clean, "../data/algae_clean.csv")
-#write_csv(animal_clean, '../data/animal_clean.csv')
+#write_csv(algae_clean, here("data","20220117_algae_clean.csv"))
+#write_csv(animal_clean, here("data","20220117_animal_clean.csv"))
 ```
 
 
 ```{r}
 
-algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'logreg', print = F)
+algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'cart', print = F)
 algae_imp2 <- complete(algae_imp) #action
 algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
 
-save(algae_imp2, file = here('data','algae_imputed.RData'))
-write.csv(algae_imp2, file = here('data', 'clean','20210806_algae_imputed.csv'))
+#save(algae_imp2, file = here('data','algae_imputed.RData'))
+write.csv(algae_imp2, file = here('data', 'clean','20220117_algae_imputed.csv'))
 
 #to see logged events
 algae_imp$loggedEvents
 
 
 
-animal_imp <- mice(animal_clean[,3:ncol(animal_clean)], m=5, method = 'polyreg', print = F)
+animal_imp <- mice(animal_clean[,3:ncol(animal_clean)], m=5, method = 'cart', print = F)
 animal_imp2 <- complete(animal_imp) #action
 animal_imp2 <- cbind(animal_raw[,1:2],animal_imp2)
 
-save(animal_imp2, file = here('data','animals_imputed.RData'))
-write.csv(animal_imp2, file = here('data', 'clean','20210806_animal_imputed.csv'))
+#save(animal_imp2, file = here('data','animals_imputed.RData'))
+write.csv(animal_imp2, file = here('data', 'clean','20220117_animal_imputed.csv'))
 
 #to see logged events
 animal_imp$loggedEvents
@@ -196,7 +196,7 @@ algae_comparison<-data.frame(algae_combdf[1,], algae_combdf[2,])
 colnames(algae_comparison) <- c("c1", "c2")
 
 #Select the variables to use from the imputed data
-algae_dataSET <- algae_imp2[,c(1:11)]
+algae_dataSET <- algae_imp2[,c(1:10)]
 algae_spnames <- algae_dataSET[,"species"]
 
 #variables for the matrix
@@ -239,8 +239,8 @@ coldiss(algae_matrix)
 #save matrix as R obejct and csv
 algae_matrix2 <- fortify(algae_matrix)
 
-save(algae_matrix, file = here('data','algae_matrix.RData'))
-write.csv(algae_matrix2, file = here('data', 'clean', '20210806_algae_matrix.csv'))
+#save(algae_matrix, file = here('data','algae_matrix.RData'))
+write.csv(algae_matrix2, file = here('data', 'clean', '20220117_algae_matrix.csv'))
 ```
 
 
@@ -299,19 +299,19 @@ coldiss(animal_matrix)
 animal_matrix2 <- fortify(animal_matrix)
 
 
-save(animal_matrix, file = here('data','animal_matrix.RData'))
-write.csv(animal_matrix2, file = here('data', 'clean', '20210806_animal_matrix.csv'))
+#save(animal_matrix, file = here('data','animal_matrix.RData'))
+write.csv(animal_matrix2, file = here('data', 'clean', '20220117_animal_matrix.csv'))
 ```
 
 ```{r export graphs}
-png(filename = here('output', '20210806_algae-dissimilarity.png'),
+png(filename = here('output', '20220117_algae-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(algae_matrix)
 dev.off()
 
 
-png(filename = here('output', '20210806_animal-dissimilarity.png'),
+png(filename = here('output', '20220117_animal-dissimilarity.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(animal_matrix)
@@ -398,7 +398,7 @@ methodsClust <- c("single", "complete", "average")
 ######Algae  
 #build the model and select the number of clusters
 algae_fit <- hclust(algae_matrix, method = methodsClust[3])  #change cluster method
-algae_clust <- cutree(algae_fit, 4)  # change number of clusters
+algae_clust <- cutree(algae_fit, 5)  # change number of clusters
 
 #make into dendro data for plotting
 algae_dendr <- dendro_data(algae_fit, type="rectangle") 
@@ -416,7 +416,7 @@ algae_dendr_plot <- ggplot() +
 
 algae_dendr_plot
 
-ggsave(here('output', '20210806_algae-cluster-dendro.png'), plot = last_plot())
+ggsave(here('output', '20220117_algae-cluster-dendro.png'), plot = last_plot())
 
 ######Animals
 animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
@@ -436,7 +436,7 @@ animal_dendr_plot <- ggplot() +
 
 animal_dendr_plot
 
-ggsave(here('output', '20210806_animal-cluster-dendro.png'), plot = last_plot())
+ggsave(here('output', '20220117_animal-cluster-dendro.png'), plot = last_plot())
 ```
 
 to do, probably figure out other coloring methods, if i can set k with rtsne, etc
@@ -453,12 +453,12 @@ tsne_plot_ag <- data.frame(x = tsne_obj_ag$Y[,1], y = tsne_obj_ag$Y[,2],
 
 tsne_algae <- ggplot(tsne_plot_ag, aes(x=x, y=y)) + 
   #geom_point(aes(color = common_name_division_bgr)) +
-  geom_point(aes(color = morphology1)) +
+  geom_point(aes(color = turf_subcanopy_canopy_algae)) +
   theme_classic()
 
 tsne_algae
 
-#ggsave(here('output', '20210730_algae-cluster-tsne2.png'), plot = last_plot())
+ggsave(here('output', '20220117_algae-cluster-tsne.png'), plot = last_plot())
 
 ## animals
 
@@ -479,7 +479,7 @@ tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) +
 
 tsne_animal
 
-ggsave(here('output', '20210806_animal-cluster-tsne.png'), plot = last_plot())
+ggsave(here('output', '20220117_animal-cluster-tsne.png'), plot = last_plot())
 
 ```
 
