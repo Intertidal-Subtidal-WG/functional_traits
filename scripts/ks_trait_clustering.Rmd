@@ -453,12 +453,13 @@ tsne_plot_ag <- data.frame(x = tsne_obj_ag$Y[,1], y = tsne_obj_ag$Y[,2],
 
 tsne_algae <- ggplot(tsne_plot_ag, aes(x=x, y=y)) + 
   #geom_point(aes(color = common_name_division_bgr)) +
-  geom_point(aes(color = turf_subcanopy_canopy_algae)) +
+  #geom_point(aes(color = turf_subcanopy_canopy_algae)) +
+  geom_point(aes(color = steneck_dethier_morphology_algae)) +
   theme_classic()
 
 tsne_algae
 
-ggsave(here('output', '20220117_algae-cluster-tsne.png'), plot = last_plot())
+ggsave(here('output', '20220117_algae-cluster-tsne_sd.png'), plot = last_plot())
 
 ## animals
 
