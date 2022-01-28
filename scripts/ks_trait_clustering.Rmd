@@ -475,12 +475,15 @@ tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2],
 
 tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
   #geom_point(aes(color = common_name_division_bgr)) +
-  geom_point(aes(color = phylum)) +
+  #geom_point(aes(color = phylum)) +
+  #geom_point(aes(color = trophic_level)) +
+  #geom_point(aes(color = dietary_pref_c)) +
+  geom_point(aes(color = body_size_avg_bin)) +
   theme_classic()
 
 tsne_animal
 
-ggsave(here('output', '20220117_animal-cluster-tsne.png'), plot = last_plot())
+ggsave(here('output', '20220117_animal-cluster-tsne_diet.png'), plot = last_plot())
 
 ```
 
