@@ -66,9 +66,11 @@ sp_1982r <- sp_1982r %>%
 
 
 sp_1982r_animal <- sp_1982r %>%
-  subset(species %in% animal_imp2$species)
+  full_join(animal_imp2) %>%
+  filter(!(is.na(group)))
 sp_1982r_algae <- sp_1982r %>%
-  subset(species %in% algae_imp2$species)
+  full_join(algae_imp2) %>%
+  filter(!(is.na(group)))
 
 write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1982-1995_animal.csv'))
 write.csv(sp_1982r_algae, here('data', 'clean', '20220128_1982-1995_algae.csv'))
