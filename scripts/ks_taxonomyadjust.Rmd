@@ -1,0 +1,56 @@
+---
+title: "traits+years"
+author: "Kate Sheridan"
+date: "1/28/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(here)
+```
+
+
+```{r}
+#load in imputed data
+animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))
+algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))
+
+#remove x column
+animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
+algae_imp2 <- algae_imp2[,2:ncol(algae_imp2),]
+
+#make factors
+animal_imp2 <- animal_imp2 %>% 
+  mutate(across(.fns = ~ as.factor(.)))
+algae_imp2 <- algae_imp2 %>% 
+  mutate(across(.fns = ~ as.factor(.)))
+
+#uncomment the one you need
+sp_1982r <- read.csv(here('data', 'fielddata', 'sp_1982-1995.csv'))
+sp_1996r <- read.csv(here('data', 'fielddata', 'sp_1996-2006.csv'))
+sp_2011r <- read.csv(here('data', 'fielddata', 'sp_2011-end.csv'))
+
+# group key
+sp_key <- read.csv((here('data', 'splists', 'species_group_key.csv')))
+```
+
+
+```{r}
+# update taxonomy
+
+
+```
+
+
+
+
+```{r}
+#filter
+algae_imp2 <- algae_imp2 %>%
+  subset(species %in% sp_list$value)
+
+animal_imp2 <- animal_imp2 %>%
+  subset(species %in% sp_list$value)
+```
+
