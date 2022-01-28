@@ -43,7 +43,7 @@ Astyris lunata,Invertebrate,Gastropoda
 Grammaria,Invertebrate,
 Halacarus,Invertebrate,
 Culicoides,Invertebrate,
-Ophiopholis,Invertebrate,
+Ophiopholis,Invertebrate,Ophiopholis aculeata
 Platyhelminthes,Invertebrate,Small worm
 Micrura affinis,Invertebrate,Small worm
 Nematodes,Invertebrate,Small worm
@@ -53,11 +53,11 @@ Acoela,Invertebrate,Small worm
 Turbellaria,Invertebrate,Small worm
 Euplana,Invertebrate,Small worm
 Foviella,Invertebrate,Small worm
-Halichondria,Invertebrate,
-Diplosoma,Invertebrate,
-Aplidium,Invertebrate,
-Molgula,Invertebrate,
-Dendrodoa,Invertebrate,
+Halichondria,Invertebrate,Halichondria panicea
+Diplosoma,Invertebrate,Tunicate
+Aplidium,Invertebrate,Aplidium pallidum
+Molgula,Invertebrate,Tunicate
+Dendrodoa,Invertebrate,Dendrodoa carnea
 Corallina,Red Algae,
 Ceramium virgatum,Red Algae,
 Plumaria plumosa,Red Algae,
