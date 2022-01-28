@@ -13,8 +13,8 @@ library(here)
 
 ```{r}
 #load in imputed data
-animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))
-algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))
+animal_imp2 <- read.csv(file = here('data', 'clean','20220117_animal_imputed.csv'))
+algae_imp2 <- read.csv(file = here('data', 'clean','20220117_algae_imputed.csv'))
 
 #remove x column
 animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
@@ -27,19 +27,51 @@ algae_imp2 <- algae_imp2 %>%
   mutate(across(.fns = ~ as.factor(.)))
 
 #uncomment the one you need
-sp_1982r <- read.csv(here('data', 'fielddata', 'sp_1982-1995.csv'))
-sp_1996r <- read.csv(here('data', 'fielddata', 'sp_1996-2006.csv'))
-sp_2011r <- read.csv(here('data', 'fielddata', 'sp_2011-end.csv'))
+sp_1982r <- read.csv(here('data', 'fielddata', 'sp_1982-1995.csv')) %>%
+  select(value) %>%
+  rename(species = value)
+sp_1996r <- read.csv(here('data', 'fielddata', 'sp_1996-2006.csv')) %>%
+  select(value) %>%
+  rename(species = value)
+sp_2011r <- read.csv(here('data', 'fielddata', 'sp_2011-end.csv')) %>%
+  select(value) %>%
+  rename(species = value)
 
 # group key
-sp_key <- read.csv((here('data', 'splists', 'species_group_key.csv')))
+sp_key <- read.csv((here('data', 'splists', 'species_group_key.csv'))) %>%
+  filter(!(is.na(Replacement)))
+
+sp_key2 <- setNames(as.list(sp_key$Species), sp_key$Replacement)
+sp_key2 <- unlist(sp_key2)
+
+
 ```
 
 
 ```{r}
 # update taxonomy
 
+sp_1982r$species2 <- sapply(sp_1982r$species, function(species) {
+  names(sp_key2)[sp_key2 == species]
+})
 
+# this makes up for that real quick and easy
+sp_1982r <- sp_1982r %>%
+  mutate(species2 = str_replace_all(species2, c("character\\(0\\)" = ""))) %>%
+  na_if("") %>%
+  mutate(species3 = coalesce(c(species2), c(species))) %>%
+  select(species3) %>%
+  rename(species = species3) %>%
+  distinct()
+
+
+sp_1982r_animal <- sp_1982r %>%
+  subset(species %in% animal_imp2$species)
+sp_1982r_algae <- sp_1982r %>%
+  subset(species %in% algae_imp2$species)
+
+write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1982-1995_animal.csv'))
+write.csv(sp_1982r_algae, here('data', 'clean', '20220128_1982-1995_algae.csv'))
 ```
 
 
