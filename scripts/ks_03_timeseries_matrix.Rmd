@@ -10,27 +10,20 @@ This should be run after 02_timeseries_taxonomy-traits where the raw species lis
 ```{r setup, include=FALSE}
 ## I don't think I actually need all these? some of them are from previous iterations
 
-
-
 library(cluster)
-
-library(ggfortify)
 library(ggthemes)
 library(fpc)
 library(gridExtra)
 
-library(stringr)
-library(vegan)
-library(ggdendro)
-library(Rtsne)
-library(tsne)
 
 # legendre
 library(gclus)
 
 # definitely use these
 library(tidyverse)
-library(nomclust) 
+library(nomclust)
+library(vegan)
+library(ggfortify)
 library(ggplot2)
 library(dplyr)
 library(here)
@@ -655,7 +648,7 @@ animal_1996_eval <- animal_eval
 
 
 
-## validation/evaluation for each method to pick number of clusters and matrix type 
+### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r animal-validation2}
 ##------------ VALIDATION
 
@@ -770,6 +763,37 @@ for(i in 1:length(nomclustEvals)){
                          paste0("animal_", nomclustEvals[i],"_plot-1996-2006.pdf")))
 }
 ```
+
+### matrix
+
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+animal_1996_matrix <- good3(animal_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(animal_1996_matrix) 
+
+#mds
+animal_1996_mds <- metaMDS(animal_1996_matrix)
+
+plot(animal_1996_mds)
+coldiss(animal_1996_matrix)
+#save these as graphs for looking at later
+
+animal_1996_matrix2 <- fortify(animal_1996_matrix)
+
+#save(animal_matrix, file = here('data','animal_matrix-1996r.RData'))
+write.csv(animal_1996_matrix2, file = here('data', 'clean', '20220128_animal_matrix_1996-1995.csv'))
+
+png(filename = here('output', 'cluster_ks', '20220128_timeseries',
+                    'animal-dissimilarity_1996-1995.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(animal_1996_matrix)
+dev.off()
+```
+
 
 
 
@@ -939,7 +963,7 @@ animal_2011_eval <- animal_eval
 
 
 
-## validation/evaluation for each method to pick number of clusters and matrix type 
+### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r animal-validation3}
 ##------------ VALIDATION
 
@@ -1056,7 +1080,35 @@ for(i in 1:length(nomclustEvals)){
 ```
 
 
+### matrix
 
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+animal_2011_matrix <- good3(animal_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(animal_2011_matrix) 
+
+#mds
+animal_2011_mds <- metaMDS(animal_2011_matrix)
+
+plot(animal_2011_mds)
+coldiss(animal_2011_matrix)
+#save these as graphs for looking at later
+
+animal_2011_matrix2 <- fortify(animal_2011_matrix)
+
+#save(animal_matrix, file = here('data','animal_matrix-2011r.RData'))
+write.csv(animal_2011_matrix2, file = here('data', 'clean', '20220128_animal_matrix_2011-end.csv'))
+
+png(filename = here('output', 'cluster_ks', '20220128_timeseries',
+                    'animal-dissimilarity_2011-end.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(animal_2011_matrix)
+dev.off()
+```
 
 
 
@@ -1228,7 +1280,7 @@ algae_1982_eval <- algae_eval
 
 
 
-## validation/evaluation for each method to pick number of clusters and matrix type 
+### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r algae-validation}
 ##------------ VALIDATION
 
@@ -1344,7 +1396,35 @@ for(i in 1:length(nomclustEvals)){
 }
 ```
 
+### matrix
 
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+algae_1982_matrix <- good3(algae_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(algae_1982_matrix) 
+
+#mds
+algae_1982_mds <- metaMDS(algae_1982_matrix)
+
+plot(algae_1982_mds)
+coldiss(algae_1982_matrix)
+#save these as graphs for looking at later
+
+algae_1982_matrix2 <- fortify(algae_1982_matrix)
+
+#save(algae_matrix, file = here('data','algae_matrix-1982r.RData'))
+write.csv(algae_1982_matrix2, file = here('data', 'clean', '20220128_algae_matrix_1982-1995.csv'))
+
+png(filename = here('output', 'cluster_ks', '20220128_timeseries',
+                    'algae-dissimilarity_1982-1995.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(algae_1982_matrix)
+dev.off()
+```
 
 
 
@@ -1515,7 +1595,7 @@ algae_1982_eval <- algae_eval
 
 
 
-## validation/evaluation for each method to pick number of clusters and matrix type 
+### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r algae-validation2}
 ##------------ VALIDATION
 
@@ -1631,6 +1711,35 @@ for(i in 1:length(nomclustEvals)){
 }
 ```
 
+### matrix
+
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+algae_1996_matrix <- good3(algae_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(algae_1996_matrix) 
+
+#mds
+algae_1996_mds <- metaMDS(algae_1996_matrix)
+
+plot(algae_1996_mds)
+coldiss(algae_1996_matrix)
+#save these as graphs for looking at later
+
+algae_1996_matrix2 <- fortify(algae_1996_matrix)
+
+#save(algae_matrix, file = here('data','algae_matrix-1996r.RData'))
+write.csv(algae_1996_matrix2, file = here('data', 'clean', '20220128_algae_matrix_1996-2006.csv'))
+
+png(filename = here('output', 'cluster_ks', '20220128_timeseries',
+                    'algae-dissimilarity_1996-2006.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(algae_1996_matrix)
+dev.off()
+```
 
 
 ## 2011-end
@@ -1799,7 +1908,7 @@ algae_1982_eval <- algae_eval
 
 
 
-## validation/evaluation for each method to pick number of clusters and matrix type 
+### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r algae-validation}
 ##------------ VALIDATION
 
@@ -1916,5 +2025,33 @@ for(i in 1:length(nomclustEvals)){
 ```
 
 
+### matrix
 
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+algae_2011_matrix <- good3(algae_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(algae_2011_matrix) 
+
+#mds
+algae_2011_mds <- metaMDS(algae_2011_matrix)
+
+plot(algae_2011_mds)
+coldiss(algae_2011_matrix)
+#save these as graphs for looking at later
+
+algae_2011_matrix2 <- fortify(algae_2011_matrix)
+
+#save(algae_matrix, file = here('data','algae_matrix-2011r.RData'))
+write.csv(algae_2011_matrix2, file = here('data', 'clean', '20220128_algae_matrix_2011-end.csv'))
+
+png(filename = here('output', 'cluster_ks', '20220128_timeseries',
+                    'algae-dissimilarity_2011-end.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(algae_2011_matrix)
+dev.off()
+```
 
