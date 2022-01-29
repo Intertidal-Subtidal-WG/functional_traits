@@ -196,8 +196,68 @@ ggsave(here('output', 'cluster_ks', '20220128_timeseries',
 ```
 
 
+## 2011+
+
+### dendrogram
+```{r}
+
+animal_2011_dist <- as.dist(animal_2011_matrix)
+
+######Animals
+animal_2011_fit <- hclust(animal_2011_dist, method = 'average')  #change cluster method
+animal_2011_clust <- cutree(animal_2011_fit, 4)  # change number of clusters
+
+animal_2011_dendr <- dendro_data(animal_2011_fit, type="rectangle") 
+
+animal_2011_labs <- label(animal_2011_dendr)
+animal_2011_labs$cluster <- as.factor(animal_2011_clust)
+  
+animal_2011_dendr_plot <- ggplot() +
+  geom_segment(data=segment(animal_2011_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=animal_2011_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+animal_2011_dendr_plot
+
+ggsave(here('output', 'cluster_ks', '20220128_timeseries',
+            'animal-cluster-dendro-2011.png'), plot = last_plot())
+
+# also make csv lists of animals in those years
+animal_2011_clust_l <- animal_2011_labs %>%
+  select(label, cluster)
+
+write.csv(animal_2011_clust_l, here('output', 'cluster_ks', '20220128_timeseries',
+                               'animal-clusters-2011-end.csv'))
+```
 
 
+### tsne
+
+```{r}
+## animals
+
+
+tsne_obj_an <- Rtsne(animal_2011_matrix, is_distance = TRUE, perplexity = 5)
+#plot(tsne_obj_an$Y) # black and white plain dots
+
+#add anything you want to map to the tsne to this object
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         animal_2011, animal_2011_clust_l)
+
+tsne_2011_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  #geom_point(aes(color = phylum)) +
+  geom_point(aes(color = cluster)) +
+  theme_classic()
+
+tsne_2011_animal
+
+ggsave(here('output', 'cluster_ks', '20220128_timeseries',
+            'animal-cluster-tsne_2011-cluster.png'), plot = last_plot())
+
+```
 
 # Algae
 
@@ -262,5 +322,135 @@ tsne_1982_algae
 
 ggsave(here('output', 'cluster_ks', '20220128_timeseries',
             'algae-cluster-tsne_1982r-phy.png'), plot = last_plot())
+
+```
+
+
+## 1996-2006
+
+### dendrogram
+
+```{r}
+
+algae_1996_dist <- as.dist(algae_1996_matrix)
+
+######algaes
+algae_1996_fit <- hclust(algae_1996_dist, method = 'average')  #change cluster method
+algae_1996_clust <- cutree(algae_1996_fit, 4)  # change number of clusters
+
+algae_1996_dendr <- dendro_data(algae_1996_fit, type="rectangle") 
+
+algae_1996_labs <- label(algae_1996_dendr)
+algae_1996_labs$cluster <- as.factor(algae_1996_clust)
+  
+algae_1996_dendr_plot <- ggplot() +
+  geom_segment(data=segment(algae_1996_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=algae_1996_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+algae_1996_dendr_plot
+
+ggsave(here('output', 'cluster_ks', '20220128_timeseries',
+            'algae-cluster-dendro-1996.png'), plot = last_plot())
+
+# also make csv lists of algaes in those years
+algae_1996_clust_l <- algae_1996_labs %>%
+  select(label, cluster)
+
+write.csv(algae_1996_clust_l, here('output', 'cluster_ks', '20220128_timeseries',
+                               'algae-clusters-1996-2006.csv'))
+```
+
+### tsne
+
+```{r}
+## algaes
+
+
+tsne_obj_an <- Rtsne(algae_1996_matrix, is_distance = TRUE, perplexity = 5)
+#plot(tsne_obj_an$Y) # black and white plain dots
+
+#add anything you want to map to the tsne to this object
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         algae_1996, algae_1996_clust_l)
+
+tsne_1996_algae <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  #geom_point(aes(color = phylum)) +
+  geom_point(aes(color = cluster)) +
+  theme_classic()
+
+tsne_1996_algae
+
+ggsave(here('output', 'cluster_ks', '20220128_timeseries',
+            'algae-cluster-tsne_1996-clust.png'), plot = last_plot())
+
+```
+
+
+
+
+## 2011+
+
+### dendrogram
+
+```{r}
+
+algae_2011_dist <- as.dist(algae_2011_matrix)
+
+######algaes
+algae_2011_fit <- hclust(algae_2011_dist, method = 'average')  #change cluster method
+algae_2011_clust <- cutree(algae_2011_fit, 4)  # change number of clusters
+
+algae_2011_dendr <- dendro_data(algae_2011_fit, type="rectangle") 
+
+algae_2011_labs <- label(algae_2011_dendr)
+algae_2011_labs$cluster <- as.factor(algae_2011_clust)
+  
+algae_2011_dendr_plot <- ggplot() +
+  geom_segment(data=segment(algae_2011_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=algae_2011_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+algae_2011_dendr_plot
+
+ggsave(here('output', 'cluster_ks', '20220128_timeseries',
+            'algae-cluster-dendro-2011.png'), plot = last_plot())
+
+# also make csv lists of algaes in those years
+algae_2011_clust_l <- algae_2011_labs %>%
+  select(label, cluster)
+
+write.csv(algae_2011_clust_l, here('output', 'cluster_ks', '20220128_timeseries',
+                               'algae-clusters-2011-end.csv'))
+```
+
+### tsne
+
+```{r}
+## algaes
+
+
+tsne_obj_an <- Rtsne(algae_2011_matrix, is_distance = TRUE, perplexity = 5)
+#plot(tsne_obj_an$Y) # black and white plain dots
+
+#add anything you want to map to the tsne to this object
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         algae_2011, algae_2011_clust_l)
+
+tsne_2011_algae <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  #geom_point(aes(color = phylum)) +
+  geom_point(aes(color = cluster)) +
+  theme_classic()
+
+tsne_2011_algae
+
+ggsave(here('output', 'cluster_ks', '20220128_timeseries',
+            'algae-cluster-tsne_2011-clust.png'), plot = last_plot())
 
 ```
