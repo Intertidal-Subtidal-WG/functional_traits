@@ -51,17 +51,23 @@ trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'),
 
 ## load in timeseries
 
+
 ```{r}
 #uncomment the one you need
 sp_list <- read.csv(here('data', 'fielddata', 'sp_1982r.csv'))
 #sp_list <- read.csv(here('data', 'fielddata', 'sp_1996r.csv'))
 #sp_list <- read.csv(here('data', 'fielddata', 'sp_2011r.csv'))
 
+# update taxonomy
+
+#filter
 algae_imp2 <- algae_imp2 %>%
   subset(species %in% sp_list$value)
 
 animal_imp2 <- animal_imp2 %>%
   subset(species %in% sp_list$value)
+
+#save?
 ```
 
 ## load in custom functions + clustering info

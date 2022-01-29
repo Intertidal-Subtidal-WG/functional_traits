@@ -1,0 +1,574 @@
+---
+title: "clusteranimaltimeseries"
+author: "Kate Sheridan"
+date: "9/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(stringr)
+library(cluster)
+library(nomclust) 
+library(ggplot2)
+library(ggthemes)
+library(fpc)
+library(gridExtra)
+library(tidyverse)
+library(here)
+library(Rtsne)
+library(gclus)
+library(vegan)
+library(ggdendro)
+library(tsne)
+library(ggfortify)
+library(dplyr)
+```
+
+## load in data
+
+```{r load-in}
+#load in imputed data
+animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))
+algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))
+
+#remove x column
+animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
+algae_imp2 <- algae_imp2[,2:ncol(algae_imp2),]
+
+#make factors
+animal_imp2 <- animal_imp2 %>% 
+  mutate(across(.fns = ~ as.factor(.)))
+algae_imp2 <- algae_imp2 %>% 
+  mutate(across(.fns = ~ as.factor(.)))
+
+
+# raw if needed
+#be sure to use na.strings or imputation will fail!
+trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
+                      na.strings = c("","NA", 'N/A'))
+```
+
+## load in timeseries
+
+
+```{r}
+#uncomment the one you need
+sp_list <- read.csv(here('data', 'fielddata', 'sp_1982r.csv'))
+#sp_list <- read.csv(here('data', 'fielddata', 'sp_1996r.csv'))
+#sp_list <- read.csv(here('data', 'fielddata', 'sp_2011r.csv'))
+
+# update taxonomy
+
+#filter
+algae_imp2 <- algae_imp2 %>%
+  subset(species %in% sp_list$value)
+
+animal_imp2 <- animal_imp2 %>%
+  subset(species %in% sp_list$value)
+
+#save?
+```
+
+## load in custom functions + clustering info
+
+```{r}
+#set up evaluations
+
+##list of the possible internal validation measures
+nomclustEvals <- c("PSFM", "PSFE", "BIC", "AIC")
+
+#old version
+#nomclustEvals <- c("WCM", "WCE", "PSTau", "PSU", "PSFM", "PSFE")
+#List of the possible linkage methods
+clusterMethod <- c("average", "complete", "single")
+
+
+#Colours for the different distance matrices
+group.colours <- c("Goodall" = "black",
+                   "Goodall_2" = "#CCCCCC",
+                   "Goodall_3" = "#999999",
+                   "Goodall_4" = "#666666",
+                   "Eskin"="blue",
+                   "IOF"="orange", 
+                   "OF" = "#D55E00",
+                   "Lin"="purple",
+                   "Lin_1" = "#9999CC",
+                   "Simple matching"="darkgreen")
+
+subDist <- c("Goodall","Eskin", "IOF", "Lin", "Simple matching")
+
+#relevant functions from Ladds 2018
+fit_nomclust <- function(dataSET, distanceMethod,clusterMethod, cmax)
+                        {nomclust(data = dataSET, measure = distanceMethod, 
+                                           method = clusterMethod,
+                                  clu.high = cmax)}
+
+
+plotEvals <- function(dat, measure){
+  ggplot(dat, 
+         aes(x = cluster, y = value, color = distance))+
+    geom_point()+geom_line()+
+    theme_base()+
+    ylab(measure)+
+    xlab("Clusters")+
+    scale_x_discrete(limits = c(2:9))+
+    #scale_y_continuous(limits = c(lowylim,highylim))+
+    scale_color_manual(values = group.colours)+
+    theme(panel.grid.minor.x	= element_line(color = "grey"),
+          panel.grid.major.x	= element_line(color = "grey"),
+          panel.grid.major.y	= element_line(color = "grey"),
+          legend.title = element_blank())
+}
+
+
+
+
+
+groupfits <- function(final_fit,distMeasure,clusterMethod){
+  dataSET$groups <- final_fit$mem
+  cor.matrix <- sapply(final_fit$mem, function(x) as.matrix(dist(x,method = "manhattan")))
+  
+  for(k in 1:8) {
+    m2 <- melt(matrix(cor.matrix[,k],nrow = nrow(dataSET)))[melt(upper.tri(matrix(cor.matrix[,k],nrow = nrow(dataSET))))$value,]
+    m2$value<-ifelse(m2$value==0,"Match","NoMatch")
+    names(m2) <- c("c1", "c2", paste0(distMeasure,"-",clusterMethod,"_",k+1))
+    m2$c1<-factor(m2$c1,labels = namesComm[1:nrow(dataSET)-1])
+    m2$c2<-factor(m2$c2,labels = namesComm[2:nrow(dataSET)])
+    comparison <- merge(comparison,m2,by=c("c1","c2"))
+  }
+  return(comparison)
+}
+```
+
+
+```{r dissimilarity matrix legendre}
+"coldiss" <- function(D, nc = 4, byrank = TRUE, diag = FALSE)
+{
+	require(gclus)
+
+	if (max(D)>1) D <- D/max(D)
+
+	if (byrank) {
+		spe.color = dmat.color(1-D, cm.colors(nc))
+	}
+	else {
+		spe.color = dmat.color(1-D, byrank=FALSE, cm.colors(nc))
+	}
+
+	spe.o = order.single(1-D)
+	speo.color = spe.color[spe.o,spe.o]
+	
+	op = par(mfrow=c(1,2), pty="s")
+
+	if (diag) {
+		plotcolors(spe.color, rlabels=attributes(D)$Labels, 
+			main="Dissimilarity Matrix", 
+			dlabels=attributes(D)$Labels)
+		plotcolors(speo.color, rlabels=attributes(D)$Labels[spe.o], 
+			main="Ordered Dissimilarity Matrix", 
+			dlabels=attributes(D)$Labels[spe.o])
+	}
+	else {
+		plotcolors(spe.color, rlabels=attributes(D)$Labels, 
+			main="Dissimilarity Matrix")
+		plotcolors(speo.color, rlabels=attributes(D)$Labels[spe.o], 
+			main="Ordered Dissimilarity Matrix")
+	}
+
+	par(op)
+}
+```
+
+
+# Animals
+
+setup
+```{r animal matrix}
+##Cluster using nomclust
+
+##Make a NULL dataset for the output from "nomclust"
+#This makes a long dataset with all possible comparisons
+animal_combdf <- combn(animal_imp2$species,2)
+animal_comparison<-data.frame(animal_combdf[1,], animal_combdf[2,])
+colnames(animal_comparison) <- c("c1", "c2")
+
+#Select the variables to use from the imputed data
+animal_dataSET <- animal_imp2[,c(1:14)]
+animal_spnames <- animal_imp2[,"species"]
+
+#other variables for matrix
+evaluation <- NULL
+cmax = 10
+
+
+animal_dataSET2 <- data.frame(animal_dataSET[,-1], row.names = animal_dataSET[,1])
+```
+
+generate all options with loop from ladds
+```{r animal loop}
+
+dataSET <- animal_dataSET2
+animal_eval <- {}
+
+# #heirachical clustering#
+ for(i in 1:length(clusterMethod))  {
+# 
+#   ##---Goodall 1
+# 
+#   #fit the model
+   good_fit<-fit_nomclust(dataSET, 'good1',clusterMethod[i], cmax)
+   #comparison<-groupfits(good_fit,"good1",clusterMethod[i])
+# 
+#   #Extract the validation metrics
+   good_eval <- dplyr::bind_rows(good_fit$eval)
+   good_eval$distance <- "Goodall"
+   good_eval$method <-  clusterMethod[i]
+# 
+#   ##---Goodall 2
+# 
+   good2_fit<-fit_nomclust(dataSET, 'good2',clusterMethod[i], cmax)
+   #comparison<-groupfits(good2_fit,"good2",clusterMethod[i])
+# 
+#   #Extract the validation metrics
+  good2_eval <- dplyr::bind_rows(good2_fit$eval)
+  good2_eval$distance <- "Goodall_3"
+  good2_eval$method <-  clusterMethod[i]
+# 
+#   ##---Goodall 3
+   good3_fit<-fit_nomclust(dataSET, 'good3',clusterMethod[i], cmax)
+#   comparison<-groupfits(good2_fit,"good3",clusterMethod[i])
+# 
+#   #Extract the validation metrics
+   good3_eval <- dplyr::bind_rows(good3_fit$eval)
+   good3_eval$distance <- "Goodall_3"
+   good3_eval$method <-  clusterMethod[i]
+# 
+# 
+#   ##---Goodall 4
+# 
+   good4_fit<-fit_nomclust(dataSET, 'good4',clusterMethod[i], cmax)
+#   comparison<-groupfits(good4_fit,"good2",clusterMethod[i])
+# 
+#   #Extract the validation metrics
+   good4_eval <- dplyr::bind_rows(good4_fit$eval)
+   good4_eval$distance <- "Goodall_4"
+   good4_eval$method <-  clusterMethod[i]
+# 
+#   ##---Eskin
+# 
+   eskin_fit <- fit_nomclust(dataSET, 'eskin',clusterMethod[i], cmax)
+#   comparison<-groupfits(eskin_fit,"eskin",clusterMethod[i])
+# 
+   eskin_eval <- dplyr::bind_rows(eskin_fit$eval)
+   eskin_eval$distance <- "Eskin"
+   eskin_eval$method <- clusterMethod[i]
+# 
+# 
+#   #--IOF
+# 
+   iof_fit <- fit_nomclust(dataSET, 'iof', clusterMethod[i], cmax)
+#   comparison<-groupfits(iof_fit,"iof",clusterMethod[i])
+# 
+   iof_eval <- dplyr::bind_rows(iof_fit$eval)
+   iof_eval$distance <- "IOF"
+   iof_eval$method <- clusterMethod[i]
+# 
+#   #--OF
+# 
+   of_fit <- fit_nomclust(dataSET, 'of',clusterMethod[i], cmax)
+#   comparison<-groupfits(of_fit,"of",clusterMethod[i])
+# 
+   of_eval <- dplyr::bind_rows(of_fit$eval)
+   of_eval$distance <- "OF"
+   of_eval$method <- clusterMethod[i]
+# 
+# 
+#   #--Lin
+# 
+   lin_fit <- fit_nomclust(dataSET, 'lin', clusterMethod[i], cmax)
+#   comparison<-groupfits(lin_fit,"lin",clusterMethod[i])
+# 
+   lin_eval <- dplyr::bind_rows(lin_fit$eval)
+   lin_eval$distance <- "Lin"
+   lin_eval$method <- clusterMethod[i]
+# 
+# 
+#   #--Lin1
+# 
+   lin1_fit <- fit_nomclust(dataSET, 'lin1',clusterMethod[i], cmax)
+#   comparison<-groupfits(lin1_fit,"lin",clusterMethod[i])
+# 
+   lin1_eval <- dplyr::bind_rows(lin1_fit$eval)
+   lin1_eval$distance <- "Lin_1"
+   lin1_eval$method <- clusterMethod[i]
+# 
+# 
+#   #--Simple matching
+# 
+   sm_fit <- fit_nomclust(dataSET, 'sm', clusterMethod[i], cmax)
+#   comparison<-groupfits(sm_fit,"sm",clusterMethod[i])
+# 
+   sm_eval <- dplyr::bind_rows(sm_fit$eval)
+   sm_eval$distance <- "Simple matching"
+   sm_eval$method <- clusterMethod[i]
+# 
+   animal_eval <- rbind(animal_eval, good_eval, good2_eval,
+                       good3_eval, good4_eval,eskin_eval,
+                       iof_eval, of_eval, lin_eval,
+                       lin1_eval, sm_eval
+)
+# 
+ }
+
+
+#save rdata if needed / don't want to rerun
+#save(animal_eval, file = here('output', 'cluster_ks', 'animal_evaluation_2-25.RData'))
+
+```
+
+make long and scale for evaluation steps
+```{r}
+#make long
+animal_eval <- animal_eval %>%
+    na_if('NaN') %>%
+  select(!(c(WCM, WCE, BK))) %>%
+  pivot_longer(cols = c(PSFM:AIC)) %>%
+  dplyr::rename(cluster = names) %>%
+  subset(!(is.na(value)))
+
+#make factors
+animal_eval <- animal_eval %>% 
+  mutate(across(cluster:name, .fns = ~ as.factor(.)))
+
+#change clusters into numbers!!!!
+animal_eval$cluster <- str_replace_all(c(animal_eval$cluster), "clu\\_", "")
+animal_eval$cluster <- as.numeric(animal_eval$cluster)
+
+#scale
+animal_eval$value_scaled <- animal_eval$value/max(animal_eval$value)
+```
+
+## validation/evaluation for each method to pick number of clusters and matrix type 
+```{r animal-validation}
+##------------ VALIDATION
+
+## Validation from the nomclust package internal measures. 
+#Sulc (2016) thesis; pg. 31
+
+nomclustEvals <- c("PSFM", "PSFE", "BIC", "AIC")
+
+evaluation <- animal_eval
+
+###PSFE - higher value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='PSFE'&!evaluation$cluster==1,]
+
+##If you want to subset further
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+
+EvalPlotPSFE <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("PSFE")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(),
+        legend.background = element_rect(fill = "white", colour = NA),
+        plot.background = element_blank())
+
+
+###PSFM - higher value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='PSFM'&!evaluation$cluster==1,]
+
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData$distance <- droplevels(EvalData$distance)
+EvalPlotPSFM <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("PSFM")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(), 
+        plot.background = element_blank())
+
+###AIC -XX value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='AIC'&!evaluation$cluster==1,]
+
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData$distance <- droplevels(EvalData$distance)
+EvalPlotAIC <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("AIC")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(), 
+        plot.background = element_blank())
+
+
+###AIC -XX value indicates better grouping.
+EvalData <- evaluation[evaluation$name=='BIC'&!evaluation$cluster==1,]
+
+#EvalData <- EvalData[!EvalData$cluster==2&EvalData$distance %in% subDist,]
+#EvalData$distance <- droplevels(EvalData$distance)
+EvalPlotBIC <- ggplot(EvalData, 
+                       aes(x = cluster, y = value, color = factor(distance)))+
+  geom_point()+geom_line()+
+  theme_base()+
+  ylab("BIC")+
+  xlab("Clusters")+
+  scale_x_discrete(limits = c(3:25))+
+  facet_grid(rows = vars(method)) +
+  #scale_y_continuous(limits = c(lowylim,highylim))+
+  scale_color_manual(values = group.colours)+
+  theme(panel.grid.minor.x	= element_line(color = "grey"),
+        panel.grid.major.x	= element_line(color = "grey"),
+        panel.grid.major.y	= element_line(color = "grey"),
+        #axis.text.x = element_blank(),
+        legend.title = element_blank(), 
+        plot.background = element_blank())
+
+```
+## save plots, be sure to change name / location if needed
+```{r save-plots}
+
+#Plot and export the different measures  
+for(i in 1:length(nomclustEvals)){
+  EvalData <- evaluation[evaluation$name==nomclustEvals[i],]
+  EvalPlot <- plotEvals(EvalData, nomclustEvals[i])
+  ggsave(EvalPlot, device = "pdf",
+         filename = here('output', 'cluster_ks',  paste0("animal_", nomclustEvals[i],"_plot-2011r.pdf")))
+}
+
+ggsave(EvalPlotPSFE, filename = here('output', 'cluster_ks', 'Animal_EvalPlotPSFE-2011r.pdf'),
+       width = 9, height = 4)
+
+ggsave(EvalPlotPSFM, filename = here('output', 'cluster_ks', 'Animal_EvalPlotPSFM-2011r.pdf'), 
+       width = 9, height = 4)
+
+ggsave(EvalPlotAIC, filename = here('output', 'cluster_ks', 'Animal_EvalPlotAIC-2011r.pdf'), 
+       width = 9, height = 4)
+
+ggsave(EvalPlotBIC, filename = here('output', 'cluster_ks', 'Animal_EvalPlotBIC-2011r.pdf'), 
+       width = 9, height = 4)
+
+
+#ggsave(here('output', 'cluster_ks', 'animal-cluster-evalplotaic-1982r.png'), plot = EvalPlotAIC)
+```
+
+```{r}
+#pick the method you want for matrix based on evaluation plots above
+animal_matrix <- good3(animal_dataSET2)
+
+
+#legendre dissimilarity matrix
+coldiss(animal_matrix) 
+
+#mds
+animalmds <- metaMDS(animal_matrix)
+
+plot(animalmds)
+coldiss(animal_matrix)
+#save these as graphs for looking at later
+
+animal_matrix2 <- fortify(animal_matrix)
+```
+
+## save dissimilarity matrix and the visualization
+```{r}
+#save(animal_matrix, file = here('data','animal_matrix-1982r.RData'))
+write.csv(animal_matrix2, file = here('data', 'clean', 'animal_matrix-2011r.csv'))
+
+png(filename = here('output', 'cluster_ks', 'animal-dissimilarity-2011r.png'),
+    width = 1000, height = 500,
+    units = 'px')
+coldiss(animal_matrix)
+dev.off()
+```
+
+Here you will use the number of clusters identified above, as well as the method
+
+```{r}
+#define options for heirarchcal clustering 
+methodsClust <- c("single", "complete", "average")
+
+######Animals
+animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
+animal_clust <- cutree(animal_fit, 4)  # change number of clusters
+
+animal_dendr <- dendro_data(animal_fit, type="rectangle") 
+
+animal_labs <- label(animal_dendr)
+animal_labs$cluster <- as.factor(animal_clust)
+  
+animal_dendr_plot <- ggplot() +
+  geom_segment(data=segment(animal_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=animal_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+animal_dendr_plot
+
+ggsave(here('output', 'animal-cluster-dendro-1982r.png'), plot = last_plot())
+
+# also make csv lists of animals in those years
+animal_clust_l <- animal_labs %>%
+  select(label, cluster)
+
+write.csv(animal_clust_l, here('output', 'cluster_ks', 'animal-clusters-1982r.csv'))
+```
+
+## tsne
+
+```{r}
+## animals
+
+animal_phyla <- trait_raw %>%
+  subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
+  dplyr:::select(species, phylum)
+
+animal_phyla <- animal_phyla %>%
+  subset(species %in% sp_list$value)
+
+tsne_obj_an <- Rtsne(animal_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj_an$Y)
+
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         animal_dataSET2, animal_phyla, animal_clust_l)
+
+tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  geom_point(aes(color = phylum)) +
+  #geom_point(aes(color = cluster)) +
+  theme_classic()
+
+tsne_animal
+
+ggsave(here('output', 'cluster_ks', 'animal-cluster-tsne_1982r-phy.png'), plot = last_plot())
+
+```
+

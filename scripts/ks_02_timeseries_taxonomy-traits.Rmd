@@ -98,7 +98,7 @@ sp_1996r_algae <- sp_1996r %>%
   full_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
-write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1996-2006_animal.csv'))
+write.csv(sp_1996r_animal, here('data', 'clean', '20220128_1996-2006_animal.csv'))
 write.csv(sp_1996r_algae, here('data', 'clean', '20220128_1996-2006_algae.csv'))
 ```
 
