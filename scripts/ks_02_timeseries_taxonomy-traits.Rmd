@@ -72,8 +72,8 @@ sp_1982r_algae <- sp_1982r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
-write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1982-1995_animal.csv'))
-write.csv(sp_1982r_algae, here('data', 'clean', '20220128_1982-1995_algae.csv'))
+write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1982-1995_animal.csv'), row.names = FALSE)
+write.csv(sp_1982r_algae, here('data', 'clean', '20220128_1982-1995_algae.csv'), row.names = FALSE)
 ```
 
 ```{r 1996}
@@ -98,13 +98,12 @@ sp_1996r_algae <- sp_1996r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
-write.csv(sp_1996r_animal, here('data', 'clean', '20220128_1996-2006_animal.csv'))
-write.csv(sp_1996r_algae, here('data', 'clean', '20220128_1996-2006_algae.csv'))
+write.csv(sp_1996r_animal, here('data', 'clean', '20220128_1996-2006_animal.csv'), row.names = FALSE)
+write.csv(sp_1996r_algae, here('data', 'clean', '20220128_1996-2006_algae.csv'), row.names = FALSE)
 ```
 
 
 ```{r}
-
 sp_2011r$species2 <- sapply(sp_2011r$species, function(species) {
   names(sp_key2)[sp_key2 == species]
 })
@@ -126,7 +125,7 @@ sp_2011r_algae <- sp_2011r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
-write.csv(sp_2011r_animal, here('data', 'clean', '20220128_2011-end_animal.csv'))
-write.csv(sp_2011r_algae, here('data', 'clean', '20220128_2011-end_algae.csv'))
+write.csv(sp_2011r_animal, here('data', 'clean', '20220128_2011-end_animal.csv'), row.names = FALSE)
+write.csv(sp_2011r_algae, here('data', 'clean', '20220128_2011-end_algae.csv'), row.names = FALSE)
 ```
 

@@ -26,7 +26,7 @@ library(ggfortify)
 library(dplyr)
 ```
 
-## load in data
+## load in timeseries
 
 ```{r load-in}
 # algae time series
@@ -38,27 +38,6 @@ algae_2011 <- read_csv(here('data', 'clean', '20220128_2011-end_algae.csv'))
 animal_1982 <- read_csv(here('data', 'clean', '20220128_1982-1995_animal.csv'))
 animal_1996 <- read_csv(here('data', 'clean', '20220128_1996-2006_animal.csv'))
 animal_2011 <- read_csv(here('data', 'clean', '20220128_2011-end_animal.csv'))
-```
-
-## load in timeseries
-
-
-```{r}
-#uncomment the one you need
-sp_list <- read.csv(here('data', 'fielddata', 'sp_1982r.csv'))
-#sp_list <- read.csv(here('data', 'fielddata', 'sp_1996r.csv'))
-#sp_list <- read.csv(here('data', 'fielddata', 'sp_2011r.csv'))
-
-# update taxonomy
-
-#filter
-algae_imp2 <- algae_imp2 %>%
-  subset(species %in% sp_list$value)
-
-animal_imp2 <- animal_imp2 %>%
-  subset(species %in% sp_list$value)
-
-#save?
 ```
 
 ## load in custom functions + clustering info
@@ -174,6 +153,7 @@ groupfits <- function(final_fit,distMeasure,clusterMethod){
 
 # Animals
 
+## 1982-1995
 setup
 ```{r animal matrix}
 ##Cluster using nomclust
