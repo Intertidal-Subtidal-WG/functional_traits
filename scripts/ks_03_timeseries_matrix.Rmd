@@ -440,7 +440,7 @@ for(i in 1:length(nomclustEvals)){
 
 ```
 
-
+### matrix
 ```{r}
 #pick the method you want for matrix based on evaluation plots above
 animal_1982_matrix <- good3(animal_dataSET2)
@@ -457,10 +457,7 @@ coldiss(animal_1982_matrix)
 #save these as graphs for looking at later
 
 animal_1982_matrix2 <- fortify(animal_1982_matrix)
-```
 
-## save dissimilarity matrix and the visualization
-```{r}
 #save(animal_matrix, file = here('data','animal_matrix-1982r.RData'))
 write.csv(animal_1982_matrix2, file = here('data', 'clean', '20220128_animal_matrix_1982-1995.csv'))
 
