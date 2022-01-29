@@ -61,13 +61,19 @@ loadfonts()
 # Load data ---------------------------------------------------------------
 
 traits<-read.csv("20210730_functional_traits_marine.csv",stringsAsFactors=FALSE) # the last version of the data
-traits_algae_imputed<-read.csv("20210806_algae_imputed.csv")
-traits_animal_imputed<-read.csv("20210806_animal_imputed.csv")
+#traits_algae_imputed<-read.csv("20210806_algae_imputed.csv")
+traits_algae_imputed<-read.csv("20220128_1982-1995_algae.csv")
+
+#traits_animal_imputed<-read.csv("20210806_animal_imputed.csv")
+traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
+
 #traits_modified_algae<-read.csv("traits_mod_algae.csv") #traits modified in algae converted to ordinal values as suggested in "gifi" package
 #traits_modified_animals<-read.csv("traits_modified_animals.csv")
 
 #Matrices traits similarity
 matrix_algae<-read.csv("20210806_algae_matrix.csv")
+
+View(matrix_algae)
 matrix_algae <- as.matrix(matrix_algae)
 matrix_animals<-read.csv("20210806_animal_matrix.csv")
 matrix_animal <- as.matrix(matrix_animals)
@@ -126,12 +132,12 @@ str(traits_animal_imputed)
 #MCA_algae
 ####
 str(traits_algae_imputed)
-traits_algae_imputed_sel<-traits_algae_imputed[,6:12] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:11] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(body_size_avg_bin, morphology1, benthic,epibiotic, intertidal, subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,body_size_avg_bin,benthic,epibiotic,intertidal,subtidal), list(as.factor)) 
 
 #MCA
 mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
@@ -140,7 +146,7 @@ mca2$eig
 mca2$var
 mca2$ind
 
-variables_scores_algae<-mca1$var$eta2 
+variables_scores_algae<-mca2$var$eta2 
 str(variables_scores_algae) 
 head(mca2$var$coord)
 mca2
@@ -171,7 +177,7 @@ ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 
   theme_bw(20)+ xlab ("  Dim 1 Morphology, Body size  15.45%")+ ylab(" Body size-small 13 %")
 
 
-plotellipses(mca2,keepvar=c(2:12))
+plotellipses(mca2,keepvar=c(2:11))
 
 
 ###
