@@ -66,10 +66,10 @@ sp_1982r <- sp_1982r %>%
 
 
 sp_1982r_animal <- sp_1982r %>%
-  full_join(animal_imp2) %>%
+  left_join(animal_imp2) %>%
   filter(!(is.na(group)))
 sp_1982r_algae <- sp_1982r %>%
-  full_join(algae_imp2) %>%
+  left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
 write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1982-1995_animal.csv'))
@@ -92,10 +92,10 @@ sp_1996r <- sp_1996r %>%
 
 
 sp_1996r_animal <- sp_1996r %>%
-  full_join(animal_imp2) %>%
+  left_join(animal_imp2) %>%
   filter(!(is.na(group)))
 sp_1996r_algae <- sp_1996r %>%
-  full_join(algae_imp2) %>%
+  left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
 write.csv(sp_1996r_animal, here('data', 'clean', '20220128_1996-2006_animal.csv'))
@@ -120,10 +120,10 @@ sp_2011r <- sp_2011r %>%
 
 
 sp_2011r_animal <- sp_2011r %>%
-  full_join(animal_imp2) %>%
+  left_join(animal_imp2) %>%
   filter(!(is.na(group)))
 sp_2011r_algae <- sp_2011r %>%
-  full_join(algae_imp2) %>%
+  left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
 write.csv(sp_2011r_animal, here('data', 'clean', '20220128_2011-end_animal.csv'))

@@ -5,6 +5,8 @@ date: "9/11/2021"
 output: html_document
 ---
 
+This should be run after 02_timeseries_taxonomy-traits where the raw species list data was updated with trait data and original taxonomy updated to lump into groups
+
 ```{r setup, include=FALSE}
 library(stringr)
 library(cluster)
@@ -27,25 +29,15 @@ library(dplyr)
 ## load in data
 
 ```{r load-in}
-#load in imputed data
-animal_imp2 <- read.csv(file = here('data', 'clean','20210806_animal_imputed.csv'))
-algae_imp2 <- read.csv(file = here('data', 'clean','20210806_algae_imputed.csv'))
+# algae time series
+algae_1982 <- read_csv(here('data', 'clean', '20220128_1982-1995_algae.csv'))
+algae_1996 <- read_csv(here('data', 'clean', '20220128_1996-2006_algae.csv'))
+algae_2011 <- read_csv(here('data', 'clean', '20220128_2011-end_algae.csv'))
 
-#remove x column
-animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
-algae_imp2 <- algae_imp2[,2:ncol(algae_imp2),]
-
-#make factors
-animal_imp2 <- animal_imp2 %>% 
-  mutate(across(.fns = ~ as.factor(.)))
-algae_imp2 <- algae_imp2 %>% 
-  mutate(across(.fns = ~ as.factor(.)))
-
-
-# raw if needed
-#be sure to use na.strings or imputation will fail!
-trait_raw <- read.csv(here("data", '20210730_ShoalsFunctionalTraits.csv'), 
-                      na.strings = c("","NA", 'N/A'))
+# animal time series
+animal_1982 <- read_csv(here('data', 'clean', '20220128_1982-1995_animal.csv'))
+animal_1996 <- read_csv(here('data', 'clean', '20220128_1996-2006_animal.csv'))
+animal_2011 <- read_csv(here('data', 'clean', '20220128_2011-end_animal.csv'))
 ```
 
 ## load in timeseries
