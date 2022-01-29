@@ -48,7 +48,7 @@ sp_key2 <- unlist(sp_key2)
 ```
 
 
-```{r}
+```{r 1982}
 # update taxonomy
 
 sp_1982r$species2 <- sapply(sp_1982r$species, function(species) {
@@ -76,15 +76,57 @@ write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1982-1995_animal.csv'
 write.csv(sp_1982r_algae, here('data', 'clean', '20220128_1982-1995_algae.csv'))
 ```
 
+```{r 1996}
+sp_1996r$species2 <- sapply(sp_1996r$species, function(species) {
+  names(sp_key2)[sp_key2 == species]
+})
 
+# this makes up for that real quick and easy
+sp_1996r <- sp_1996r %>%
+  mutate(species2 = str_replace_all(species2, c("character\\(0\\)" = ""))) %>%
+  na_if("") %>%
+  mutate(species3 = coalesce(c(species2), c(species))) %>%
+  select(species3) %>%
+  rename(species = species3) %>%
+  distinct()
+
+
+sp_1996r_animal <- sp_1996r %>%
+  full_join(animal_imp2) %>%
+  filter(!(is.na(group)))
+sp_1996r_algae <- sp_1996r %>%
+  full_join(algae_imp2) %>%
+  filter(!(is.na(group)))
+
+write.csv(sp_1982r_animal, here('data', 'clean', '20220128_1996-2006_animal.csv'))
+write.csv(sp_1996r_algae, here('data', 'clean', '20220128_1996-2006_algae.csv'))
+```
 
 
 ```{r}
-#filter
-algae_imp2 <- algae_imp2 %>%
-  subset(species %in% sp_list$value)
 
-animal_imp2 <- animal_imp2 %>%
-  subset(species %in% sp_list$value)
+sp_2011r$species2 <- sapply(sp_2011r$species, function(species) {
+  names(sp_key2)[sp_key2 == species]
+})
+
+# this makes up for that real quick and easy
+sp_2011r <- sp_2011r %>%
+  mutate(species2 = str_replace_all(species2, c("character\\(0\\)" = ""))) %>%
+  na_if("") %>%
+  mutate(species3 = coalesce(c(species2), c(species))) %>%
+  select(species3) %>%
+  rename(species = species3) %>%
+  distinct()
+
+
+sp_2011r_animal <- sp_2011r %>%
+  full_join(animal_imp2) %>%
+  filter(!(is.na(group)))
+sp_2011r_algae <- sp_2011r %>%
+  full_join(algae_imp2) %>%
+  filter(!(is.na(group)))
+
+write.csv(sp_2011r_animal, here('data', 'clean', '20220128_2011-end_animal.csv'))
+write.csv(sp_2011r_algae, here('data', 'clean', '20220128_2011-end_algae.csv'))
 ```
 
