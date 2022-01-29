@@ -1,0 +1,73 @@
+---
+title: "timeseries_cluster2"
+author: "Kate Sheridan"
+date: "1/28/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here you will use the number of clusters identified above, as well as the method
+
+```{r}
+#define options for heirarchcal clustering 
+methodsClust <- c("single", "complete", "average")
+
+######Animals
+animal_fit <- hclust(animal_matrix, method = methodsClust[3])  #change cluster method
+animal_clust <- cutree(animal_fit, 4)  # change number of clusters
+
+animal_dendr <- dendro_data(animal_fit, type="rectangle") 
+
+animal_labs <- label(animal_dendr)
+animal_labs$cluster <- as.factor(animal_clust)
+  
+animal_dendr_plot <- ggplot() +
+  geom_segment(data=segment(animal_dendr), aes(x=x, y=y, xend=xend, yend=yend)) +
+  geom_text(data=animal_labs, aes(x=x, y=y, label=label, hjust=0, color = cluster), size=2) +
+  coord_flip() + scale_y_reverse(expand=c(0.1, 0), limits = c(.9,-0.1)) +
+  theme_void()
+  
+
+animal_dendr_plot
+
+ggsave(here('output', 'animal-cluster-dendro-1982r.png'), plot = last_plot())
+
+# also make csv lists of animals in those years
+animal_clust_l <- animal_labs %>%
+  select(label, cluster)
+
+write.csv(animal_clust_l, here('output', 'cluster_ks', 'animal-clusters-1982r.csv'))
+```
+
+## tsne
+
+```{r}
+## animals
+
+animal_phyla <- trait_raw %>%
+  subset(group %in% c('Invertebrate', 'Vertebrate')) %>%
+  dplyr:::select(species, phylum)
+
+animal_phyla <- animal_phyla %>%
+  subset(species %in% sp_list$value)
+
+tsne_obj_an <- Rtsne(animal_matrix, is_distance = TRUE, perplexity = 5)
+plot(tsne_obj_an$Y)
+
+tsne_plot_an <- data.frame(x = tsne_obj_an$Y[,1], y = tsne_obj_an$Y[,2], 
+                         animal_dataSET2, animal_phyla, animal_clust_l)
+
+tsne_animal <- ggplot(tsne_plot_an, aes(x=x, y=y)) + 
+  #geom_point(aes(color = common_name_division_bgr)) +
+  geom_point(aes(color = phylum)) +
+  #geom_point(aes(color = cluster)) +
+  theme_classic()
+
+tsne_animal
+
+ggsave(here('output', 'cluster_ks', 'animal-cluster-tsne_1982r-phy.png'), plot = last_plot())
+
+```
