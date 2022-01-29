@@ -6,7 +6,19 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# which of these are used?
+library(nomclust) 
+library(stringr)
+library(vegan)
+library(ggdendro)
+library(Rtsne)
+library(tsne)
+
+# definitely use these
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(here)
 ```
 
 Here you will use the number of clusters identified above, as well as the method
