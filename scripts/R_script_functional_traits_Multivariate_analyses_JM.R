@@ -191,6 +191,15 @@ plot_algae_1982_end
 plot_ellipses_algae_1982_end
 
 
+#Percentage of explained variation
+
+fviz_screeplot(mca2, addlabels = TRUE)
+
+
+# Contribution of individual variables in axis 1 and 2 
+fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
+
+
 # ALGAE_MCA_1982_1995 ---------------------------------------------------
 #Data
 traits_algae_imputed<-read.csv("20220128_1982-1995_algae.csv")
@@ -387,14 +396,26 @@ plot_algae_2011_end
 plot_ellipses_algae_2011_end
 
 # MCA ANIMALS -----------------------------------------------------------------
+####Alternative using MCA Multiple correspondence analyses
+###
+#https://rpubs.com/gaston/MCA
+#http://rstudio-pubs-static.s3.amazonaws.com/472227_23cd8fc6608740df8619a1db47a434c9.html
+#The plot below shows the relationship between the points.
+#Similar rows are grouped together
+#Negatively correlated rows are plotted on the oposite sides
+#The distance from the orgin represents the quality of row points on the factor map.
+#The quality of represtation is measured by squared cosine (cos2) which measures the contribution of variables to the two dimensional plot.
+#The highest cos2, the better. Variables with low cos2 should be treated and interpreted with caution.
+#The closer the arrow is to the axis the more it contributes to the realtive dimension.
+
 #MCA All years
-traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
+traits_animal_imputed<-read.csv("20220117_animal_imputed.csv")
 str(traits_animal_imputed)
 traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
 traits_animal_imputed<-select (traits_animal_imputed, -c(intertidal))
 
 str(traits_animal_imputed)
-traits_animal_imputed_sel<-traits_animal_imputed[,4:13] #select columns of interest
+traits_animal_imputed_sel<-traits_animal_imputed[,5:14] #select columns of interest
 cats=apply(traits_animal_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
@@ -431,11 +452,25 @@ animals_1982_end<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_h
                                                                                                                                                                                                                 aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
   ggtitle("Animals, MCA plot 1982_end, FactorMineR") + scale_colour_discrete(name = "Variable")+
   geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  theme_bw(20)+ xlab (" Dim 1 18.57 ")+ ylab(" Dim 2 13.20 ")
+  theme_bw(20)+ xlab (" Dim 1 17.45 ")+ ylab(" Dim 2 12.77 ")
 
 
   #plot individual variables  in the multispace
-  animal_elypses_1982_end<-plotellipses(mca1,keepvar=c(2:18))
+  animal_elypses_1982_end<-plotellipses(mca1,keepvar=c(2:15))
+  animal_elypses_1982_end
+  
+  animals_1982_end
+  
+  
+  #Percentage of explained variation
+  
+  fviz_screeplot(mca1, addlabels = TRUE)
+  
+  
+  # Contribution of individual variables in axis 1 and 2 
+  fviz_contrib(mca1, choice = "var", axes = 1:2, top = 15)
+  fviz_contrib(dt.mca, choice = "var", axes = 1:2, top = 15)
+  
   
 ###
   
@@ -446,14 +481,8 @@ a+geom_density2d(colour = "red")
 a + geom_hline(yintercept = 0,  colour = "gray70")+  geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", alpha = 0.7) + geom_density2d(colour = "red") + ggtitle("animals MCA plot of variables using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
   theme_bw(20) + xlab(" Body size + Trophic level+ motility (18%) ") + ylab("Diet+Morphology")
 
-# Animals plot by year
-animals_1982_end
-animal_elypses_1982_end
-
 
 # MCA_animals_1982_1995 ---------------------------------------------------
-
-
 traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
 str(traits_animal_imputed)
 traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
@@ -491,22 +520,129 @@ ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars
 
 
 # MCA plot of observations and categories [Plot used for the presentation!]
-animals_1982_end<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+animals_1982_1995<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
                                                                                      colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
                                                                                                                                                                      alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca1_vars_df, 
                                                                                                                                                                                                                                   aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
-  ggtitle("Animals, MCA plot 1982_end, FactorMineR") + scale_colour_discrete(name = "Variable")+
+  ggtitle("Animals, MCA plot 1982_1995, FactorMineR") + scale_colour_discrete(name = "Variable")+
   geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  theme_bw(20)+ xlab (" Dim 1 18.57 ")+ ylab(" Dim 2 13.20 ")
+  theme_bw(20)+ xlab (" Dim 1 18.57% ")+ ylab(" Dim 2 13.20% ")
 
 
 #plot individual variables  in the multispace
-animal_elypses_1982_end<-plotellipses(mca1,keepvar=c(2:18))
+animal_elypses_1982_1995<-plotellipses(mca1,keepvar=c(2:18))
+
+# MCA_animals_1996_2006 ---------------------------------------------------
+traits_animal_imputed<-read.csv("20220128_1996-2006_animal.csv")
+str(traits_animal_imputed)
+traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
+traits_animal_imputed<-select (traits_animal_imputed, -c(intertidal))
+
+str(traits_animal_imputed)
+traits_animal_imputed_sel<-traits_animal_imputed[,4:13] #select columns of interest
+cats=apply(traits_animal_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats
+
+#trait_animal_imputed_sel<-trait_animal_imputed_sel %>% mutate_at(vars(body_size_avg_bin, morphology1,dietary_pref_c,trophic_level, motility_juv, motility_adult, benthic,epibiotic, invasive, intertidal, subtidal), list(as.factor)) 
+
+#MCA
+mca1 = MCA (traits_animal_imputed_sel, graph = TRUE)
+summary (mca1)
+mca1$eig
+variables_scores_animal<-mca1$var$eta2
+write.csv(variables_scores_animal, "animal_variable_scores.csv")
+str(variables_scores_animal)
+head(mca1$var$coord)
+mca1
+plot(mca1)
+
+#dimdesc(mca1)
+######## Variable needed for the plot extracted from mca1
+mca1_vars_df = data.frame(mca1$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca1_obs_df = data.frame(mca1$ind$coord)
+
+#####MCA plot
+# plot of variable categories
+ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("animals MCA plot of variables using R package FactoMineR")
 
 
+# MCA plot of observations and categories [Plot used for the presentation!]
+animals_1996_2006<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                                      colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                                      alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca1_vars_df, 
+                                                                                                                                                                                                                                   aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
+  ggtitle("Animals, MCA plot 1996_2006, FactorMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab (" Dim 1 18.57% ")+ ylab(" Dim 2 13.38% ")
 
 
+#plot individual variables  in the multispace
+animal_elypses_1996_2006<-plotellipses(mca1,keepvar=c(2:18))
 
+# MCA_animals_2011_end ---------------------------------------------------
+traits_animal_imputed<-read.csv("20220128_2011-end_animal.csv")
+str(traits_animal_imputed)
+traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
+traits_animal_imputed<-select (traits_animal_imputed, -c(intertidal))
+str(traits_animal_imputed)
+traits_animal_imputed_sel<-traits_animal_imputed[,4:13] #select columns of interest
+cats=apply(traits_animal_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats
+
+#trait_animal_imputed_sel<-trait_animal_imputed_sel %>% mutate_at(vars(body_size_avg_bin, morphology1,dietary_pref_c,trophic_level, motility_juv, motility_adult, benthic,epibiotic, invasive, intertidal, subtidal), list(as.factor)) 
+
+#MCA
+mca1 = MCA (traits_animal_imputed_sel, graph = TRUE)
+summary (mca1)
+mca1$eig
+variables_scores_animal<-mca1$var$eta2
+write.csv(variables_scores_animal, "animal_variable_scores.csv")
+str(variables_scores_animal)
+head(mca1$var$coord)
+mca1
+plot(mca1)
+
+#dimdesc(mca1)
+######## Variable needed for the plot extracted from mca1
+mca1_vars_df = data.frame(mca1$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca1_obs_df = data.frame(mca1$ind$coord)
+
+#####MCA plot
+# plot of variable categories
+ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("animals MCA plot of variables using R package FactoMineR")
+
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+animals_2011_end<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                                      colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                                      alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca1_vars_df, 
+                                                                                                                                                                                                                                   aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
+  ggtitle("Animals, MCA plot 2011_end, FactorMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab (" Dim 1 18.12% ")+ ylab(" Dim 2 13.48% ")
+
+
+#plot individual variables  in the multispace
+animal_elypses_2011_end<-plotellipses(mca1,keepvar=c(2:18))
+
+# Animals plot by year
+animals_1982_end
+animal_elypses_1982_end
+
+animals_1982_1995
+animal_elypses_1982_1995
+
+animals_1996_2006
+animal_elypses_1996_2006
+
+animals_2011_end
+animal_elypses_2011_end
 
 
 ###########ANALYSES BY YEAR################
