@@ -62,7 +62,7 @@ loadfonts()
 
 traits<-read.csv("20210730_functional_traits_marine.csv",stringsAsFactors=FALSE) # the last version of the data
 #traits_algae_imputed<-read.csv("20210806_algae_imputed.csv")
-traits_algae_imputed<-read.csv("20220128_1982-1995_algae.csv")
+
 
 #traits_animal_imputed<-read.csv("20210806_animal_imputed.csv")
 traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
@@ -72,6 +72,8 @@ traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
 
 #Matrices traits similarity
 matrix_algae<-read.csv("20210806_algae_matrix.csv")
+
+# Matrices and trait similarity -------------------------------------------
 
 View(matrix_algae)
 matrix_algae <- as.matrix(matrix_algae)
@@ -106,9 +108,10 @@ str(species_year)
 
 
 
-#Multivariate analyses
+
 
 # MCA Multiple correspondence analyses -------------------------------------
+##Multivariate analyses
 ####Alternative using MCA Multiple correspondence analyses
 ###
 #https://rpubs.com/gaston/MCA
@@ -124,20 +127,26 @@ str(species_year)
 require(FactoMineR)
 require(ggplot2)
 
-# MCA_all_years_together ---------------------------------------------------
-str(traits_algae_imputed) 
+# ALGAE_MCA_all_years_together ---------------------------------------------------
+#Data
+traits_algae_imputed<-read.csv("20220117_algae_imputed.csv")
+traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
+traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+
+str(traits_algae_imputed)
+
 str(traits_animal_imputed)
 
 ####
 #MCA_algae
 ####
 str(traits_algae_imputed)
-traits_algae_imputed_sel<-traits_algae_imputed[,4:11] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:9] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,body_size_avg_bin,benthic,epibiotic,intertidal,subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
 
 #MCA
 mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
@@ -168,25 +177,227 @@ ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars
                                                              colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
 
 # MCA plot of observations and categories [Plot used for the presentation!]
-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+plot_algae_1982_end<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
                                                                    colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
                                                                                                                                                    alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca2_vars_df, 
                                                                                                                                                                                                                 aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
-  ggtitle("Algae, MCA plot of variables using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
+  ggtitle("Algae, MCA plot of variables 1982_end (package FactoMineR)") + scale_colour_discrete(name = "Variable")+
   geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  theme_bw(20)+ xlab ("  Dim 1 Morphology, Body size  15.45%")+ ylab(" Body size-small 13 %")
+  theme_bw(20)+ xlab ("Dim 1 18.33%")+ ylab("Dim 2  16.09%")
+
+plot_ellipses_algae_1982_end<-plotellipses(mca2,keepvar=c(2:11))
+
+plot_algae_1982_end
+plot_ellipses_algae_1982_end
 
 
-plotellipses(mca2,keepvar=c(2:11))
+# ALGAE_MCA_1982_1995 ---------------------------------------------------
+#Data
+traits_algae_imputed<-read.csv("20220128_1982-1995_algae.csv")
+traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
+traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
 
+str(traits_algae_imputed)
 
-###
-#ANIMALS
-###
+####
+#MCA_algae
+####
+str(traits_algae_imputed)
+traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats
 
-traits_animal_imputed_sel<-traits_animal_imputed[,5:15] #select columns of interest
+str(traits_algae_imputed_sel)
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+
+#MCA
+mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
+summary (mca2)
+mca2$eig
+mca2$var
+mca2$ind
+
+variables_scores_algae<-mca2$var$eta2 
+str(variables_scores_algae) 
+head(mca2$var$coord)
+mca2
+plot(mca2)
+
+str(traits_algae_imputed_sel)
+
+#dimdesc(mca2)
+######## Variable needed for the plot extracted from mca2
+mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca2_obs_df = data.frame(mca2$ind$coord)
+
+View(mca2_vars_df )
+
+# plot of variable categories
+ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+plot_algae_1982_1995<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                                        colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                                        alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca2_vars_df, 
+                                                                                                                                                                                                                                     aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
+  ggtitle("Algae, MCA plot 1982_1995. FactorMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
+
+plot_ellipses_algae_1982_1995<-plotellipses(mca2,keepvar=c(2:11))
+
+plot_algae_1982_1995
+plot_ellipses_algae_1982_1995
+# ALGAE_MCA_1996_2006 ---------------------------------------------------
+#Data
+traits_algae_imputed<-read.csv("20220128_1996-2006_algae.csv")
+traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
+traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+
+str(traits_algae_imputed)
+
+####
+#MCA_algae
+####
+str(traits_algae_imputed)
+traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats
+
+str(traits_algae_imputed_sel)
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+
+#MCA
+mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
+summary (mca2)
+mca2$eig
+mca2$var
+mca2$ind
+
+variables_scores_algae<-mca2$var$eta2 
+str(variables_scores_algae) 
+head(mca2$var$coord)
+mca2
+plot(mca2)
+
+str(traits_algae_imputed_sel)
+
+#dimdesc(mca2)
+######## Variable needed for the plot extracted from mca2
+mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca2_obs_df = data.frame(mca2$ind$coord)
+
+View(mca2_vars_df )
+
+# plot of variable categories
+ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+plot_algae_1996_2006<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                                         colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                                         alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca2_vars_df, 
+                                                                                                                                                                                                                                      aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
+  ggtitle("Algae,  MCA plot 1996_2006. FactorMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab (" Dim 1  21.35%")+ ylab(" Dim 2 16.95 %")
+
+plot_ellipses_algae_1996_2006<-plotellipses(mca2,keepvar=c(2:11))
+
+plot_algae_1996_2006
+plot_ellipses_algae_1996_2006
+# ALGAE_MCA_2011_end_algae ---------------------------------------------------
+#Data
+traits_algae_imputed<-read.csv("20220128_2011-end_algae.csv")
+traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
+traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+
+str(traits_algae_imputed)
+
+####
+#MCA_algae
+####
+str(traits_algae_imputed)
+traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats
+
+str(traits_algae_imputed_sel)
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+
+#MCA
+mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
+summary (mca2)
+mca2$eig
+mca2$var
+mca2$ind
+
+variables_scores_algae<-mca2$var$eta2 
+str(variables_scores_algae) 
+head(mca2$var$coord)
+mca2
+plot(mca2)
+
+str(traits_algae_imputed_sel)
+
+#dimdesc(mca2)
+######## Variable needed for the plot extracted from mca2
+mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca2_obs_df = data.frame(mca2$ind$coord)
+
+View(mca2_vars_df )
+
+# plot of variable categories
+ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+plot_algae_2011_end<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                                         colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                                         alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca2_vars_df, 
+                                                                                                                                                                                                                                      aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
+  ggtitle("Algae, MCA plot 2011_end,FactoRMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab (" Dim 1  19.21%")+ ylab(" Dim 2 16.74 %")
+
+plot_ellipses_algae_2011_end<-plotellipses(mca2,keepvar=c(2:11))
+
+plot_algae_2011_end
+plot_ellipses_algae_2011_end
+
+# List_of_plots -----------------------------------------------------------
+
+plot_algae_1982_end
+plot_ellipses_algae_1982_end
+
+plot_algae_1982_1995
+plot_ellipses_algae_1982_1995
+
+plot_algae_1996_2006
+plot_ellipses_algae_1996_2006
+
+plot_algae_2011_end
+plot_ellipses_algae_2011_end
+
+# MCA ANIMALS -----------------------------------------------------------------
+#MCA All years
+traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
+str(traits_animal_imputed)
+traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
+traits_animal_imputed<-select (traits_animal_imputed, -c(intertidal))
+
+str(traits_animal_imputed)
+traits_animal_imputed_sel<-traits_animal_imputed[,4:13] #select columns of interest
 cats=apply(traits_animal_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
+
 #trait_animal_imputed_sel<-trait_animal_imputed_sel %>% mutate_at(vars(body_size_avg_bin, morphology1,dietary_pref_c,trophic_level, motility_juv, motility_adult, benthic,epibiotic, invasive, intertidal, subtidal), list(as.factor)) 
 
 #MCA
@@ -214,24 +425,88 @@ ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars
 
 
 # MCA plot of observations and categories [Plot used for the presentation!]
-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+animals_1982_end<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
                                                                    colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
                                                                                                                                                    alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca1_vars_df, 
                                                                                                                                                                                                                 aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
-  ggtitle("Animals, MCA plot of variables using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
+  ggtitle("Animals, MCA plot 1982_end, FactorMineR") + scale_colour_discrete(name = "Variable")+
   geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  theme_bw(20)+ xlab ("  Dim 1 ")+ ylab(" Dim 2")
+  theme_bw(20)+ xlab (" Dim 1 18.57 ")+ ylab(" Dim 2 13.20 ")
 
 
   #plot individual variables  in the multispace
-  plotellipses(mca1,keepvar=c(2:18))
-
+  animal_elypses_1982_end<-plotellipses(mca1,keepvar=c(2:18))
+  
+###
+  
 #Extract particular variables of interest
 
 a<-plotellipses(mca1, keepvar =4,graph.type="ggplot")
 a+geom_density2d(colour = "red")
 a + geom_hline(yintercept = 0,  colour = "gray70")+  geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", alpha = 0.7) + geom_density2d(colour = "red") + ggtitle("animals MCA plot of variables using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
   theme_bw(20) + xlab(" Body size + Trophic level+ motility (18%) ") + ylab("Diet+Morphology")
+
+# Animals plot by year
+animals_1982_end
+animal_elypses_1982_end
+
+
+# MCA_animals_1982_1995 ---------------------------------------------------
+
+
+traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
+str(traits_animal_imputed)
+traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
+traits_animal_imputed<-select (traits_animal_imputed, -c(intertidal))
+
+str(traits_animal_imputed)
+traits_animal_imputed_sel<-traits_animal_imputed[,4:13] #select columns of interest
+cats=apply(traits_animal_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats
+
+#trait_animal_imputed_sel<-trait_animal_imputed_sel %>% mutate_at(vars(body_size_avg_bin, morphology1,dietary_pref_c,trophic_level, motility_juv, motility_adult, benthic,epibiotic, invasive, intertidal, subtidal), list(as.factor)) 
+
+#MCA
+mca1 = MCA (traits_animal_imputed_sel, graph = TRUE)
+summary (mca1)
+mca1$eig
+variables_scores_animal<-mca1$var$eta2
+write.csv(variables_scores_animal, "animal_variable_scores.csv")
+str(variables_scores_animal)
+head(mca1$var$coord)
+mca1
+plot(mca1)
+
+#dimdesc(mca1)
+######## Variable needed for the plot extracted from mca1
+mca1_vars_df = data.frame(mca1$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca1_obs_df = data.frame(mca1$ind$coord)
+
+#####MCA plot
+# plot of variable categories
+ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("animals MCA plot of variables using R package FactoMineR")
+
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+animals_1982_end<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+                                                                                     colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
+                                                                                                                                                                     alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca1_vars_df, 
+                                                                                                                                                                                                                                  aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
+  ggtitle("Animals, MCA plot 1982_end, FactorMineR") + scale_colour_discrete(name = "Variable")+
+  geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab (" Dim 1 18.57 ")+ ylab(" Dim 2 13.20 ")
+
+
+#plot individual variables  in the multispace
+animal_elypses_1982_end<-plotellipses(mca1,keepvar=c(2:18))
+
+
+
+
+
 
 
 ###########ANALYSES BY YEAR################
