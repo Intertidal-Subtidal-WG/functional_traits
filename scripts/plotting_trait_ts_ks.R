@@ -132,14 +132,14 @@ cover_year_all <- cover_avg_by_year %>%
 # RELATIVE ABUNDANCE: COUNT DATA BY YEAR
 
 # group
-(plot1 <- count_year_all %>% 
+plot1 <- count_year_all %>% 
    group_by(Year, Position, group) %>%
    summarise(Sum = sum(Rel_abund_by_side)) %>% 
    ggplot(aes(x = Year, y = Sum, color = group)) +
    geom_point() +
    geom_line() +
    facet_wrap(~ Position, nrow = 2) + 
-   theme_bw())
+   theme_bw()
 
 # body_size_avg_bin
 (plot2 <- count_year_all %>% 
@@ -203,17 +203,17 @@ cover_year_all <- cover_avg_by_year %>%
     theme_bw())
 
 # benthic
-(plot8 <- count_year_all %>% 
+plot8 <- count_year_all %>% 
     group_by(Year, Position, benthic) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = benthic)) +
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 # invasive
-(plot9 <- count_year_all %>% 
+plot9 <- count_year_all %>% 
     group_by(Year, Position, invasive) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     drop_na() %>% 
@@ -221,13 +221,16 @@ cover_year_all <- cover_avg_by_year %>%
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 count_rel_abund_plots <- (plot1 + plot2 + plot3) / 
   (plot4 + plot5 + plot6) / 
   (plot7 + plot8 + plot9) +
   plot_annotation(title = "Relative Abundance (Count)")
-#ggsave("plots/count_rel_abund_plots.png")
+ggsave(count_rel_abund_plots, "output/2022march/count_rel_abund_plots.png",
+       device = 'png')
+
+
 
 # RELATIVE ABUNDANCE: COVER DATA
 
