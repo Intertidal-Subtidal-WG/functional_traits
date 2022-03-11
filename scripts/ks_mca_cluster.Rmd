@@ -1,0 +1,31 @@
+---
+title: "ks_mca_clusters"
+author: "Kate Sheridan"
+date: "3/11/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(FactoMineR)
+library(dplyr)
+library(here)
+
+# here filepaths
+mcadata <- here('data', 'clean')
+```
+
+# Run MCAs
+## Algae
+### All
+```{r}
+#Data
+traits_algae_imputed <- read_csv(here(mcadata, "20220117_algae_imputed.csv"),
+                                 col_select = !1) %>%
+  filter(intertidal == 'yes') %>%
+  select(!(c(body_size_avg_bin, intertidal)))
+
+#glimpse(traits_algae_imputed)
+```
+
