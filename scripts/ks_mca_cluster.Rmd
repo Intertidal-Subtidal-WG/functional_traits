@@ -14,18 +14,88 @@ library(here)
 
 # here filepaths
 mcadata <- here('data', 'clean')
+plots <- here('output', '2022march', 'mca')
 ```
 
 # Run MCAs
 ## Algae
 ### All
-```{r}
-#Data
+```{r load-algae-all}
 traits_algae_imputed <- read_csv(here(mcadata, "20220117_algae_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(body_size_avg_bin, intertidal)))
 
 #glimpse(traits_algae_imputed)
+```
+
+```{r mca-algae-all}
+traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+
+cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+cats # what is this for?
+
+# to factors
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>%
+  mutate_at(vars(turf_subcanopy_canopy_algae, steneck_dethier_morphology_algae, 
+                 benthic, epibiotic, subtidal), list(as.factor)) 
+
+#MCA
+mca2 = MCA(traits_algae_imputed_sel, graph = TRUE)
+summary (mca2)
+mca2$eig
+mca2$var
+mca2$ind
+
+variables_scores_algae<-mca2$var$eta2 
+#str(variables_scores_algae) 
+head(mca2$var$coord)
+#mca2
+plot(mca2)
+
+```
+
+```{r mca-plot-algae-all}
+# prep data for plot
+mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca2_obs_df = data.frame(mca2$ind$coord)
+
+# plot of variable categories
+ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + 
+  geom_vline(xintercept = 0, colour = "gray70") + 
+  geom_text(aes(colour = Variable)) + 
+  ggtitle("Algae_MCA plot of variables using R package FactoMineR")
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+plot_algae_1982_1995<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + 
+  geom_hline(yintercept = 0, colour = "gray70") + 
+  geom_vline(xintercept = 0, colour = "gray70") + 
+  geom_point(colour = "gray50", alpha = 0.7) + 
+  geom_density2d(colour = "gray80") + 
+  geom_text(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(mca2_vars_df), 
+                                     colour = Variable)) + 
+  ggtitle("Algae, MCA plot 1982_1995. FactorMineR") + 
+  scale_colour_discrete(name = "Variable") +
+  geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
+
+plot_algae_1982_1995
+ggsave(here(plots, '20220311_mca_algae-all.png'), plot = plot_algae_1982_1995,
+       device = 'png', width = 10)
+
+# ellipses plot
+plot_ellipses_algae_1982_1995 <- plotellipses(mca2,keepvar=c(2:11))
+
+# saving these requires the png/dev.off combo. 
+## check how to adjust output later
+png(here(plots, '20220311_mca_ellipse_algae-all.png'))
+plot_ellipses_algae_1982_1995
+dev.off()
+
+
 ```
 
