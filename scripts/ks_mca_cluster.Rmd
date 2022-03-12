@@ -22,7 +22,7 @@ plots <- here('output', '2022march', 'mca')
 ## Algae
 ### All
 ```{r load-algae-all}
-traits_algae_imputed <- read_csv(here(mcadata, "20220117_algae_imputed.csv"),
+traits_algae_imputed <- read_csv(here(mcadata, "20220312_algae_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(body_size_avg_bin, intertidal)))
@@ -31,15 +31,16 @@ traits_algae_imputed <- read_csv(here(mcadata, "20220117_algae_imputed.csv"),
 ```
 
 ```{r mca-algae-all}
-traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,3:14] #select columns of interest
 
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats # what is this for?
 
+
+
 # to factors
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>%
-  mutate_at(vars(turf_subcanopy_canopy_algae, steneck_dethier_morphology_algae, 
-                 benthic, epibiotic, subtidal), list(as.factor)) 
+traits_algae_imputed_sel <- traits_algae_imputed_sel %>%
+  mutate(across(.fns = ~ as.factor(.)))
 
 #MCA
 mca2 = MCA(traits_algae_imputed_sel, graph = TRUE)
@@ -84,7 +85,7 @@ plot_algae_1982_1995<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) +
   theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
 
 plot_algae_1982_1995
-ggsave(here(plots, '20220311_mca_algae-all.png'), plot = plot_algae_1982_1995,
+ggsave(here(plots, '20220312_mca_algae-all.png'), plot = plot_algae_1982_1995,
        device = 'png', width = 10)
 
 # ellipses plot
@@ -92,7 +93,7 @@ plot_ellipses_algae_1982_1995 <- plotellipses(mca2,keepvar=c(2:11))
 
 # saving these requires the png/dev.off combo. 
 ## check how to adjust output later
-png(here(plots, '20220311_mca_ellipse_algae-all.png'))
+png(here(plots, '20220312_mca_ellipse_algae-all.png'))
 plot_ellipses_algae_1982_1995
 dev.off()
 ```
@@ -112,11 +113,11 @@ algae_all_hcpc$desc.var$category
 algae_all_hcpc$desc.ind$para
 
 
-png(here(plots, '20220311_mca_cluster-tree_algae-all.png'))
+png(here(plots, '20220312_mca_cluster-tree_algae-all.png'))
 fviz_dend(algae_all_hcpc, show_labels = FALSE)
 dev.off()
 
-png(here(plots, '20220311_mca_cluster-map_algae-all.png'))
+png(here(plots, '20220312_mca_cluster-map_algae-all.png'))
 fviz_cluster(algae_all_hcpc, geom = "point", main = "Factor map")
 dev.off()
 
