@@ -1,0 +1,89 @@
+species,group,common_name_division_bgr,body_size_avg_bin,calcareous,dietary_pref_c,trophic_level,motility_juv,motility_adult,benthic,epibiotic,intertidal,subtidal
+Urticina felina,Invertebrate,Anemone,medium,no,predator,secondary consumer,motile,sessile,yes,yes,no,yes
+Metridium dianthus,Invertebrate,Anemone,small-medium,no,predator,secondary consumer,motile,sessile,yes,yes,yes,no
+Diadumene lineata,Invertebrate,Anemone,small,no,predator,secondary consumer,motile,sessile,yes,yes,yes,yes
+Semibalanus balanoides,Invertebrate,Barnacle,small,yes,filter-suspension,primary consumer,motile,sessile,no,yes,yes,no
+Ostrea edulis,Invertebrate,Bivalve,small-medium,yes,filter-suspension,primary consumer,motile,sessile,no,yes,yes,yes
+Anomia simplex,Invertebrate,Bivalve,small,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no
+Hiatella arctica,Invertebrate,Bivalve,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no
+Modiolus modiolus,Invertebrate,Bivalve,medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Mytilus edulis,Invertebrate,Bivalve,medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Placopecten magellanicus,Invertebrate,Bivalve,medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Mya arenaria,Invertebrate,Bivalve,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,no,yes,yes
+Bugulina spicata,Invertebrate,Bryozoan,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Crisia eburnea,Invertebrate,Bryozoan,small,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Crisularia turrita,Invertebrate,Bryozoan,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Dendrobeania murrayana,Invertebrate,Bryozoan,medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Membranipora membranacea,Invertebrate,Bryozoan,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Patinella verrucaria,Invertebrate,Bryozoan,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Schizoporella unicornis,Invertebrate,Bryozoan,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Tricellaria inopinata,Invertebrate,Bryozoan,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Cryptosula pallasiana,Invertebrate,Bryozoan,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Electra pilosa,Invertebrate,Bryozoan,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Bugula neritina,Invertebrate,Bryozoan,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Celleporella hyalina,Invertebrate,Bryozoan,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Flustrellidra hispida,Invertebrate,Bryozoan,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Boreochiton ruber,Invertebrate,Chiton,small,yes,herbivore,primary consumer,motile,motile,yes,yes,no,yes
+Stenosemus albus,Invertebrate,Chiton,small,yes,herbivore,primary consumer,motile,motile,yes,no,no,yes
+Pachycerianthus borealis,Invertebrate,Cnidarian,medium-large,no,filter-suspension,secondary consumer,motile,sessile,yes,no,no,yes
+Metridium senile,Invertebrate,Cnidarian,medium-large,no,filter-suspension,secondary consumer,motile,sessile,yes,yes,yes,no
+Amphipoda,Invertebrate,Crustacean,small,yes,filter-suspension,secondary consumer,motile,motile,yes,yes,yes,no
+Cancer borealis,Invertebrate,Crustacean,small-medium,yes,omnivore,secondary consumer,motile,motile,yes,no,yes,yes
+Cancer irroratus,Invertebrate,Crustacean,small-medium,yes,omnivore,secondary consumer,motile,motile,yes,no,yes,yes
+Carcinus maenus,Invertebrate,Crustacean,small-medium,yes,omnivore,secondary consumer,motile,motile,yes,yes,yes,no
+Homarus americanus,Invertebrate,Crustacean,medium-large,yes,predator,secondary consumer,motile,motile,yes,no,no,yes
+Pagurus acadianus,Invertebrate,Crustacean,small-medium,yes,scavenger,secondary consumer,motile,motile,yes,NA,yes,no
+Hemigrapsus sanguineus,Invertebrate,Crustacean,small-medium,yes,omnivore,secondary consumer,motile,motile,yes,no,yes,no
+Isopoda,Invertebrate,Crustacean,small,yes,herbivore,primary consumer,motile,motile,yes,no,yes,no
+Cucumaria frondosa,Invertebrate,Echinoderm,medium-large,yes,deposit feeder,decomposer,motile,motile,yes,no,no,yes
+Echinarachnius parma,Invertebrate,Echinoderm,small-medium,yes,deposit feeder,decomposer,motile,motile,yes,no,no,yes
+Ophiopholis aculeata,Invertebrate,Echinoderm,medium,yes,scavenger,secondary consumer,motile,motile,yes,no,no,yes
+Strongylocentrotus droebachiensis,Invertebrate,Echinoderm,small-medium,yes,herbivore,primary consumer,motile,motile,yes,yes,yes,yes
+Lacuna vincta,Invertebrate,Gastropod,small,yes,filter-suspension,primary consumer,motile,motile,no,yes,yes,no
+Littorina littorea,Invertebrate,Gastropod,small-medium,yes,herbivore,primary consumer,motile,motile,no,yes,yes,no
+Littorina obtusata,Invertebrate,Gastropod,small,yes,herbivore,primary consumer,motile,motile,no,yes,yes,no
+Nudibranchia,Invertebrate,Gastropod,small,no,predator,secondary consumer,motile,motile,yes,NA,yes,yes
+Gastropoda,Invertebrate,Gastropod,small,yes,NA,NA,motile,motile,yes,NA,yes,yes
+Nucella lapillus,Invertebrate,Gastropod,small-medium,yes,predator,secondary consumer,motile,motile,no,yes,yes,no
+Buccinum undatum,Invertebrate,Gastropod,small-medium,yes,predator,secondary consumer,motile,motile,yes,yes,no,yes
+Crepidula fornicata,Invertebrate,Gastropod,small-medium,yes,filter-suspension,primary consumer,sessile,sessile,yes,yes,yes,yes
+Littorina saxatilis,Invertebrate,Gastropod,small-medium,yes,herbivore,primary consumer,motile,motile,yes,no,yes,no
+Tectura testudinalis,Invertebrate,Gastropod,small,yes,herbivore,primary consumer,motile,motile,yes,no,yes,no
+Testudinalia testudinalis,Invertebrate,Gastropod,small-medium,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Thylacodes,Invertebrate,Gastropod,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Dynamena pumila,Invertebrate,Hydrozoan,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,no
+Obelia,Invertebrate,Hydrozoan,medium-large,no,filter-suspension,primary consumer,sessile,motile,yes,yes,no,yes
+Spirorbis,Invertebrate,Annelid worm,very small,yes,filter-suspension,primary consumer,motile,sessile,no,yes,yes,no
+Sedentary Polychaete,Invertebrate,Annelid worm,small,no,NA,primary consumer,motile,sessile,yes,NA,yes,yes
+Annelida,Invertebrate,Annelid worm,small,no,NA,NA,motile,motile,NA,NA,yes,yes
+Asterias forbesi,Invertebrate,Sea Stars,small-medium,yes,predator,secondary consumer,motile,motile,yes,no,yes,yes
+Asterias rubens,Invertebrate,Sea Stars,medium-large,yes,predator,secondary consumer,motile,motile,yes,no,yes,yes
+Henricia sanguinolenta,Invertebrate,Sea Stars,small-medium,yes,filter-suspension,primary consumer,motile,motile,yes,no,yes,yes
+Halichondria panicea,Invertebrate,Sponge,medium,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Halisarca dujardinii,Invertebrate,Sponge,NA,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Hymedesmia,Invertebrate,Sponge,NA,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Leucosolenia,Invertebrate,Sponge,NA,yes,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Aplidium pallidum,Invertebrate,Tunicate,small-medium,no,filter-suspension,primary consumer,motile,sessile,yes,no,no,yes
+Ciona savignyi,Invertebrate,Tunicate,medium,no,filter-suspension,primary consumer,sessile,sessile,no,yes,no,yes
+Boltenia echinata,Invertebrate,Tunicate,small,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Boltenia ovifera,Invertebrate,Tunicate,small-medium,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Botrylloides violaceus,Invertebrate,Tunicate,medium,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Botryllus schlosseri,Invertebrate,Tunicate,medium,no,filter-suspension,primary consumer,motile,sessile,yes,yes,yes,yes
+Ciona intestinalis,Invertebrate,Tunicate,small-medium,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Dendrodoa carnea,Invertebrate,Tunicate,small,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Didemnum albidum,Invertebrate,Tunicate,small,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Didemnum vexillum,Invertebrate,Tunicate,small,no,filter-suspension,primary consumer,sessile,sessile,yes,yes,yes,yes
+Diplosoma listerianum,Invertebrate,Tunicate,very small,no,filter-suspension,primary consumer,motile,sessile,yes,yes,no,yes
+Tunicate,Invertebrate,Tunicate,NA,no,filter-suspension,primary consumer,motile,sessile,yes,yes,NA,NA
+Small worm,Invertebrate,Small worm,NA,no,NA,NA,motile,motile,yes,NA,yes,yes
+Cyclopterus lumpus,Vertebrate,Fish,large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Morone saxatilis,Vertebrate,Fish,very large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Myoxocephalus octodecemspinosus,Vertebrate,Fish,medium-large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Myoxocephalus scorpius,Vertebrate,Fish,large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Pholis gunnellus,Vertebrate,Fish,medium,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Pollachius virens,Vertebrate,Fish,very large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Pseudopleuronectes americanus,Vertebrate,Fish,large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Tautoga onitis,Vertebrate,Fish,large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Tautogolabrus adspersus,Vertebrate,Fish,medium-large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Urophycis regia,Vertebrate,Fish,medium-large,no,predator,secondary consumer,motile,motile,yes,no,no,yes
+Gaidropsarus,Vertebrate,Fish,NA,no,predator,secondary consumer,motile,motile,yes,no,no,yes

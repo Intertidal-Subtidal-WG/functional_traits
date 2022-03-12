@@ -1,0 +1,56 @@
+species,group,common_name_division_bgr,turf_subcanopy_canopy_algae,macrophyte,leathery,corticated,foliose,crustose,articulated,calcareous,body_size_avg_bin,benthic,epibiotic,intertidal,subtidal
+Alaria esculenta,Algae,Brown Algae,Canopy,yes,yes,no,no,no,no,no,very large,no,yes,yes,yes
+Ascophyllum nodosum,Algae,Brown Algae,Canopy,yes,yes,no,no,no,no,no,large,no,yes,yes,yes
+Elachista fucicola,Algae,Brown Algae,Turf,no,no,no,no,no,no,no,small-medium,no,yes,yes,no
+Fucus,Algae,Brown Algae,Subcanopy,yes,yes,no,no,no,no,no,large,yes,no,yes,no
+Fucus distichus,Algae,Brown Algae,Subcanopy,yes,yes,no,no,no,no,no,large,yes,no,yes,no
+Fucus vesiculosus,Algae,Brown Algae,Subcanopy,yes,yes,no,no,no,no,no,large,yes,no,yes,no
+Sphacelaria cirrosa,Algae,Brown Algae,Turf,no,no,no,no,no,no,no,medium,yes,yes,yes,yes
+Pylaiella littoralis,Algae,Brown Algae,Turf,no,no,no,no,no,no,no,NA,yes,yes,yes,yes
+Leathesia marina,Algae,Brown Algae,Subcanopy,no,no,no,no,no,no,no,NA,yes,yes,yes,yes
+Scytosiphon lomentaria,Algae,Brown Algae,Turf,no,no,yes,yes,no,no,no,large,yes,yes,yes,yes
+Chordaria flagelliformis,Algae,Brown Algae,Turf,no,no,yes,yes,no,no,no,large,no,yes,yes,yes
+Petalonia fascia,Algae,Brown Algae,Turf,no,no,no,yes,no,no,no,NA,yes,yes,yes,no
+Cladostephus spongiosus,Algae,Brown Algae,Subcanopy,yes,no,yes,no,no,no,no,NA,yes,no,yes,no
+Agarum clathratum,Algae,Brown Algae,Canopy,yes,yes,no,no,no,no,no,very large,yes,no,no,yes
+Colpomenia peregrina,Algae,Brown Algae,Turf,no,no,yes,yes,no,no,no,small-medium,yes,yes,yes,yes
+Desmarestia aculeata,Algae,Brown Algae,Subcanopy,yes,no,yes,no,no,no,no,large,yes,no,no,yes
+Desmarestia viridis,Algae,Brown Algae,Subcanopy,yes,no,yes,no,no,no,no,large,yes,no,no,yes
+Halosiphon tomentosus,Algae,Brown Algae,Subcanopy,no,no,no,no,no,no,no,very small,yes,no,no,yes
+Laminaria digitata,Algae,Brown Algae,Canopy,yes,yes,no,no,no,no,no,large,yes,yes,no,yes
+Saccharina latissima,Algae,Brown Algae,Canopy,yes,yes,no,no,no,no,no,very large,yes,yes,yes,yes
+Saccorhiza dermatodea,Algae,Brown Algae,Canopy,yes,yes,no,no,no,no,no,very large,yes,no,yes,yes
+Codium fragile,Algae,Green Algae,Subcanopy,no,no,yes,yes,no,no,no,medium-large,yes,no,yes,yes
+Prasiola stipitata,Algae,Green Algae,Turf,no,no,no,yes,no,no,no,small-medium,yes,no,yes,no
+Ulva lactuca,Algae,Green Algae,Turf,no,no,no,yes,no,no,no,medium-large,yes,yes,yes,no
+Ulva intestinalis,Algae,Green Algae,Turf,no,no,no,yes,no,no,no,medium,yes,yes,yes,no
+Ahnfeltia plicata,Algae,Green Algae,Subcanopy,yes,no,yes,no,no,no,no,medium,yes,no,yes,yes
+Chaetomorpha ligustica,Algae,Green Algae,Turf,no,no,yes,yes,no,no,no,large,no,yes,yes,yes
+Spongomorpha aeruginosa,Algae,Green Algae,Turf,no,no,no,no,no,no,no,NA,no,yes,yes,no
+Ceramium virgatum,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,medium-large,yes,yes,yes,yes
+Plumaria plumosa,Algae,Red Algae,Turf,yes,no,yes,no,no,no,no,medium,yes,yes,yes,yes
+Vertebrata lanosa,Algae,Red Algae,Subcanopy,yes,yes,no,no,no,no,no,NA,yes,yes,yes,no
+Corallina officinalis,Algae,Red Algae,Turf,NA,NA,NA,NA,NA,yes,yes,medium,yes,yes,yes,no
+Leptophytum acervatum,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,medium,yes,yes,no,yes
+Lithophyllum ,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,medium,yes,no,no,yes
+Lithothamnion,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,medium,yes,no,no,yes
+Phymatolithon lenormandii,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,medium,yes,yes,yes,no
+Titanoderma,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,small,NA,no,no,yes
+Clathromorphum circumscriptum,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,unknown,yes,no,yes,yes
+Hildenbrandia rubra,Algae,Red Algae,Turf,no,no,no,no,yes,no,no,medium,yes,no,yes,yes
+Dumontia contorta,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,medium,no,yes,no,yes
+Bonnemaisonia hamifera,Algae,Red Algae,Turf,no,no,no,no,no,no,no,medium-large,yes,yes,yes,yes
+Ceramium,Algae,Red Algae,Canopy,no,no,no,no,no,no,no,medium-large,yes,yes,no,yes
+Chondrus crispus,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,medium,yes,no,yes,yes
+Coccotylus truncatus,Algae,Red Algae,Turf,no,no,yes,yes,no,no,no,medium,yes,no,no,yes
+Cystoclonium purpureum,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,large,yes,no,yes,yes
+Dasysiphonia japonica,Algae,Red Algae,Turf,no,no,no,no,no,no,no,large,yes,no,no,yes
+Euthora cristata,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,small-medium,yes,yes,yes,yes
+Mastocarpus stellatus,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,medium,yes,no,yes,yes
+Palmaria palmata,Algae,Red Algae,Subcanopy,no,no,yes,yes,no,no,no,medium-large,yes,yes,yes,yes
+Phycodrys rubens,Algae,Red Algae,Subcanopy,no,no,no,yes,no,no,no,medium,yes,no,no,yes
+Polyides rotunda,Algae,Red Algae,Turf,yes,no,yes,no,no,no,no,medium,yes,no,no,yes
+Polysiphonia,Algae,Red Algae,Turf,no,no,no,no,no,no,no,medium-large,yes,yes,yes,yes
+Porphyra,Algae,Red Algae,Turf,no,no,no,yes,no,no,no,large,yes,no,yes,yes
+Ptilota serrata,Algae,Red Algae,Subcanopy,yes,no,yes,no,no,no,no,medium-large,yes,no,yes,yes
+Spermothamnion repens,Algae,Red Algae,Turf,no,no,no,no,no,no,no,small-medium,yes,yes,no,yes
