@@ -9,6 +9,7 @@ output: html_document
 library(tidyverse)
 library(ggplot2)
 library(FactoMineR)
+library(factoextra)
 library(dplyr)
 library(here)
 
@@ -52,7 +53,6 @@ variables_scores_algae<-mca2$var$eta2
 head(mca2$var$coord)
 #mca2
 plot(mca2)
-
 ```
 
 ```{r mca-plot-algae-all}
@@ -95,7 +95,46 @@ plot_ellipses_algae_1982_1995 <- plotellipses(mca2,keepvar=c(2:11))
 png(here(plots, '20220311_mca_ellipse_algae-all.png'))
 plot_ellipses_algae_1982_1995
 dev.off()
+```
 
+```{r}
+algae_all_hcpc <- HCPC(mca2, graph = FALSE)
+
+# Dendrogram
+fviz_dend(algae_all_hcpc, show_labels = FALSE)
+# Individuals facor map
+fviz_cluster(algae_all_hcpc, geom = "point", main = "Factor map")
+
+# shows each cluster and lists variables that define it in order
+algae_all_hcpc$desc.var$category
+
+#shows individuals
+algae_all_hcpc$desc.ind$para
+
+
+png(here(plots, '20220311_mca_cluster-tree_algae-all.png'))
+fviz_dend(algae_all_hcpc, show_labels = FALSE)
+dev.off()
+
+png(here(plots, '20220311_mca_cluster-map_algae-all.png'))
+fviz_cluster(algae_all_hcpc, geom = "point", main = "Factor map")
+dev.off()
 
 ```
 
+
+code from tutiorial
+```{r}
+res.hcpc <- HCPC(mca2, graph = FALSE, max = 3)
+
+# Dendrogram
+fviz_dend(res.hcpc, show_labels = FALSE)
+# Individuals facor map
+fviz_cluster(res.hcpc, geom = "point", main = "Factor map")
+```
+
+
+
+### Year chunks
+
+## Animals
