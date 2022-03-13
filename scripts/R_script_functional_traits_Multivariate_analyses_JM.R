@@ -63,7 +63,6 @@ loadfonts()
 traits<-read.csv("20210730_functional_traits_marine.csv",stringsAsFactors=FALSE) # the last version of the data
 #traits_algae_imputed<-read.csv("20210806_algae_imputed.csv")
 
-
 #traits_animal_imputed<-read.csv("20210806_animal_imputed.csv")
 traits_animal_imputed<-read.csv("20220128_1982-1995_animal.csv")
 
@@ -107,9 +106,6 @@ str(species_year)
 #matrix<-read<-("species_year_matrix.csv")
 
 
-
-
-
 # MCA Multiple correspondence analyses -------------------------------------
 ##Multivariate analyses
 ####Alternative using MCA Multiple correspondence analyses
@@ -129,24 +125,24 @@ require(ggplot2)
 
 # ALGAE_MCA_all_years_together ---------------------------------------------------
 #Data
-traits_algae_imputed<-read.csv("20220117_algae_imputed.csv")
+traits_algae_imputed<-read.csv("20220312_algae_imputed.csv")
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
-traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+#traits_algae_imputed<-select(traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(X,body_size_avg_bin,intertidal))
 
 str(traits_algae_imputed)
+head(traits_algae_imputed)
 
-str(traits_animal_imputed)
 
 ####
 #MCA_algae
 ####
-str(traits_algae_imputed)
-traits_algae_imputed_sel<-traits_algae_imputed[,4:9] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:14] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae, macrophyte,leathery, corticated, foliose, crustose, articulated,calcareous,benthic,epibiotic,subtidal), list(as.factor)) 
 
 #MCA
 mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
