@@ -14,8 +14,12 @@ transects <- read_csv("data/fielddata/transect_info.csv") %>%
   select(Transect, Position)
 
 # cleaned traits data (not imputed)
-algae <- read_csv("data/clean/algae_clean.csv")
-animal <- read_csv("data/clean/animal_clean.csv")
+## these were imputed versions actually
+#algae <- read_csv("data/clean/algae_clean.csv")
+#animal <- read_csv("data/clean/animal_clean.csv")
+
+algae <- read_csv("data/algae_clean.csv")
+animal <- read_csv("data/animal_clean.csv")
 
 # SUMMARIZE #===================================================================
 
@@ -141,8 +145,9 @@ plot1 <- count_year_all %>%
    facet_wrap(~ Position, nrow = 2) + 
    theme_bw()
 
+
 # body_size_avg_bin
-(plot2 <- count_year_all %>% 
+plot2 <- count_year_all %>% 
     group_by(Year, Position, body_size_avg_bin) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     drop_na() %>% 
@@ -150,57 +155,58 @@ plot1 <- count_year_all %>%
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 # morphology
-(plot3 <- count_year_all %>% 
+plot3 <- count_year_all %>% 
     group_by(Year, Position, morphology1) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = morphology1)) +
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
+
 
 # trophic level
-(plot4 <- count_year_all %>% 
+plot4 <- count_year_all %>% 
     group_by(Year, Position, trophic_level) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = trophic_level)) +
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 # dietary_pref
-(plot5 <- count_year_all %>% 
+plot5 <- count_year_all %>% 
     group_by(Year, Position, dietary_pref_c) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = dietary_pref_c)) +
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 # motility_adult
-(plot6 <- count_year_all %>% 
+plot6 <- count_year_all %>% 
     group_by(Year, Position, motility_adult) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = motility_adult)) +
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 # epibiotic
-(plot7 <- count_year_all %>% 
+plot7 <- count_year_all %>% 
     group_by(Year, Position, epibiotic) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = epibiotic)) +
     geom_point() +
     geom_line() +
     facet_wrap(~ Position, nrow = 2) + 
-    theme_bw())
+    theme_bw()
 
 # benthic
 plot8 <- count_year_all %>% 
@@ -227,7 +233,8 @@ count_rel_abund_plots <- (plot1 + plot2 + plot3) /
   (plot4 + plot5 + plot6) / 
   (plot7 + plot8 + plot9) +
   plot_annotation(title = "Relative Abundance (Count)")
-ggsave(count_rel_abund_plots, "output/2022march/count_rel_abund_plots.png",
+ggsave("output/2022march/count_rel_abund_plots.png",
+       count_rel_abund_plots,
        device = 'png')
 
 
@@ -330,4 +337,6 @@ cover_rel_abund_plots <- (plot1 + plot2 + plot3) /
   (plot4 + plot5 + plot6) / 
   (plot7 + plot8 + plot9) +
   plot_annotation(title = "Relative Abundance (Cover)")
-ggsave("output/2022march/cover_rel_abund_plots.png")
+ggsave("output/2022march/cover_rel_abund_plots.png",
+       cover_rel_abund_plots, device = 'png',
+       width = 12)

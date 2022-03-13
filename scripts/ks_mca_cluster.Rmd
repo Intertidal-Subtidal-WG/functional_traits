@@ -18,6 +18,82 @@ mcadata <- here('data', 'clean')
 plots <- here('output', '2022march', 'mca')
 ```
 
+load in functions
+```{r}
+# input should be imputed traits, filtered as needed
+## note that we're selecting columns automatically here 
+## starting with column 3 after the species column; change if not true
+# note that only output starting with gg are ggplot objects
+appledoreMCAHCPC <- function(traits) {
+  # select columns for MCA
+  traits <- traits %>% 
+    column_to_rownames('species') %>%
+    dplyr::select(3:(ncol(traits)-1)) %>%
+    mutate(across(.fns = ~ as.factor(.)))
+  # run MCA
+  mca2 <- MCA(traits, graph = FALSE)
+  # prepare data for plotting
+  cats=apply(traits, 2, function(x) nlevels(as.factor(x)))
+  mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+  mca2_obs_df = data.frame(mca2$ind$coord)
+  # plot with lines and vectors
+  mcaggplot <- ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray70") + 
+    geom_vline(xintercept = 0, colour = "gray70") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray80") + 
+    geom_text(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(mca2_vars_df), 
+                                     colour = Variable)) + 
+    ggtitle("MCA plot with FactorMineR") + 
+    scale_colour_discrete(name = "Variable") +
+    geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+    theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
+  # ellipses plot
+  plot_ellipses <- plotellipses(mca2)
+  # screeplot
+  scree2 <- fviz_screeplot(mca2)
+  contrib2 <- fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
+  
+  
+  # run HCPC
+  hcpc2 <- HCPC(mca2, graph = FALSE)
+  # hcpc dendrogram
+  hcpc_dend <- fviz_dend(hcpc2)
+  # hcpc factor map
+  hcpc_clust <- fviz_cluster(hcpc2, geom = "point", main = "Factor map")
+  
+  
+  
+  #output
+  list(summarymca = summary(mca2), clustmembers = hcpc2$desc.ind$para,
+       clustervariables = hcpc2$desc.var$category,
+       mcaplotraw = plot(mca2), ggmca = mcaggplot,
+       ggscreeplot = scree2, ggcontrib = contrib2,
+       ellipses = plot_ellipses, ggdendrogram = hcpc_dend,
+       ggclusterplot = hcpc_clust)
+}
+
+
+
+testalgae <- appledoreMCAHCPC(traits_algae_imputed)
+
+testalgae$ggmca + theme_bw()
+testalgae$ggcontrib + theme_bw()
+testalgae$summarymca
+
+testanimal <- mcatest(traits_animal_imputed)
+
+summmmsss <- tidy(summary(mca2))
+
+
+testanimal$ggmca
+testanimal$dendrogram
+```
+
+
 # Run MCAs
 ## Algae
 ### All
@@ -33,11 +109,6 @@ traits_algae_imputed <- read_csv(here(mcadata, "20220312_algae_imputed.csv"),
 
 ```{r mca-algae-all}
 traits_algae_imputed_sel<-traits_algae_imputed[,4:ncol(traits_algae_imputed)] #select columns of interest
-
-cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
-cats # what is this for?
-
-
 
 # to factors
 traits_algae_imputed_sel <- traits_algae_imputed_sel %>%
@@ -59,6 +130,8 @@ plot(mca2)
 
 ```{r mca-plot-algae-all}
 # prep data for plot
+cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
+
 mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
                                                          cats))
 mca2_obs_df = data.frame(mca2$ind$coord)
