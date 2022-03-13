@@ -25,13 +25,14 @@ plots <- here('output', '2022march', 'mca')
 traits_algae_imputed <- read_csv(here(mcadata, "20220312_algae_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(body_size_avg_bin, intertidal)))
+  select(!(c(body_size_avg_bin, intertidal,
+             calcareous)))
 
 #glimpse(traits_algae_imputed)
 ```
 
 ```{r mca-algae-all}
-traits_algae_imputed_sel<-traits_algae_imputed[,3:14] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:ncol(traits_algae_imputed)] #select columns of interest
 
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats # what is this for?
@@ -124,18 +125,93 @@ dev.off()
 ```
 
 
-code from tutiorial
-```{r}
-res.hcpc <- HCPC(mca2, graph = FALSE, max = 3)
-
-# Dendrogram
-fviz_dend(res.hcpc, show_labels = FALSE)
-# Individuals facor map
-fviz_cluster(res.hcpc, geom = "point", main = "Factor map")
-```
 
 
 
 ### Year chunks
 
 ## Animals
+
+```{r}
+traits_animal_imputed <- read_csv(here(mcadata, "20220312_animal_imputed.csv"),
+                                 col_select = !1) %>%
+  filter(intertidal == 'yes') %>%
+  select(!(c(body_size_avg_bin, intertidal)))
+```
+```{r animal-mca}
+traits_animal_imputed_sel<-traits_animal_imputed[,4:ncol(traits_animal_imputed)] #select columns of interest
+
+# to factors
+traits_animal_imputed_sel <- traits_animal_imputed_sel %>%
+  mutate(across(.fns = ~ as.factor(.)))
+
+#MCA
+mca3 = MCA(traits_animal_imputed_sel, graph = TRUE)
+```
+
+
+
+```{r mca-plot-algae-all}
+# prep data for plot
+mca3_vars_df = data.frame(mca3$var$coord, Variable = rep(names(cats), 
+                                                         cats))
+mca3_obs_df = data.frame(mca3$ind$coord)
+
+# plot of variable categories
+ggplot(data = mca3_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca3_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + 
+  geom_vline(xintercept = 0, colour = "gray70") + 
+  geom_text(aes(colour = Variable)) + 
+  ggtitle("Animal_MCA plot of variables using R package FactoMineR")
+
+# MCA plot of observations and categories [Plot used for the presentation!]
+plot_animal_1982_end <-ggplot(data = mca3_obs_df, aes(x = Dim.1, y = Dim.2)) + 
+  geom_hline(yintercept = 0, colour = "gray70") + 
+  geom_vline(xintercept = 0, colour = "gray70") + 
+  geom_point(colour = "gray50", alpha = 0.7) + 
+  geom_density2d(colour = "gray80") + 
+  geom_text(data = mca3_vars_df, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(mca3_vars_df), 
+                                     colour = Variable)) + 
+  ggtitle("Animal, MCA plot 1982_end. FactorMineR") + 
+  scale_colour_discrete(name = "Variable") +
+  geom_segment(data = mca3_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
+
+plot_animal_1982_end
+ggsave(here(plots, '20220313_mca_animal-all.png'), plot = plot_algae_1982_1995,
+       device = 'png', width = 10)
+
+# ellipses plot
+plot_ellipses_animal_1982_end <- plotellipses(mca3,keepvar=c(2:11))
+
+# saving these requires the png/dev.off combo. 
+## check how to adjust output later
+png(here(plots, '20220313_mca_ellipse_animal-all.png'))
+plot_ellipses_animal_1982_end
+dev.off()
+```
+
+
+```{r}
+animal_all_hcpc <- HCPC(mca3, graph = FALSE)
+
+# Dendrogram
+fviz_dend(animal_all_hcpc, show_labels = FALSE)
+# Individuals facor map
+fviz_cluster(animal_all_hcpc, geom = "point", main = "Factor map")
+
+# shows each cluster and lists variables that define it in order
+animal_all_hcpc$desc.var$category
+
+
+png(here(plots, '20220313_mca_cluster-tree_animal-all.png'))
+fviz_dend(animal_all_hcpc, show_labels = FALSE)
+dev.off()
+
+png(here(plots, '20220313_mca_cluster-map_animal-all.png'))
+fviz_cluster(animal_all_hcpc, geom = "point", main = "Factor map")
+dev.off()
+```
+
