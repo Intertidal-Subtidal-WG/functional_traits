@@ -4,29 +4,34 @@ author: "Kate Sheridan"
 date: "1/28/2022"
 output: html_document
 ---
+# Add trait data
+This script adds trait data to the species lists from the filter, replaces the species in the list with groups determined for traits, and also makes a master trait x year/transect/position list.
 
 ```{r setup, include=FALSE}
 library(dplyr)
 library(here)
+
+# here filepaths
+trait <- here('data','clean')
+field <- here('data','fielddata')
 ```
 
 
 ```{r}
 #load in imputed data
-animal_imp2 <- read.csv(file = here('data', 'clean','20220312_animal_imputed.csv'))
-algae_imp2 <- read.csv(file = here('data', 'clean','20220312_algae_imputed.csv'))
-
-#remove x column
-animal_imp2 <- animal_imp2[,2:ncol(animal_imp2),]
-algae_imp2 <- algae_imp2[,2:ncol(algae_imp2),]
-
-#make factors
-animal_imp2 <- animal_imp2 %>% 
+## remove first column, turn all into factors
+animal_imp2 <- read.csv(file = here(trait,'20220312_animal_imputed.csv'))[,-1]%>% 
   mutate(across(.fns = ~ as.factor(.)))
-algae_imp2 <- algae_imp2 %>% 
+algae_imp2 <- read.csv(file = here(trait,'20220312_algae_imputed.csv'))[,-1]%>% 
   mutate(across(.fns = ~ as.factor(.)))
 
-#uncomment the one you need
+# combined year+transect list
+## read in formatted that can play with the others
+pc_ct <- read.csv(file = here(field, 'combined_intertidal_species.csv')) %>%
+  janitor::clean_names() %>%
+  rename(species = organism)
+
+# for time series
 sp_1982r <- read.csv(here('data', 'fielddata', 'sp_1982-1995.csv')) %>%
   select(value) %>%
   dplyr::rename(species = value)
@@ -37,15 +42,45 @@ sp_2011r <- read.csv(here('data', 'fielddata', 'sp_2011-end.csv')) %>%
   select(value) %>%
   dplyr::rename(species = value)
 
-# group key
+# group key, make named list
 sp_key <- read_csv((here('data', 'splists', 'species_group_key.csv'))) %>%
   filter(!(is.na(Replacement)))
 
 sp_key2 <- setNames(as.list(sp_key$Species), sp_key$Replacement)
 sp_key2 <- unlist(sp_key2)
 
+```
+
+```{r combined}
+# update taxonomy
+
+pc_ct$species2 <- sapply(pc_ct$species, function(species) {
+  names(sp_key2)[sp_key2 == species]
+})
+
+# this makes up for that real quick and easy
+pc_ct <- pc_ct %>%
+  mutate(species2 = str_replace_all(species2, c("character\\(0\\)" = ""))) %>%
+  na_if("") %>%
+  mutate(species3 = coalesce(c(species2), c(species))) %>%
+  select(!(c(species,species2))) %>%
+  dplyr::rename(species = species3) %>%
+  distinct()
+
+
+pc_ct_animal <- pc_ct2 %>%
+  left_join(animal_imp2) %>%
+  filter(!(is.na(group)))
+pc_ct_algae <- pc_ct2 %>%
+  left_join(algae_imp2) %>%
+  filter(!(is.na(group)))
+
+write.csv(pc_ct_animal, here(trait, '20220314_1982-end_animal.csv'), row.names = FALSE)
+write.csv(pc_ct_algae, here(trait, '20220314_1982-end_algae.csv'), row.names = FALSE)
+
 
 ```
+
 
 
 ```{r 1982}

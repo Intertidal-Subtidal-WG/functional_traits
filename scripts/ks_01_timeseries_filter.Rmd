@@ -5,6 +5,10 @@ date: "9/10/2021"
 output: html_document
 ---
 
+# Filtering species observations
+
+First step is setting up the data for the time series. This script generates plain species list by time and a cleaned combined set including year, transect, exposed/protected, and species. It also runs the lists through taxize to standardize for taxonomic revisions over the course of the dataset.
+
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(dplyr)
@@ -21,13 +25,16 @@ pc <- read.csv(here::here('data', 'fielddata', 'pc_clean.csv'))
 
 #keen <- read.csv(here('data', 'fielddata', 'keen_all_methods_site_merged.csv'))
 
-#transect <- read.csv(here('data', 'fielddata', 'transect_info_decimals.csv'))
+# only load in relevant columns here
+transect <- read.csv(here('data', 'fielddata', 'transect_info.csv')) %>%
+  select(Transect, Position)
 
 ```
 
 
-extract useful stuff?
-First extract just species, year, and transect (for east west)
+Filter count and percent cover by positive observations.
+Extract species, year, transect, and merge with position (exposed/protected) from transect.
+
 ```{r}
 # count and percent cover data
 ct_count <- ct %>%
@@ -80,12 +87,19 @@ pc_ct2 <- pc_ct2 %>%
 
 # replace pc_ct with the new values and rerun splits
 pc_ct <- pc_ct2 %>%
-  select((c(Year, unique_name))) %>%
+  select((c(Year, Transect, unique_name))) %>%
   rename(Organism = unique_name)
+
+# add exposed/protected
+pc_ct <- pc_ct %>%
+  left_join(transect) %>%
+  relocate('Position', .before = 'Organism')
+
+# save
+write_csv(pc_ct, here('data', 'fielddata', 'combined_intertidal_species.csv'))
 ```
 
-single years for intersting times
-may want to do a range in the future. some have very few species
+single years, don't bother with this again, ranges are more informative.
 
 ```{r single-year}
 
