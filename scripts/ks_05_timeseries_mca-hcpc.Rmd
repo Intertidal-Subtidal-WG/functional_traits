@@ -151,14 +151,56 @@ mca_algae_96_06_mca <- appledoreMCAHCPC(algae_96_06)
 mca_algae_10_end <- appledoreMCAHCPC(algae_10_end)
 ```
 
-### exposed/protected
+### exposed/sheltered
 
 for the time series here it will just be beginning and end
 
-```{r}
+```{r algae-exposedsheltered}
+# just exposed v sheltered
+algae_exposed <- algae_traits %>%
+  filter(position == 'exposed') %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
 
+algae_sheltered <- algae_traits %>%
+  filter(position == 'sheltered') %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
 
+mca_algae_exposed <- appledoreMCAHCPC(algae_exposed)
+mca_algae_sheltered <- appledoreMCAHCPC(algae_sheltered)
 
+# exposed v sheltered beginning and end
+algae_exposed_start <- algae_traits %>%
+  filter(position == 'exposed' & year <= 1994 & year >= 1982) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
 
+algae_sheltered_start <- algae_traits %>%
+  filter(position == 'sheltered' & year <= 1994 & year >= 1982) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+algae_exposed_end <- algae_traits %>%
+  filter(position == 'exposed' & year <= 2010) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+algae_sheltered_end <- algae_traits %>%
+  filter(position == 'sheltered' & year <= 2010) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+mca_algae_exposed_start <- appledoreMCAHCPC(algae_exposed_start)
+mca_algae_sheltered_start <- appledoreMCAHCPC(algae_sheltered_start)
+mca_algae_exposed_end <- appledoreMCAHCPC(algae_exposed_end)
+mca_algae_sheltered_end <- appledoreMCAHCPC(algae_sheltered_end)
+
+mca_algae_exposed_start$ggmca
+mca_algae_exposed_end$ggmca
+mca_algae_sheltered_start$ggmca
+mca_algae_sheltered_end$ggmca
+mca_algae_exposed$ggmca
+mca_algae_sheltered$ggmca
 ```
 
