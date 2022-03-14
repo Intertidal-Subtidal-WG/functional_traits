@@ -128,7 +128,7 @@ require(ggplot2)
 traits_algae_imputed<-read.csv("20220312_algae_imputed.csv")
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
 #traits_algae_imputed<-select(traits_algae_imputed, -c(body_size_avg_bin,intertidal))
-traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(X,body_size_avg_bin,intertidal))
+traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(X,body_size_avg_bin,intertidal,calcareous))
 
 str(traits_algae_imputed)
 head(traits_algae_imputed)
@@ -137,12 +137,12 @@ head(traits_algae_imputed)
 ####
 #MCA_algae
 ####
-traits_algae_imputed_sel<-traits_algae_imputed[,4:14] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:13] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae, macrophyte,leathery, corticated, foliose, crustose, articulated,calcareous,benthic,epibiotic,subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae, macrophyte,leathery, corticated, foliose, crustose, articulated,benthic,epibiotic,subtidal), list(as.factor)) 
 
 #MCA
 mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
@@ -179,18 +179,16 @@ plot_algae_1982_end<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geo
                                                                                                                                                                                                                 aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
   ggtitle("Algae, MCA plot of variables 1982_end (package FactoMineR)") + scale_colour_discrete(name = "Variable")+
   geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  theme_bw(20)+ xlab ("Dim 1 18.33%")+ ylab("Dim 2  16.09%")
+  theme_bw(20)+ xlab ("Dim 1")+ ylab("Dim 2 ")
 
-plot_ellipses_algae_1982_end<-plotellipses(mca2,keepvar=c(2:11))
+plot_ellipses_algae_1982_end<-plotellipses(mca2,keepvar=c(1:12))
 
 plot_algae_1982_end
 plot_ellipses_algae_1982_end
 
-
+#DIAGNOSTIC PLOTS
 #Percentage of explained variation
-
 fviz_screeplot(mca2, addlabels = TRUE)
-
 
 # Contribution of individual variables in axis 1 and 2 
 fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
@@ -201,6 +199,7 @@ fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
 traits_algae_imputed<-read.csv("20220128_1982-1995_algae.csv")
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
 traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(body_size_avg_bin,intertidal,calcareous))
 
 str(traits_algae_imputed)
 
@@ -524,6 +523,7 @@ animals_1982_1995<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_
   geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
   theme_bw(20)+ xlab (" Dim 1 18.57% ")+ ylab(" Dim 2 13.20% ")
 
+plot(mca2)
 
 #plot individual variables  in the multispace
 animal_elypses_1982_1995<-plotellipses(mca1,keepvar=c(2:18))
@@ -743,3 +743,40 @@ ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 
   ggtitle(" Algae year 1982 using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
   geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
   theme_bw(20)+ xlab ("  Dim 1 ")+ ylab(" Dim 2")
+
+### Hypervolume 
+
+data(penguins,package='palmerpenguins')
+str(penguins)
+penguins_no_na = as.data.frame(na.omit(penguins))
+penguins_adelie = penguins_no_na[penguins_no_na$species=="Adelie",
+                                 c("bill_length_mm","bill_depth_mm","flipper_length_mm")]
+penguins_chinstrap = penguins_no_na[penguins_no_na$species=="Chinstrap",
+                                    c("bill_length_mm","bill_depth_mm","flipper_length_mm")]
+plot(hv2)
+hv1 = hypervolume_box(penguins_adelie,name='Adelie')
+hv2 = hypervolume_box(penguins_chinstrap,name='Chinstrap')
+hv_set <- hypervolume_set(hv1, hv2, check.memory=FALSE)
+hypervolume_overlap_statistics(hv_set)
+
+
+plot(hv_set)
+
+install.packages("mclust")
+library(mclust)
+
+x<-hypvol(mca2_obs_df)
+plot(x)
+
+a<-hypervolume(mca2_obs_df)
+b<-hypervolume_box(mca2_obs_df)
+c<-hypervolume_box(mca2_obs_df)
+
+hv_set <- hypervolume_set(a, b, check.memory=FALSE)
+hypervolume_overlap_statistics(hv_set)
+
+plot(hv_set)
+
+
+
+
