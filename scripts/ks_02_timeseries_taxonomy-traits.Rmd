@@ -68,10 +68,10 @@ pc_ct <- pc_ct %>%
   distinct()
 
 
-pc_ct_animal <- pc_ct2 %>%
+pc_ct_animal <- pc_ct %>%
   left_join(animal_imp2) %>%
   filter(!(is.na(group)))
-pc_ct_algae <- pc_ct2 %>%
+pc_ct_algae <- pc_ct %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
