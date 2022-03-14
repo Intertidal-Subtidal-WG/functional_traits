@@ -21,6 +21,7 @@ plots <- here('output', '2022march', 'mca')
 ## load in data
 
 ```{r}
+# all species
 algae_imputed_all <- read_csv(here(mcadata, "20220312_algae_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
@@ -29,6 +30,14 @@ algae_imputed_all <- read_csv(here(mcadata, "20220312_algae_imputed.csv"),
 
 animal_imputed_all <- read_csv(here(mcadata, "20220312_animal_imputed.csv"),
                                  col_select = !1) %>%
+  filter(intertidal == 'yes') %>%
+  select(!(c(intertidal)))
+
+# time series
+animal_1982_1995_traits <- read_csv(here(mcadata, "20220313_1982-1995_animal.csv")) %>%
+  filter(intertidal == 'yes') %>%
+  select(!(c(intertidal)))
+animal_2011_end_traits <- read_csv(here(mcadata, "20220313_2011-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal)))
 ```
@@ -101,6 +110,9 @@ appledoreMCAHCPC <- function(traits) {
 algae_all <- appledoreMCAHCPC(algae_imputed_all)
 
 animal_all <- appledoreMCAHCPC(animal_imputed_all)
+
+animal_1982_1995 <- appledoreMCAHCPC(animal_1982_1995_traits)
+animal_2011_end <- appledoreMCAHCPC(animal_2011_end_traits)
 ```
 explore output; use df$ to see all saved plots and summary stats
 Any output starting with gg is a ggplot object and can be chained with ggplot functions such as:
@@ -111,6 +123,11 @@ algae_all$mcaeigen
 
 # example ggplot
 animal_all$ggscreeplot + theme_bw()
+
+animal_all$ggdendrogram
+
+animal_1982_1995$ggdendrogram
+animal_2011_end$ggdendrogram
 ```
 
 
