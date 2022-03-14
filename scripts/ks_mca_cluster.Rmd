@@ -66,9 +66,10 @@ appledoreMCAHCPC <- function(traits) {
   hcpc_clust <- fviz_cluster(hcpc2, geom = "point", main = "Factor map")
   
   
-  
   #output
-  list(summarymca = summary(mca2), clustmembers = hcpc2$desc.ind$para,
+  list(mcaeigen = mca2$eig, mcavar = mca2$var,
+       mcaind = mca2$ind,
+       clustmembers = hcpc2$desc.ind$para,
        clustervariables = hcpc2$desc.var$category,
        mcaplotraw = plot(mca2), ggmca = mcaggplot,
        ggscreeplot = scree2, ggcontrib = contrib2,
@@ -84,10 +85,12 @@ testalgae$ggmca + theme_bw()
 testalgae$ggcontrib + theme_bw()
 testalgae$summarymca
 
-testanimal <- mcatest(traits_animal_imputed)
+testalgae$mcaind
 
-summmmsss <- tidy(summary(mca2))
 
+testanimal <- appledoreMCAHCPC(traits_animal_imputed)
+
+testanimal$mcaind
 
 testanimal$ggmca
 testanimal$dendrogram
