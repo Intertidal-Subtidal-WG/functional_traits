@@ -36,7 +36,7 @@ animal_imputed_all <- read_csv(here(mcadata, "20220312_animal_imputed.csv"),
 # time series
 algae_traits <- read_csv(here(mcadata, "20220314_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
+  select(!(c(intertidal, body_size_avg_bin)))
 
 animal_traits <- read_csv(here(mcadata, "20220314_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
@@ -195,6 +195,10 @@ mca_algae_exposed_start <- appledoreMCAHCPC(algae_exposed_start)
 mca_algae_sheltered_start <- appledoreMCAHCPC(algae_sheltered_start)
 mca_algae_exposed_end <- appledoreMCAHCPC(algae_exposed_end)
 mca_algae_sheltered_end <- appledoreMCAHCPC(algae_sheltered_end)
+```
+
+
+```{r algae-position-plots}
 
 mca_algae_exposed_start$ggmca
 mca_algae_exposed_end$ggmca
@@ -202,5 +206,111 @@ mca_algae_sheltered_start$ggmca
 mca_algae_sheltered_end$ggmca
 mca_algae_exposed$ggmca
 mca_algae_sheltered$ggmca
+
+ggsave(here(plots, 'temporary', 'algaeexposed.png'), mca_algae_exposed$ggmca, width = 10)
+ggsave(here(plots, 'temporary', 'algaesheltered.png'), mca_algae_sheltered$ggmca, width = 10)
+
+ggsave(here(plots, 'temporary', 'algaeexposed_start.png'), mca_algae_exposed_start$ggmca, width = 10)
+ggsave(here(plots, 'temporary', 'algaeexposed_end.png'), mca_algae_exposed_end$ggmca, width = 10)
+
+ggsave(here(plots, 'temporary', 'algaesheltered_start.png'), mca_algae_sheltered_start$ggmca, width = 10)
+ggsave(here(plots, 'temporary', 'algaesheltered_end.png'), mca_algae_sheltered_end$ggmca, width = 10)
+
+```
+
+
+
+
+
+
+## Animals
+
+### Timeseries
+```{r}
+# filter
+animal_82_95 <- animal_traits %>%
+  filter(year <= 1994 & year >= 1982) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_96_06 <- animal_traits %>%
+  filter(year >= 1996 & year < 2007) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_10_end <- animal_traits %>%
+  filter(year <= 2011) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+# run mca
+mca_animal_82_95 <- appledoreMCAHCPC(animal_82_95)
+mca_animal_96_06_mca <- appledoreMCAHCPC(animal_96_06)
+mca_animal_10_end <- appledoreMCAHCPC(animal_10_end)
+```
+
+### exposed/sheltered
+
+for the time series here it will just be beginning and end
+
+```{r animal-exposedsheltered}
+# just exposed v sheltered
+animal_exposed <- animal_traits %>%
+  filter(position == 'exposed') %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_sheltered <- animal_traits %>%
+  filter(position == 'sheltered') %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+mca_animal_exposed <- appledoreMCAHCPC(animal_exposed)
+mca_animal_sheltered <- appledoreMCAHCPC(animal_sheltered)
+
+# exposed v sheltered beginning and end
+animal_exposed_start <- animal_traits %>%
+  filter(position == 'exposed' & year <= 1994 & year >= 1982) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_sheltered_start <- animal_traits %>%
+  filter(position == 'sheltered' & year <= 1994 & year >= 1982) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_exposed_end <- animal_traits %>%
+  filter(position == 'exposed' & year <= 2010) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_sheltered_end <- animal_traits %>%
+  filter(position == 'sheltered' & year <= 2010) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+mca_animal_exposed_start <- appledoreMCAHCPC(animal_exposed_start)
+mca_animal_sheltered_start <- appledoreMCAHCPC(animal_sheltered_start)
+mca_animal_exposed_end <- appledoreMCAHCPC(animal_exposed_end)
+mca_animal_sheltered_end <- appledoreMCAHCPC(animal_sheltered_end)
+```
+
+
+```{r animal-position-plots}
+
+mca_animal_exposed_start$ggmca
+mca_animal_exposed_end$ggmca
+mca_animal_sheltered_start$ggmca
+mca_animal_sheltered_end$ggmca
+mca_animal_exposed$ggmca
+mca_animal_sheltered$ggmca
+
+
+ggsave(here(plots, 'temporary', 'animalexposed_start.png'), mca_animal_exposed_start$ggmca, width = 10)
+ggsave(here(plots, 'temporary', 'animalexposed_end.png'), mca_animal_exposed_end$ggmca, width = 10)
+
+ggsave(here(plots, 'temporary', 'animalsheltered_start.png'), mca_animal_sheltered_start$ggmca, width = 10)
+ggsave(here(plots, 'temporary', 'animalsheltered_end.png'), mca_animal_sheltered_end$ggmca, width = 10)
+
 ```
 
