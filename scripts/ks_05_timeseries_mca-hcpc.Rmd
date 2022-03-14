@@ -42,15 +42,14 @@ animal_traits <- read_csv(here(mcadata, "20220314_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal)))
 
-
-animal_1982_1995_traits <- read_csv(here(mcadata, "20220313_1982-1995_animal.csv")) %>%
-  filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
-animal_2011_end_traits <- read_csv(here(mcadata, "20220313_2011-end_animal.csv")) %>%
-  filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
+# to load in individual species lists
+#animal_1982_1995_traits <- read_csv(here(mcadata, "20220313_1982-1995_animal.csv")) %>%
+#  filter(intertidal == 'yes') %>%
+#  select(!(c(intertidal)))
+#animal_2011_end_traits <- read_csv(here(mcadata, "20220313_2011-end_animal.csv")) %>%
+#  filter(intertidal == 'yes') %>%
+#  select(!(c(intertidal)))
 ```
-
 
 ## load in functions
 
@@ -113,30 +112,53 @@ appledoreMCAHCPC <- function(traits) {
 }
 ```
 
-## run function
-
-```{r}
-algae_all <- appledoreMCAHCPC(algae_imputed_all)
-
-animal_all <- appledoreMCAHCPC(animal_imputed_all)
-
-animal_1982_1995 <- appledoreMCAHCPC(animal_1982_1995_traits)
-animal_2011_end <- appledoreMCAHCPC(animal_2011_end_traits)
-```
+## run function example
 explore output; use df$ to see all saved plots and summary stats
 Any output starting with gg is a ggplot object and can be chained with ggplot functions such as:
 `algae_all$ggmca + theme_bw()`
 ```{r}
+algae_all <- appledoreMCAHCPC(algae_imputed_all)
 # example view a summary
 algae_all$mcaeigen
-
 # example ggplot
-animal_all$ggscreeplot + theme_bw()
+algae_all$ggscreeplot + theme_bw()
+```
+# set up subsets and run
 
-animal_all$ggdendrogram
+## Algae
 
-animal_1982_1995$ggdendrogram
-animal_2011_end$ggdendrogram
+### Timeseries
+```{r}
+# filter
+algae_82_95 <- algae_traits %>%
+  filter(year <= 1994 & year >= 1982) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+algae_96_06 <- algae_traits %>%
+  filter(year >= 1996 & year < 2007) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+algae_10_end <- algae_traits %>%
+  filter(year <= 2011) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+# run mca
+mca_algae_82_95 <- appledoreMCAHCPC(algae_82_95)
+mca_algae_96_06_mca <- appledoreMCAHCPC(algae_96_06)
+mca_algae_10_end <- appledoreMCAHCPC(algae_10_end)
 ```
 
+### exposed/protected
+
+for the time series here it will just be beginning and end
+
+```{r}
+
+
+
+
+```
 
