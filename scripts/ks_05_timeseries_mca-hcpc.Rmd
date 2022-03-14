@@ -14,7 +14,7 @@ library(dplyr)
 library(here)
 
 # here filepaths
-mcadata <- here('data', 'clean')
+traits <- here('data', 'clean')
 plots <- here('output', '2022march', 'mca')
 ```
 
@@ -22,23 +22,23 @@ plots <- here('output', '2022march', 'mca')
 
 ```{r}
 # all species
-algae_imputed_all <- read_csv(here(mcadata, "20220312_algae_imputed.csv"),
+algae_imputed_all <- read_csv(here(traits, "20220312_algae_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(body_size_avg_bin, intertidal,
              calcareous)))
 
-animal_imputed_all <- read_csv(here(mcadata, "20220312_animal_imputed.csv"),
+animal_imputed_all <- read_csv(here(traits, "20220312_animal_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal)))
 
 # time series
-algae_traits <- read_csv(here(mcadata, "20220314_1982-end_algae.csv")) %>%
+algae_traits <- read_csv(here(traits, "20220314_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal, body_size_avg_bin)))
 
-animal_traits <- read_csv(here(mcadata, "20220314_1982-end_animal.csv")) %>%
+animal_traits <- read_csv(here(traits, "20220314_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal)))
 
@@ -122,6 +122,8 @@ algae_all <- appledoreMCAHCPC(algae_imputed_all)
 algae_all$mcaeigen
 # example ggplot
 algae_all$ggscreeplot + theme_bw()
+
+animal_all <- appledoreMCAHCPC(animal_imputed_all)
 ```
 # set up subsets and run
 
