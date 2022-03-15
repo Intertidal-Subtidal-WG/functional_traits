@@ -316,3 +316,26 @@ ggsave(here(plots, 'temporary', 'animalsheltered_end.png'), mca_animal_sheltered
 
 ```
 
+# presentation plots
+
+palette is:
+#bcbcd2, #94b4d8, #5484c4, #374658, #a08b5a, #806238, #543414, #3a230e
+lavender grey, pale cerulean, glaucous, charcoal, metallic sunburst, coyote brown, dark brown, bistre
+
+sets of 2 should be primarily drawn from the middle two of each part of the palette:
+two blues
+#94b4d8, #5484c4
+two browns
+#806238, #543414
+blue brown light
+#94b4d8,#806238
+blue brown dark
+#5484c4, #543414
+
+
+```{r}
+
+```
+
+
+
