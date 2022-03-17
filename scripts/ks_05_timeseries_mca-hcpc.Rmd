@@ -319,7 +319,7 @@ ggsave(here(plots, 'temporary', 'animalsheltered_end.png'), mca_animal_sheltered
 # presentation plots
 
 palette is:
-#bcbcd2, #94b4d8, #5484c4, #374658, #a08b5a, #806238, #543414, #3a230e
+`#bcbcd2, #94b4d8, #5484c4, #374658, #a08b5a, #806238, #543414, #3a230e`
 lavender grey, pale cerulean, glaucous, charcoal, metallic sunburst, coyote brown, dark brown, bistre
 
 sets of 2 should be primarily drawn from the middle two of each part of the palette:
@@ -334,7 +334,11 @@ blue brown dark
 
 
 ```{r}
+mca_algae_exposed_start$ggclusterplot
+mca_algae_exposed_end$ggclusterplotl
 
+mca_algae_exposed_start$ggdendrogram + 
+  labs(y = NULL)
 ```
 
 
