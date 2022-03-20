@@ -332,14 +332,60 @@ blue brown light
 blue brown dark
 #5484c4, #543414
 
+## clusters
 
 ```{r}
-mca_algae_exposed_start$ggclusterplot
-mca_algae_exposed_end$ggclusterplotl
+#tree
+library(dendextend)
 
-mca_algae_exposed_start$ggdendrogram + 
-  labs(y = NULL)
+# extract dendrogram and save as ggdend object
+test <- as.ggdend(mca_algae_exposed_start$ggdendrogram$plot_env$dend)
+
+ggplot(test, horiz = TRUE) + 
+  labs(y = NULL, title = 'Algae Clusters') +
+  ylim(.25,-.12) +
+  # manually set colors
+  scale_color_manual(values = c('red','blue','purple','black','green','orange','grey')) +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank()
+        )
+
+ggsave(filename = here(plots, 'algaetest.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+
+
+# clusters
+
+mca_algae_exposed_start$ggclusterplot +
+  #manually set colors
+  scale_fill_manual(values = c('red','blue','purple','black','green','orange')) +
+  scale_color_manual(values = c('red','blue','purple','black','green','orange')) +
+  labs(title = 'Algae clusters') +
+  theme_classic() +
+  theme(axis.text = element_blank())
+
+ggsave(filename = here(plots, 'algaetest2.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+
+
 ```
 
+## MCA plots
 
+```{r}
+mca_algae_exposed_start$ggmca + 
+  labs(title = 'Algae mca') +
+    scale_color_manual(values = c('red','blue','purple', 'black',
+                                  'green','orange', 'grey', 'yellow', 'brown',
+                                  'grey17', 'pink')) +
+  theme_classic() +
+  theme(legend.position = 'none')
+  
+  
+  
+ggsave(filename = here(plots, 'algaetest3.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+```
 
