@@ -1,0 +1,90 @@
+species,phylum,group,common_name_division,solitary_colonial,body_size_lower_cm,adult_body_size_upper_cm,adult_body_size_bin,calcareous,herbivore,predator,omnivore,deposit_feeder,filter_suspension,scavenger,trophic_level,motility_adult,habitat_type,benthic,pelagic,epibiotic,intertidal,subtidal,notes,Source,synonym,dietary_pref
+Annelida,Annelida,Invertebrate,Annelid worm,solitary,,,SC1,no,yes,yes,yes,yes,yes,yes,,motile,,,,,yes,yes,,,"Annelida, Polychaeta, Oligochaeta, Lepidonotus, Namanareis",
+Sedentary Polychaete,Annelida,Invertebrate,Annelid worm,solitary,,,SC1,no,no,no,no,no,yes,no,primary consumer,sessile,,yes,no,,yes,yes,,,"Nicolea, Cirratulus, Thelepus cincinnatus",
+Spirorbis,Annelida,Invertebrate,Annelid worm,gregarious,,0.5,SC1,yes,no,no,no,no,yes,no,primary consumer,sessile,epifloral,no,no,yes,yes,no,,"WoRMS,",,filter feeder
+Semibalanus balanoides,Arthropoda,Invertebrate,Barnacle,gregarious,1,5,SC1,yes,no,no,no,no,yes,no,primary consumer ,sessile,epifaunal,no,no,yes,yes,no,,,,Suspension feeder
+Anurida maritima,Arthropoda,invertebrate,Collembolan,solitary,,0.3,SC1,yes,no,no,no,no,no,yes,decomposer,motile,epibenthic,yes,no,no,yes,no,,,,scavenger/detritivore
+Amphipoda,Arthropoda,Invertebrate,Crustacean,solitary,1,2,SC1,yes,yes,yes,yes,no,no,yes,secondary consumer,motile,epilithic/epifaunal,yes,yes,yes,yes,no,,,,scavenger/detritivore
+Cancer borealis,Arthropoda,Invertebrate,Crustacean,solitary,0.2,20,SC2,yes,no,yes,yes,no,no,no,secondary consumer,motile,epibenthic,yes,no,no,yes,yes,,,,predator
+Cancer irroratus,Arthropoda,Invertebrate,Crustacean,solitary,0.5,14,SC2,yes,yes,yes,yes,no,no,yes,secondary consumer,motile,epibenthic,yes,no,no,yes,yes,,,,omnivore
+Carcinus maenas,Arthropoda,Invertebrate,Crustacean,solitary,3,10,SC2,yes,no,yes,no,no,no,yes,secondary consumer,motile,epibenthic,yes,no,yes,yes,no,,BIOTIC/marlin,,omnivore
+Hemigrapsus sanguineus,Arthropoda,Invertebrate,Crustacean,solitary,0.2,20,SC2,yes,no,no,yes,no,no,yes,secondary consumer,motile,epibenthic,yes,no,no,yes,no,,,,omnivore
+Homarus americanus,Arthropoda,Invertebrate,Crustacean,solitary,10,64,SC4,yes,no,yes,yes,no,no,no,secondary consumer,motile,epibenthic,yes,no,no,no,yes,,"WoRMS,",,omnivore
+Isopoda,Arthropoda,Invertebrate,Crustacean,solitary,0.2,20,SC2,yes,yes,no,no,no,no,yes,primary consumer,motile,epibenthic,yes,no,no,yes,no,,,,herbivore
+Pagurus acadianus,Arthropoda,Invertebrate,Crustacean,solitary,0.2,20,SC2,yes,no,no,yes,no,no,yes,secondary consumer,motile,epibenthic,yes,no,NA,yes,no,,worms/sealifebase,,"omnivore, scavenger"
+Bugula neritina,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,,yes,no,yes,yes,yes,,sealifebase,,suspension feeder
+Bugulina spicata,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,worms,,suspension feeder
+Celleporella hyalina,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic,encrusting",yes,no,yes,yes,yes,,,,suspension feeder
+Crisia eburnea,Bryozoa,Invertebrate,Bryozoan,colonial,1,2,SC1,yes,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, epiphytic, epifaunal",yes,no,yes,no,yes,,,,Suspension feeder
+Crisularia turrita,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,worms,,suspension feeder
+Cryptosula pallasiana,Bryozoa,Invertebrate,Bryozoan,colonial,,3,SC1,yes,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, attached",yes,no,yes,yes,yes,,,,suspension feeder
+Dendrobeania murrayana,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,30,SC3,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,worms,,suspension feeder
+Electra pilosa,Bryozoa,Invertebrate,Bryozoan,colonial,0.05,7,SC1,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic/ 'attached',yes,no,yes,yes,yes,,sealifebase,,suspension feeder
+Flustrellidra hispida,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, epiphytic",yes,no,yes,yes,yes,,,,suspension feeder
+Membranipora membranacea,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,yes,yes,,worms,,suspension feeder
+Patinella verrucaria,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,worms,,suspension feeder
+Schizoporella unicornis,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,yes,yes,,worms,,suspension feeder
+Tricellaria inopinata,Bryozoa,Invertebrate,Bryozoan,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,worms,,suspension feeder
+Diadumene lineata,Cnidaria,Invertebrate,Anemone,solitary,,3,SC1,no,no,yes,no,no,no,no,secondary consumer,sessile,"benthic, attached to oysters",yes,no,yes,yes,yes,,,,predator
+Metridium dianthus,Cnidaria,Invertebrate,Anemone,gregarious,0.2,20,SC2,no,no,yes,yes,no,yes,no,secondary consumer,sessile,"benthic, attached to mussels",yes,no,yes,yes,no,,,,predator
+Urticina felina,Cnidaria,Invertebrate,Anemone,solitary,11,20,SC2,no,no,yes,no,no,no,no,secondary consumer,sessile,"epifaunal, epibenthic",yes,no,yes,no,yes,,BIOTIC/marlin,,predator
+Metridium senile,Cnidaria,Invertebrate,Cnidarian,gregarious,21,50,SC3,no,no,yes,no,no,no,no,secondary consumer,sessile,epifaunal/epilithic,yes,no,yes,yes,no,,BIOTIC/marlin,,Suspension feeder
+Pachycerianthus borealis,Cnidaria,Invertebrate,Cnidarian,solitary,,30,SC3,no,no,yes,no,no,no,no,secondary consumer,sessile,benthic infauna,yes,no,no,no,yes,,,,Suspension feeder
+Dynamena pumila,Cnidaria,Invertebrate,Hydrozoan,colonial,,3,SC1,yes,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, epiphytic",yes,no,yes,yes,no,,,,filter feeder
+Obelia,Cnidaria,Invertebrate,Hydrozoan,colonial,21,50,SC3,no,no,no,no,no,yes,no,primary consumer,motile,epibenthic/epilithic/epiphytic/epifaunal/epizoic,yes,no,yes,no,yes,,,,suspension feeder
+Cucumaria frondosa,Echinodermata,Invertebrate,Echinoderm,gregarious,,50,SC3,yes,no,no,no,yes,yes,no,decomposer,motile,epibenthic,yes,no,no,no,yes,"calcareous due to ossicles, but generally soft bodied",sealifebase,,deposit feeder
+Echinarachnius parma,Echinodermata,Invertebrate,Echinoderm,solitary,1,10,SC2,yes,yes,no,yes,yes,no,yes,decomposer,motile,"epibenthic, infaunal",yes,no,no,no,yes,,"WoRMS,",,"deposit feeder, herbivore"
+Ophiopholis aculeata,Echinodermata,Invertebrate,Echinoderm,solitary,0.2,20,SC2,yes,no,yes,no,no,no,yes,secondary consumer,motile,epibenthic,yes,no,no,no,yes,,worms/sealifebase,Ophiopholis,scavenger/detritivore
+Strongylocentrotus droebachiensis,Echinodermata,Invertebrate,Echinoderm,gregarious,3,10,SC2,yes,yes,no,no,no,no,no,primary consumer,motile,epibenthic,yes,no,yes,yes,yes,,Memorial University of Newfoundland,,herbivore
+Asterias forbesi,Echinodermata,Invertebrate,Sea Stars,solitary,7,15,SC2,yes,no,yes,no,no,no,no,secondary consumer,motile,epibenthic,yes,no,no,yes,yes,,ADW,,predator
+Asterias rubens,Echinodermata,Invertebrate,Sea Stars,solitary,21,50,SC3,yes,no,yes,no,no,no,yes,secondary consumer,motile,epibenthic,yes,yes,no,yes,yes,,BIOTIC/marlin,,predator/scavenger
+Henricia sanguinolenta,Echinodermata,Invertebrate,Sea Stars,solitary,,10,SC2,yes,no,no,no,no,yes,yes,primary consumer,motile,epibenthic,yes,no,no,yes,yes,,ADW,,filter feeder
+Small worm,Mixed,Invertebrate,Small worm,solitary,,5,SC1,no,yes,yes,yes,yes,no,yes,,motile,,yes,,,yes,yes,"mix of phyla - small, free living forms  / no parasites",,"Platyhelminthes, Nematodes, Nemertea, Notoplana, Acoela, Turbellaria, Euplana, Foviella, Micrura",
+Anomia simplex,Mollusca,Invertebrate,Bivalve,solitary,1,5,SC1,yes,no,no,no,no,yes,no,primary consumer ,sessile,epilithic,yes,no,yes,yes,no,very sensitive to disturbsnce,"WoRMS,",,Suspension feeder
+Hiatella arctica,Mollusca,Invertebrate,Bivalve,solitary,3,5,SC1,yes,no,no,no,no,yes,no,primary consumer ,sessile,"epilithic, ephizoic, rock-boring",yes,no,yes,yes,no,"bore into rock, very sensotive to disturbance",Marlin,,Suspension feeder
+Modiolus modiolus,Mollusca,Invertebrate,Bivalve,gregarious,11,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,"epifaunal, infaunal, epibenthic, epilithic",yes,no,yes,yes,yes,,,,suspension feeder
+Mya arenaria,Mollusca,Invertebrate,Bivalve,solitary,,10,SC2,yes,no,no,no,no,yes,no,primary consumer ,sessile,benthic,yes,no,no,yes,yes,,,,Suspension feeder
+Mytilus edulis,Mollusca,Invertebrate,Bivalve,gregarious,11,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epilithic,yes,no,yes,yes,yes,,,,suspension feeder
+Ostrea edulis,Mollusca,Invertebrate,Bivalve,gregarious,3,10,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epifaunal,no,no,yes,yes,yes,,BIOTIC/marlin,,suspension feeder
+Placopecten magellanicus,Mollusca,Invertebrate,Bivalve,gregarious,,20,SC2,yes,no,no,no,no,yes,no,primary consumer ,sessile,benthic,yes,no,yes,no,yes,,worms,,Suspension feeder
+Boreochiton ruber,Mollusca,Invertebrate,Chiton,solitary,,2.1,SC1,yes,yes,no,no,no,no,no,primary consumer,motile,epibenthic,yes,no,yes,no,yes,,worms,,herbivore
+Stenosemus albus,Mollusca,Invertebrate,Chiton,solitary,,1.3,SC1,yes,yes,no,no,no,no,no,primary consumer,motile,epibenthic,yes,no,no,no,yes,,sealifebase,,herbivore
+Buccinum undatum,Mollusca,Invertebrate,Gastropod,solitary,3,10,SC2,yes,no,no,no,no,no,yes,secondary consumer,motile,"epifaunal, epibenthic",yes,no,yes,no,yes,,,,scavenger
+Crepidula fornicata,Mollusca,Invertebrate,Gastropod,gregarious,3,10,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epifaunal/epibenthic/epizoic,yes,no,yes,yes,yes,,,,suspension feeder
+Gastropoda,Mollusca,Invertebrate,Gastropod,solitary,,,SC2,yes,yes,yes,yes,no,yes,yes,,motile,,yes,no,,yes,yes,,worms/sealifebase,"Colus stimpsoni, Skeneopsis planorbis, Astyris lunata",
+Lacuna vincta,Mollusca,Invertebrate,Gastropod,solitary,1,2,SC1,yes,yes,no,no,no,no,no,primary consumer,motile,epifaunal,no,no,yes,yes,no,,BIOTIC/marlin,,herbivore
+Littorina littorea,Mollusca,Invertebrate,Gastropod,gregarious,3,10,SC2,yes,yes,no,no,no,no,no,primary consumer,motile,epifaunal,no,no,yes,yes,no,,marlin database,,Herbivore
+Littorina obtusata,Mollusca,Invertebrate,Gastropod,solitary,,1.5,SC1,yes,yes,no,no,no,no,no,primary consumer,motile,epifaunal,no,no,yes,yes,no,,,,Herbivore
+Littorina saxatilis,Mollusca,Invertebrate,Gastropod,solitary,1,14,SC2,yes,yes,no,no,no,no,no,primary consumer,motile,epibenthic,yes,no,no,yes,no,,,,Herbivore
+Nucella lapillus,Mollusca,Invertebrate,Gastropod,gregarious,3,10,SC2,yes,no,yes,no,no,no,no,secondary consumer,motile,epifaunal,no,no,yes,yes,no,,,,Predator
+Nudibranchia,Mollusca,Invertebrate,Gastropod,solitary,,,SC1,no,no,yes,no,no,no,no,secondary consumer,motile,epibenthic,yes,no,,yes,yes,Only considering new england nudibranchs,worms/sealifebase,"Flabellina, Onchidoris, Dendronotus",
+Testudinalia testudinalis,Mollusca,Invertebrate,Gastropod,solitary,3,10,SC2,yes,yes,no,no,no,no,no,primary consumer,sessile,benthic,yes,no,yes,no,yes,,,Tectura testudinalis,suspension feeder
+Thylacodes,Mollusca,Invertebrate,Gastropod,solitary,,,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, epizoic",yes,no,yes,no,yes,,,,filter feeder
+Halichondria panicea,Porifera,Invertebrate,Sponge,colonial,1,25,SC3,no,no,no,no,no,yes,no,primary consumer,sessile,epiphytic/epilithic,yes,no,yes,no,yes,,BIOTIC/marlin/sealifebase,Halichondria,suspension feeder
+Halisarca dujardinii,Porifera,Invertebrate,Sponge,colonial,0.2,20,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,sealifebase,,suspension feeder
+Hymedesmia,Porifera,Invertebrate,Sponge,colonial,0.2,20,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,,sealifebase,,suspension feeder
+Leucosolenia,Porifera,Invertebrate,Sponge,colonial,0.2,20,SC2,yes,no,no,no,no,yes,no,primary consumer,sessile,epibenthic,yes,no,yes,no,yes,calcareous due to spicules,sealifebase,,suspension feeder
+Aplidium pallidum,Tunicata,Invertebrate,Tunicate,colonial,2,40,SC3,no,no,no,no,no,yes,no,primary consumer,sessile,benthic,yes,no,no,no,yes,colonial,worms,,filter feeder
+Boltenia echinata,Tunicata,Invertebrate,Tunicate,solitary,,2,SC1,no,no,no,no,no,yes,no,primary consumer,sessile,epilithic,yes,no,yes,no,yes,,MARLIN,,filter feeder
+Boltenia ovifera,Tunicata,Invertebrate,Tunicate,gregarious,,8,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,benthic,yes,no,yes,no,yes,,worms/sealifebase,,filter feeder
+Botrylloides violaceus,Tunicata,Invertebrate,Tunicate,colonial,,20,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, epiphytic, epifaunal",yes,no,yes,no,yes,,sealifebase,,filter feeder
+Botryllus schlosseri,Tunicata,Invertebrate,Tunicate,colonial,11,20,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,epifaunal/epilithic,yes,no,yes,yes,yes,,,,suspension feeder
+Ciona intestinalis,Tunicata,Invertebrate,Tunicate,gregarious,2,15,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,"epilithic, epifloral",yes,no,yes,no,yes,low wave exposure,MARLIN,,filter feeder
+Ciona savignyi,Tunicata,Invertebrate,Tunicate,gregarious,11,20,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,epifaunal,no,no,yes,no,yes,,BIOTIC/marlin,,suspension feeder
+Dendrodoa carnea,Tunicata,Invertebrate,Tunicate,gregarious,,20,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,epilithic ,yes,no,yes,no,yes,,"WoRMS,",Dendrodoa,filter feeder
+Didemnum albidum,Tunicata,Invertebrate,Tunicate,colonial,1,2,SC1,no,no,no,no,no,yes,no,primary consumer,sessile,benthic,yes,no,yes,no,yes,,,,filter feeder
+Didemnum vexillum,Tunicata,Invertebrate,Tunicate,colonial,1,2,SC1,no,no,no,no,no,yes,no,primary consumer,sessile,"epibenthic, epiphytic, epifaunal",yes,no,yes,yes,yes,,,,filter feeder?
+Diplosoma listerianum,Tunicata,Invertebrate,Tunicate,colonial,0,1,SC1,no,no,no,no,no,yes,no,primary consumer,sessile,epilithic/epiphytic,yes,no,yes,no,yes,,,,suspension feeder
+Tunicate,Tunicata,Invertebrate,Tunicate,gregarious,,,SC2,no,no,no,no,no,yes,no,primary consumer,sessile,,yes,no,yes,,,"size class estimate, hard to find data",,"other tunicates; Diplosoma, Molgula",suspension feeder
+Cyclopterus lumpus,Vertebrata,Vertebrate,Fish,solitary,,61,SC4,no,no,yes,no,no,no,yes,secondary consumer,motile,benthopelagic,yes,yes,no,no,yes,lives up to 13 years,"WoRMS, fishbase, bowman 2000",,carnivore
+Gaidropsarus,Vertebrata,Vertebrate,Fish,solitary,,40,SC3,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,"max size for gadropsarus ensis, g. argentatus = 35cm. some european ones seem larger but we're assuming its US native",fishbase,,carnivore
+Morone saxatilis,Vertebrata,Vertebrate,Fish,solitary,,120,SC5,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,,"WoRMS, fishbase, bowman 2001",,carnivore
+Myoxocephalus octodecemspinosus,Vertebrata,Vertebrate,Fish,solitary,,46,SC3,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,lives up to 11 years,"WoRMS, fishbase, bowman 2002",,carnivore
+Myoxocephalus scorpius,Vertebrata,Vertebrate,Fish,solitary,,60,SC4,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,,"WoRMS, fishbase, bowman 2003",,carnivore
+Pholis gunnellus,Vertebrata,Vertebrate,Fish,solitary,,25,SC3,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,lives up to 14 years,"WoRMS, fishbase",,carnivore
+Pollachius virens,Vertebrata,Vertebrate,Fish,gregarious,,130,SC5,no,no,yes,no,no,no,no,secondary consumer,motile,benthopelagic,yes,yes,no,no,yes,lives up to 25 years,"WoRMS, fishbase, bowman 2003",,carnivore
+Pseudopleuronectes americanus,Vertebrata,Vertebrate,Fish,solitary,,64,SC4,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,lives up to 14 years,"WoRMS, fishbase",,carnivore
+Tautoga onitis,Vertebrata,Vertebrate,Fish,solitary,,91,SC4,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,,"WoRMS, fishbase",,carnivore
+Tautogolabrus adspersus,Vertebrata,Vertebrate,Fish,gregarious,,38,SC3,no,no,yes,no,no,no,yes,secondary consumer,motile,benthic,yes,no,no,no,yes,,"WoRMS, fishbase",,"carnivore, scavenger"
+Urophycis regia,Vertebrata,Vertebrate,Fish,solitary,,41,SC3,no,no,yes,no,no,no,no,secondary consumer,motile,benthic,yes,no,no,no,yes,,"WoRMS, fishbase",,carnivore
+,,,,,,,,,,,,,,,,,,,,,,,estimated size class based on average tunicate entry,,,
