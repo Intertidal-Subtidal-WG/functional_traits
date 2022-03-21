@@ -1,0 +1,31 @@
+---
+title: "ks_00_traitimpute"
+author: "Kate Sheridan"
+date: "3/21/2022"
+output: html_document
+---
+
+This script does imputation from the functional traits csvs with mice.
+This differs from previous scripts in that it doesn't make a dissimilarity matrix, cluster, or do any further analysis. It simply removes NAs by imputing traits with their most probable replacement.
+
+```{r setup, include=FALSE}
+library(readr)
+library(dplyr)
+library(mice)
+library(here)
+
+# here filepaths
+
+
+```
+
+```{r loadin}
+#be sure to use na.strings or imputation will fail!
+animal_trait_raw <- read.csv(here("data", '20220320_shoals_animal_traits.csv'), 
+                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
+
+# algae traits not ready
+#algae_trait_raw <- read.csv(here("data", '20220320_shoals_algae_traits.csv'), 
+#                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
+```
+
