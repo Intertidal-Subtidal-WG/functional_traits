@@ -6,26 +6,102 @@ output: html_document
 ---
 
 This script does imputation from the functional traits csvs with mice.
-This differs from previous scripts in that it doesn't make a dissimilarity matrix, cluster, or do any further analysis. It simply removes NAs by imputing traits with their most probable replacement.
+This differs from previous scripts in that it doesn't make a dissimilarity matrix, cluster, or do any further analysis. It simply removes NAs by imputing traits with their most probable replacement. 
+
+To run the matrix/cluster/etc from the previous script, use ks_03_timeseries_matrix or ks_04_timeseries_cluster-tsne.
+But our current analysis uses only MCA/HCPC
 
 ```{r setup, include=FALSE}
 library(readr)
 library(dplyr)
 library(mice)
 library(here)
-
-# here filepaths
-
-
 ```
 
 ```{r loadin}
 #be sure to use na.strings or imputation will fail!
-animal_trait_raw <- read.csv(here("data", '20220320_shoals_animal_traits.csv'), 
-                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
 
 # algae traits not ready
-#algae_trait_raw <- read.csv(here("data", '20220320_shoals_algae_traits.csv'), 
+#algae_raw <- read.csv(here("data", '20220320_shoals_algae_traits.csv'), 
 #                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
+
+animal_raw <- read.csv(here("data", '20220320_shoals_animal_traits.csv'), 
+                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
 ```
+
+# Select columns 
+
+Only columns that will be used later; remove notes, references, etc.
+Also remove any columns known a priori to be collinear, or move them to the front to be masked during imputations.
+
+
+```{r filter}
+#algae_raw <- algae_raw %>%
+#  select(species, group, common_name_division_bgr, ... ) %>%
+# Make everything a factor
+#  mutate(across(.fns = ~ as.factor(.)))
+
+animal_raw <- animal_raw %>%
+  select(species, phylum, common_name_division, # for filtering later
+         # subtidal/intertidal for filtering later
+         subtidal, intertidal,
+         # basic traits
+         solitary_colonial, adult_body_size_bin, 
+         calcareous, motility_adult,
+         # trophic traits
+         herbivore, predator, omnivore, deposit_feeder,
+         filter_suspension, scavenger, trophic_level,
+         # habitat traits
+         benthic, pelagic, epibiotic
+         ) %>%
+  # holdover from past script, not there's still whitespace issues tbh
+  mutate(trophic_level = str_trim(trophic_level)) %>% 
+  # make everything a factor
+  mutate(across(.fns = ~ as.factor(.)))
+```
+
+
+
+
+## Impute with Mice
+
+
+
+```{r mice}
+## algae
+# run mice on select columns
+algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'cart', print = F)
+algae_imp2 <- complete(algae_imp) # necessary!
+# reattach taxonomy/filtering columns
+algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
+
+#to see logged events
+algae_imp$loggedEvents
+
+## animals
+# run mice on select columns
+animal_imp <- mice(animal_raw[,6:ncol(animal_raw)], m=5, method = 'cart', print = F)
+animal_imp2 <- complete(animal_imp) #necessary!
+# reattach taxonomy/filtering columns
+animal_imp2 <- cbind(animal_raw[,1:5],animal_imp2)
+
+
+#to see logged events
+animal_imp$loggedEvents
+
+```
+
+
+
+```{r save}
+# write csv for imputed data
+write.csv(algae_imp2, file = here('data', 'clean','20220321_algae_imputed.csv'))
+write.csv(animal_imp2, file = here('data', 'clean','20220321_animal_imputed.csv'))
+
+# if you want .RData versions
+#save(algae_imp2, file = here('data','algae_imputed.RData'))
+#save(animal_imp2, file = here('data','animals_imputed.RData'))
+
+```
+
 

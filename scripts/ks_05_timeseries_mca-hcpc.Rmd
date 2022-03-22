@@ -28,7 +28,7 @@ algae_imputed_all <- read_csv(here(traits, "20220312_algae_imputed.csv"),
   select(!(c(body_size_avg_bin, intertidal,
              calcareous)))
 
-animal_imputed_all <- read_csv(here(traits, "20220312_animal_imputed.csv"),
+animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal)))
@@ -38,11 +38,11 @@ algae_traits <- read_csv(here(traits, "20220314_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal, body_size_avg_bin)))
 
-animal_traits <- read_csv(here(traits, "20220314_1982-end_animal.csv")) %>%
+animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
+  select(!(c(intertidal, trophic_level, pelagic, deposit_feeder)))
 
-# to load in individual species lists
+# to load in individual species lists from parts of the time series
 #animal_1982_1995_traits <- read_csv(here(mcadata, "20220313_1982-1995_animal.csv")) %>%
 #  filter(intertidal == 'yes') %>%
 #  select(!(c(intertidal)))
@@ -66,6 +66,8 @@ appledoreMCAHCPC <- function(traits) {
     mutate(across(.fns = ~ as.factor(.)))
   # run MCA
   mca2 <- MCA(traits, graph = FALSE)
+  # extract variable categories
+  mca2_vars <- get_mca_var(mca2)
   # prepare data for plotting
   cats=apply(traits, 2, function(x) nlevels(as.factor(x)))
   mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
@@ -87,26 +89,34 @@ appledoreMCAHCPC <- function(traits) {
     theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
   # ellipses plot
   plot_ellipses <- plotellipses(mca2)
-  # screeplot
+  # diagnostics
   scree2 <- fviz_screeplot(mca2)
   contrib2 <- fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
+  cos2plot <- fviz_cos2(mca2, choice = 'var', axes = 1:2, top = 15)
+  # this plot combines output of contribution and cos2, 
+  ## eg: orange+high alpha = high contribution, high quality
+  cos2contribplot <- fviz_mca_var(mca2, col.var = 'cos2', alpha.var = 'contrib',
+                           gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+                           repel = TRUE, # Avoid text overlapping
+                           ggtheme = theme_minimal())
   
   
   # run HCPC
   hcpc2 <- HCPC(mca2, graph = FALSE)
   # hcpc dendrogram
-  hcpc_dend <- fviz_dend(hcpc2)
+  hcpc_dend <- fviz_dend(hcpc2, cex = .6)
   # hcpc factor map
   hcpc_clust <- fviz_cluster(hcpc2, geom = "point", main = "Factor map")
   
   
   #output
-  list(mcaeigen = mca2$eig, mcavar = mca2$var,
-       mcaind = mca2$ind,
+  list(mcares = mca2, mcacos2 = mca2_vars$cos2,
        clustmembers = hcpc2$desc.ind$para,
        clustervariables = hcpc2$desc.var$category,
-       mcaplotraw = plot(mca2), ggmca = mcaggplot,
+       hcpc_chi = hcpc2$desc.var$test.chi2,
+       ggmca = mcaggplot,
        ggscreeplot = scree2, ggcontrib = contrib2,
+       ggcos2 = cos2plot, ggvars = cos2contribplot,
        ellipses = plot_ellipses, ggdendrogram = hcpc_dend,
        ggclusterplot = hcpc_clust)
 }
@@ -227,6 +237,30 @@ ggsave(here(plots, 'temporary', 'algaesheltered_end.png'), mca_algae_sheltered_e
 
 ## Animals
 
+Note animal_all gives different result than any group of animals. I really don't understand why, it puts Astarias rubens in totally different locations.
+
+```{r}
+animal_all_t <- animal_traits %>%
+  select(!(c(year,transect,position))) %>%
+  distinct()
+
+mca_animal_all <- appledoreMCAHCPC(animal_all_t)
+
+animal_allhcpc <- HCPC(res = mca_animal_all$mcares, nb.clust =  4)
+
+fviz_cluster(testhcpc, geom = "point", main = "Factor map")
+fviz_cluster(animal_allhcpc, geom = "point", main = "Factor map")
+animal_all$ggclusterplot
+
+
+fviz_dend(animal_allhcpc)
+fviz_dend(testhcpc)
+
+animal_all$clustmembers
+animal_all$clustervariables
+```
+
+
 ### Timeseries
 ```{r}
 # filter
@@ -297,16 +331,31 @@ mca_animal_exposed_end <- appledoreMCAHCPC(animal_exposed_end)
 mca_animal_sheltered_end <- appledoreMCAHCPC(animal_sheltered_end)
 ```
 
-
 ```{r animal-position-plots}
-
-mca_animal_exposed_start$ggmca
-mca_animal_exposed_end$ggmca
-mca_animal_sheltered_start$ggmca
-mca_animal_sheltered_end$ggmca
+# overall
 mca_animal_exposed$ggmca
 mca_animal_sheltered$ggmca
 
+
+mca_animal_exposed_start$ggvars
+mca_animal_exposed_end$ggvars
+
+
+
+
+
+# exposed
+mca_animal_exposed_start$ggmca
+mca_animal_exposed_end$ggmca
+
+
+
+# sheltered
+mca_animal_sheltered_start$ggmca
+mca_animal_sheltered_end$ggmca
+
+mca_animal_sheltered_start$ggvars
+mca_animal_sheltered_end$ggvars
 
 ggsave(here(plots, 'temporary', 'animalexposed_start.png'), mca_animal_exposed_start$ggmca, width = 10)
 ggsave(here(plots, 'temporary', 'animalexposed_end.png'), mca_animal_exposed_end$ggmca, width = 10)
@@ -315,6 +364,61 @@ ggsave(here(plots, 'temporary', 'animalsheltered_start.png'), mca_animal_shelter
 ggsave(here(plots, 'temporary', 'animalsheltered_end.png'), mca_animal_sheltered_end$ggmca, width = 10)
 
 ```
+```{r hcpc-exploration}
+shelteredhcpc2 <- HCPC(res = mca_animal_sheltered$mcares, nb.clust =  5)
+exposedhcpc2 <- HCPC(res = mca_animal_exposed$mcares, nb.clust =  4)
+  
+fviz_cluster(exposedhcpc2, geom = "point", main = "Factor map") 
+fviz_cluster(shelteredhcpc2, geom = "point", main = "Factor map")
+
+fviz_dend(exposedhcpc2)
+fviz_dend(shelteredhcpc2)
+
+mca_animal_exposed$ggclusterplot
+mca_animal_sheltered$ggclusterplot
+
+mca_animal_exposed$ggdendrogram
+mca_animal_sheltered$ggdendrogram
+
+mca_animal_exposed$clustervariables
+mca_animal_sheltered$clustervariables
+
+#mca_animal_exposed$clustmembers
+mca_animal_sheltered$clustmembers
+
+mca_animal_sheltered_start$ggclusterplot
+mca_animal_sheltered_end$ggclusterplot
+mca_animal_exposed_start$ggclusterplot
+mca_animal_exposed_end$ggclusterplot
+
+mca_animal_sheltered$ggdendrogram
+mca_animal_sheltered_start$ggdendrogram
+mca_animal_sheltered_end$ggdendrogram
+
+mca_animal_exposed$ggdendrogram
+mca_animal_exposed_start$ggdendrogram
+mca_animal_exposed_end$ggdendrogram
+```
+
+
+# arsenal to extract differences quickly
+
+```{r}
+library(arsenal)
+# in output, first dataframe is X, second is Y
+exposedvprotect <- comparedf(animal_exposed, animal_sheltered, by = 'species')
+#extract differences
+diffs(exposedvprotect, what = c('observations'))
+
+protectstvend <- comparedf(animal_sheltered_start, animal_sheltered_end, by = 'species')
+diffs(protectstvend, what = c('observations'))
+
+exposedstvend <- comparedf(animal_exposed_start, animal_exposed_end, by = 'species')
+diffs(exposedstvend, what = c('observations'))
+
+```
+
+
 
 # presentation plots
 
@@ -334,12 +438,12 @@ blue brown dark
 
 ## clusters
 
-```{r}
+```{r testing}
 #tree
 library(dendextend)
 
 # extract dendrogram and save as ggdend object
-test <- as.ggdend(mca_algae_exposed_start$ggdendrogram$plot_env$dend)
+test <- as.ggdend(mca_animal_exposed$ggdendrogram$plot_env$dend)
 
 ggplot(test, horiz = TRUE) + 
   labs(y = NULL, title = 'Algae Clusters') +
@@ -369,23 +473,152 @@ ggsave(filename = here(plots, 'algaetest2.png'), device = 'png',
        height = 5, width = 7, units = 'in')
 
 
-
-```
-
-## MCA plots
-
-```{r}
-mca_algae_exposed_start$ggmca + 
+#mcas
+mca_animal_exposed_start$ggmca + 
   labs(title = 'Algae mca') +
     scale_color_manual(values = c('red','blue','purple', 'black',
                                   'green','orange', 'grey', 'yellow', 'brown',
-                                  'grey17', 'pink')) +
+                                  'grey17', 'pink', 'grey60', 'salmon',
+                                  'violet', 'cornsilk2')) +
   theme_classic() +
   theme(legend.position = 'none')
   
   
+
+
+
   
 ggsave(filename = here(plots, 'algaetest3.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
+
+```
+
+```{r animals}
+#manually split the 4 clusters for sheltered_start
+## probably better plotting can be done at this point but 
+# i'm just going to make it into the same format as the others
+shelteredhcpc2 <- HCPC(res = mca_animal_sheltered_start$mcares, nb.clust =  4)
+start_test <- fviz_dend(shelteredhcpc2, cex = .7)
+start_test2 <- as.ggdend(start_test$plot_env$dend)
+start_cluster2 <- fviz_cluster(shelteredhcpc2, geom = "point", main = "Factor map")
+
+
+dend_animal_sheltered_end <- as.ggdend(mca_animal_sheltered_end$ggdendrogram$plot_env$dend)
+
+
+ggplot(start_test2, horiz = TRUE) + 
+  labs(y = NULL, title = 'Animal Functional groups: Protected 1982-1995') +
+  ylim(.25,-.12) +
+  # manually set colors
+  scale_color_manual(values = c('#a08b5a','#bcbcd2','#543414','#5484c4','black')) +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank()
+        )
+
+ggsave(filename = here(plots, 'hcpc', '20220321_animal_dend_protected-start.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+
+ggplot(dend_animal_sheltered_end, horiz = TRUE) + 
+  labs(y = NULL, title = 'Animal functional groups: protected 2010-present') +
+  ylim(.3,-.12) +
+  # manually set colors
+  scale_color_manual(values = c('#a08b5a','#543414','#bcbcd2','black')) +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank()
+        )
+
+ggsave(filename = here(plots, 'hcpc', '20220321_animal_protected-end_dend.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+
+
+start_cluster2 +
+  #manually set colors
+  scale_fill_manual(values = c('#543414', '#a08b5a', '#5484c4', '#bcbcd2')) +
+  scale_color_manual(values = c('#543414', '#a08b5a', '#5484c4', '#bcbcd2')) +
+  labs(title = 'Animal functional groups: protected 1982-1995') +
+  theme_classic() +
+  theme(axis.text = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, 'hcpc', '20220321_animal_protected-start_cluster.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+mca_animal_sheltered_end$ggclusterplot +
+  #manually set colors
+  scale_fill_manual(values = c('#a08b5a','#543414','#bcbcd2')) +
+  scale_color_manual(values = c('#a08b5a','#543414','#bcbcd2')) +
+  labs(title = 'Animal functional groups: protected 2010-present') +
+  theme_classic() +
+  theme(axis.text = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, 'hcpc', '20220321_animal_protected-end_cluster.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+
+
+
+
+dend_animal_exposed <- as.ggdend(mca_animal_exposed_end$ggdendrogram$plot_env$dend)
+
+ggplot(dend_animal_exposed, horiz = TRUE) + 
+  labs(y = NULL, title = 'Animal functional groups: exposed 2010-present') +
+  ylim(.3,-.12) +
+  # manually set colors
+  scale_color_manual(values = c('#a08b5a','#543414','#bcbcd2','black')) +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank()
+        )
+
+ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+```
+
+
+
+
+## MCA plots
+
+```{r}
+mca_animal_exposed_start$ggmca + 
+  labs(title = 'Algae mca') +
+    scale_color_manual(values = c('red','blue','purple', 'black',
+                                  'green','orange', 'grey', 'yellow', 'brown',
+                                  'grey17', 'pink', 'grey60', 'salmon',
+                                  'violet', 'cornsilk2')) +
+  theme_classic() +
+  theme(legend.position = 'none')
+  
+  
+
+
+
+  
+ggsave(filename = here(plots, 'algaetest3.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+```
+
+
+
+```{r venns}
+library(eulerr)
+
+# make a list of lists
+venn_all <- list(p_start = animal_sheltered_start$species,
+                 p_end = animal_sheltered_end$species
+                 #exposed = animal_exposed$species
+                 )
+
+# run eulerr
+euleranimal <- euler(venn_all)
+
+# plot output
+plot(euleranimal,
+     quantities = list(type = 'counts', cex = .75, fontface = 2),
+     adjust_labels = TRUE,
+     main = 'Unique fish species')
 ```
 
