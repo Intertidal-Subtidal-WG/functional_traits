@@ -57,7 +57,6 @@ library(FactoMineR)
 
 loadfonts()
 
-
 # Load data ---------------------------------------------------------------
 
 traits<-read.csv("20210730_functional_traits_marine.csv",stringsAsFactors=FALSE) # the last version of the data
@@ -186,19 +185,11 @@ plot_ellipses_algae_1982_end<-plotellipses(mca2,keepvar=c(1:12))
 plot_algae_1982_end
 plot_ellipses_algae_1982_end
 
-#DIAGNOSTIC PLOTS
-#Percentage of explained variation
-fviz_screeplot(mca2, addlabels = TRUE)
-
-# Contribution of individual variables in axis 1 and 2 
-fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
-
-
 # ALGAE_MCA_1982_1995 ---------------------------------------------------
 #Data
-traits_algae_imputed<-read.csv("20220128_1982-1995_algae.csv")
+traits_algae_imputed<-read.csv("20220313_1982-1995_algae.csv")
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
-traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+#traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
 traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(body_size_avg_bin,intertidal,calcareous))
 
 str(traits_algae_imputed)
@@ -207,13 +198,14 @@ str(traits_algae_imputed)
 #MCA_algae
 ####
 str(traits_algae_imputed)
-traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:13] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae, macrophyte,leathery, corticated, foliose, crustose, articulated,benthic,epibiotic,subtidal), list(as.factor)) 
 
+library(tidyverse)
 #MCA
 mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
 summary (mca2)
@@ -222,7 +214,7 @@ mca2$var
 mca2$ind
 
 variables_scores_algae<-mca2$var$eta2 
-str(variables_scores_algae) 
+str(variables_scores_algae)
 head(mca2$var$coord)
 mca2
 plot(mca2)
@@ -257,9 +249,10 @@ plot_algae_1982_1995
 plot_ellipses_algae_1982_1995
 # ALGAE_MCA_1996_2006 ---------------------------------------------------
 #Data
-traits_algae_imputed<-read.csv("20220128_1996-2006_algae.csv")
+traits_algae_imputed<-read.csv("20220313_1996-2006_algae.csv")
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
-traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+#traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(body_size_avg_bin,intertidal,calcareous))
 
 str(traits_algae_imputed)
 
@@ -267,35 +260,36 @@ str(traits_algae_imputed)
 #MCA_algae
 ####
 str(traits_algae_imputed)
-traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:13] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae, macrophyte,leathery, corticated, foliose, crustose, articulated,benthic,epibiotic,subtidal), list(as.factor)) 
 
+library(tidyverse)
 #MCA
-mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
-summary (mca2)
-mca2$eig
-mca2$var
-mca2$ind
+mca3 = MCA (traits_algae_imputed_sel, graph = TRUE)
+summary (mca3)
+mca3$eig
+mca3$var
+mca3$ind
 
-variables_scores_algae<-mca2$var$eta2 
-str(variables_scores_algae) 
-head(mca2$var$coord)
-mca2
-plot(mca2)
+variables_scores_algae<-mca3$var$eta2 
+str(variables_scores_algae)
+head(mca3$var$coord)
+mca3
+plot(mca3)
 
 str(traits_algae_imputed_sel)
 
 #dimdesc(mca2)
 ######## Variable needed for the plot extracted from mca2
-mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+mca3_vars_df = data.frame(mca3$var$coord, Variable = rep(names(cats), 
                                                          cats))
-mca2_obs_df = data.frame(mca2$ind$coord)
+mca3_obs_df = data.frame(mca3$ind$coord)
 
-View(mca2_vars_df )
+View(mca3_vars_df )
 
 # plot of variable categories
 ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
@@ -315,11 +309,13 @@ plot_ellipses_algae_1996_2006<-plotellipses(mca2,keepvar=c(2:11))
 
 plot_algae_1996_2006
 plot_ellipses_algae_1996_2006
+
 # ALGAE_MCA_2011_end_algae ---------------------------------------------------
 #Data
-traits_algae_imputed<-read.csv("20220128_2011-end_algae.csv")
+traits_algae_imputed<-read.csv("20220313_2011-end_algae.csv")
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
-traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+#traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
+traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(body_size_avg_bin,intertidal,calcareous))
 
 str(traits_algae_imputed)
 
@@ -327,43 +323,46 @@ str(traits_algae_imputed)
 #MCA_algae
 ####
 str(traits_algae_imputed)
-traits_algae_imputed_sel<-traits_algae_imputed[,3:8] #select columns of interest
+traits_algae_imputed_sel<-traits_algae_imputed[,4:13] #select columns of interest
 cats=apply(traits_algae_imputed_sel, 2, function(x) nlevels(as.factor(x)))
 cats
 
 str(traits_algae_imputed_sel)
-traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae,steneck_dethier_morphology_algae,benthic,epibiotic,subtidal), list(as.factor)) 
+traits_algae_imputed_sel<-traits_algae_imputed_sel %>% mutate_at(vars(turf_subcanopy_canopy_algae, macrophyte,leathery, corticated, foliose, crustose, articulated,benthic,epibiotic,subtidal), list(as.factor)) 
 
+library(tidyverse)
 #MCA
-mca2 = MCA (traits_algae_imputed_sel, graph = TRUE)
-summary (mca2)
-mca2$eig
-mca2$var
-mca2$ind
+mca4 = MCA(traits_algae_imputed_sel, graph = TRUE)
+summary (mca4)
+mca4$eig
+mca4$var
+mca4$ind
 
-variables_scores_algae<-mca2$var$eta2 
+variables_scores_algae<-mca4$var$eta2 
 str(variables_scores_algae) 
-head(mca2$var$coord)
-mca2
-plot(mca2)
+head(mca4$var$coord)
+mca4
+plot(mca4)
 
 str(traits_algae_imputed_sel)
 
 #dimdesc(mca2)
 ######## Variable needed for the plot extracted from mca2
-mca2_vars_df = data.frame(mca2$var$coord, Variable = rep(names(cats), 
+mca4_vars_df = data.frame(mca4$var$coord, Variable = rep(names(cats), 
                                                          cats))
-mca2_obs_df = data.frame(mca2$ind$coord)
+mca4_obs_df = data.frame(mca4$ind$coord)
 
-View(mca2_vars_df )
+View(mca4_vars_df )
+
+
 
 # plot of variable categories
-ggplot(data = mca2_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df))) + 
+ggplot(data = mca4_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca4_vars_df))) + 
   geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
                                                              colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR")
 
 # MCA plot of observations and categories [Plot used for the presentation!]
-plot_algae_2011_end<-ggplot(data = mca2_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
+plot_algae_2011_end<-ggplot(data = mca4_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
                                                                                          colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
                                                                                                                                                                          alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca2_vars_df, 
                                                                                                                                                                                                                                       aes(x = Dim.1, y = Dim.2, label = rownames(mca2_vars_df), colour = Variable)) + 
@@ -375,6 +374,15 @@ plot_ellipses_algae_2011_end<-plotellipses(mca2,keepvar=c(2:11))
 
 plot_algae_2011_end
 plot_ellipses_algae_2011_end
+
+# ALGAE_Diagnostic_plots -------------------------------------------------------
+#Percentage of explained variation
+fviz_screeplot(mca2, addlabels = TRUE)
+
+# Contribution of individual variables in axis 1 and 2 
+fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
+
+fviz_contrib(mca2, choice = "var", axes = 1, top = 15)
 
 # List_of_plots -----------------------------------------------------------
 
@@ -579,7 +587,7 @@ animals_1996_2006<-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_
 animal_elypses_1996_2006<-plotellipses(mca1,keepvar=c(2:18))
 
 # MCA_animals_2011_end ---------------------------------------------------
-traits_animal_imputed<-read.csv("20220128_2011-end_animal.csv")
+traits_animal_imputed<-read.csv("20220313_2011-end_animal.csv")
 str(traits_animal_imputed)
 traits_animal_imputed<-filter(traits_animal_imputed,intertidal=="yes")
 traits_animal_imputed<-select (traits_animal_imputed, -c(intertidal))
@@ -641,111 +649,14 @@ animals_2011_end
 animal_elypses_2011_end
 
 
-###########ANALYSES BY YEAR################
-###########MCA BY YEAR 
 
-#Lets extract the abundance for years of interest
+# Hypervolume ------------------------------------------------------------
+install.packages("mclust")
+install.packages("hypervolume")
+library(mclust)
+library(hypervolume)
 
-abundances<-read.csv("relative_abund_cover.csv") ## It probably wll be better to have this from the count data
-
-# 1983 seems to be a weird year so talking to Kylla she suggested that 1985 will be of more interest
-str(abundances)
-year1985_abun<-abundances %>% filter(year==1985) %>% select(species, rel_abund_by_side, position) 
-year1985_abun<-rename(year1985_abun, Historical.Abundance=rel_abund_by_side)
-
-str(year1982_abun)
-
-year2020_abun<- abundances %>% filter(year==2020) %>% select(species, rel_abund_by_side, position) 
-year2020_abun<-rename(year2020_abun, Current.Abundance=rel_abund_by_side)
-View(year2020_abun)
-
-
-#### The traits data with score
-
-scores_total_animal_mca<-read.csv("scores_total_animal_mca.csv")
-scores_total_algae_mca<-read.csv("scores_total_algae_mca.csv")
-
-## the matrix with the years
-
-species_year_matrix<-read.csv("species_year_matrix.csv")
-View(species_year_matrix)
-
-######MCA by year
-
-###Animal
-scores_total_animal_mca_years<-left_join(scores_total_animal_mca, species_year_matrix, by="species")
-write.csv(scores_total_animal_mca_years, "scores_total_animal_mca_years.csv")
-scores_total_animal_mca_years_abun<-inner_join(scores_total_animal_mca_years,year2017_abun, by="species")
-scores_total_animal_mca_years_abun<-inner_join(scores_total_animal_mca_years_abun,year1982_abun, by="species")
-str(scores_total_animal_mca_years_abun)
-write.csv(scores_total_animal_mca_years_abun, "1.trait_animals_year_abun.csv")
-
-#Algae
-scores_total_algae_mca_years<-left_join(scores_total_algae_mca, species_year_matrix, by="species")
-write.csv(scores_total_algae_mca_years, "scores_total_animal_mca_years.csv")
-scores_total_algae_mca_years_abun<-inner_join(scores_total_algae_mca_years,year2017_abun, by="species")
-scores_total_algae_mca_years_abun<-inner_join(scores_total_algae_mca_years_abun,year1982_abun, by="species")
-str(scores_total_algae_mca_years_abun)
-write.csv(scores_total_algae_mca_years_abun, "1.trait_algae_year_abun.csv")
-
-
-###### MCA by year 
-
-###Year 1982
-
-algae_final<-read.csv("1.trait_algae_year_abun.csv")
-animal_final<-read.csv("1.trait_animals_year_abun.csv")
-
-#Algae subtidal and intertidal
-str(algae_final)
-algae_final_1982<-algae_final %>% filter(X1995==1)
-
-#algae
-algae_final_sel_1982<-algae_final_1982[,15:21] #select columns of interest
-cats=apply(algae_final_sel_1982, 2, function(x) nlevels(as.factor(x)))
-cats
-
-algae_final_sel_1982<-algae_final_sel_1982 %>% mutate_at(vars(body_size_avg_bin, morphology1,dietary_pref_c,trophic_level, motility_juv, motility_adult, benthic,epibiotic, invasive, intertidal, subtidal), list(as.factor)) 
-
-#MCA
-mca1 = MCA (algae_final_sel_1982, graph = TRUE)
-summary (mca1)
-mca1$eig
-variables_scores_algae<-mca1$var$eta2
-#write.csv(variables_scores_algae, "algae_variable_scores.csv")
-str(variables_scores_algae)
-head(mca1$var$coord)
-mca1
-plot(mca1)
-
-#dimdesc(mca1)
-
-######## Variable needed for the plot extracted from mca1
-
-mca1_vars_df = data.frame(mca1$var$coord, Variable = rep(names(cats), 
-                                                         cats))
-mca1_obs_df = data.frame(mca1$ind$coord)
-
-mca1_vars_df
-
-#####MCA plot
-
-# plot of variable categories
-ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df))) + 
-  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
-                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("algaes MCA plot of variables using R package FactoMineR")
-
-# MCA plot of observations and categories
-ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) + geom_hline(yintercept = 0, 
-                                                                   colour = "gray70") + geom_vline(xintercept = 0, colour = "gray70") + geom_point(colour = "gray50", 
-                                                                                                                                                   alpha = 0.7) + geom_density2d(colour = "gray80") + geom_text(data = mca1_vars_df, 
-                                                                                                                                                                                                                aes(x = Dim.1, y = Dim.2, label = rownames(mca1_vars_df), colour = Variable)) + 
-  ggtitle(" Algae year 1982 using R package FactoMineR") + scale_colour_discrete(name = "Variable")+
-  geom_segment(data = mca1_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  theme_bw(20)+ xlab ("  Dim 1 ")+ ylab(" Dim 2")
-
-### Hypervolume 
-
+#Example 
 data(penguins,package='palmerpenguins')
 str(penguins)
 penguins_no_na = as.data.frame(na.omit(penguins))
@@ -758,25 +669,37 @@ hv1 = hypervolume_box(penguins_adelie,name='Adelie')
 hv2 = hypervolume_box(penguins_chinstrap,name='Chinstrap')
 hv_set <- hypervolume_set(hv1, hv2, check.memory=FALSE)
 hypervolume_overlap_statistics(hv_set)
-
-
 plot(hv_set)
 
-install.packages("mclust")
-library(mclust)
 
-x<-hypvol(mca2_obs_df)
-plot(x)
+# With our data
+#Plotting and individual hypervolume
+hypervolume1<-hypvol(mca2_obs_df)
+plot(hypervolume1)
 
-a<-hypervolume(mca2_obs_df)
-b<-hypervolume_box(mca2_obs_df)
-c<-hypervolume_box(mca2_obs_df)
+# Creating hypervolumnes for our time frames
 
-hv_set <- hypervolume_set(a, b, check.memory=FALSE)
+a<-hypervolume_box(mca2_obs_df) # 1982-1995
+b<-hypervolume_box(mca3_obs_df) # 1996-
+c<-hypervolume_box(mca4_obs_df) # 2011-end
+
+# Calculating some statistics
+hv_set <- hypervolume_set(a, c, check.memory=FALSE)
 hypervolume_overlap_statistics(hv_set)
 
 plot(hv_set)
 
+####
+# Other ways of doing the hypervolume # but not sure how to use it with categorical data
+install.packages("Ostats")
+library(Ostats)
 
+data(pitcher_traits)
+str(pitcher_traits)
+s <- Ostats(traits =traits_algae_imputed_sel,
+                             plots = factor(rep(1, nrow(traits_algae_imputed_sel))),
+                             run_null_model = FALSE)
+                             
 
+### End of script
 
