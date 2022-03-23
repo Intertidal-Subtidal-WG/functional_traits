@@ -21,21 +21,10 @@ plots <- here('output', '2022march', 'mca')
 ## load in data
 
 ```{r}
-# all species
-algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
-                                 col_select = !1) %>%
-  filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
-
-animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
-                                 col_select = !1) %>%
-  filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
-
 # time series
 algae_traits <- read_csv(here(traits, "20220321_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
+  select(!(c(intertidal, group, size_categories, feeding)))
 
 animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
@@ -46,6 +35,18 @@ animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
 #  filter(intertidal == 'yes') %>%
 #  select(!(c(intertidal)))
 #animal_2011_end_traits <- read_csv(here(mcadata, "20220313_2011-end_animal.csv")) %>%
+#  filter(intertidal == 'yes') %>%
+#  select(!(c(intertidal)))
+
+
+# all species
+#algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
+#                                 col_select = !1) %>%
+#  filter(intertidal == 'yes') %>%
+#  select(!(c(intertidal)))
+
+#animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
+#                                 col_select = !1) %>%
 #  filter(intertidal == 'yes') %>%
 #  select(!(c(intertidal)))
 ```
@@ -165,9 +166,16 @@ algae_10_end <- algae_traits %>%
 
 # run mca
 mca_algae_82_95 <- appledoreMCAHCPC(algae_82_95)
-mca_algae_96_06_mca <- appledoreMCAHCPC(algae_96_06)
+mca_algae_96_06 <- appledoreMCAHCPC(algae_96_06)
 mca_algae_10_end <- appledoreMCAHCPC(algae_10_end)
 ```
+```{r}
+mca_algae_82_95$ggmca
+mca_algae_96_06$ggmca
+mca_algae_10_end$ggmca
+```
+
+
 
 ### exposed/sheltered
 
@@ -225,17 +233,44 @@ mca_algae_sheltered_end$ggmca
 mca_algae_exposed$ggmca
 mca_algae_sheltered$ggmca
 
-ggsave(here(plots, 'temporary', 'algaeexposed.png'), mca_algae_exposed$ggmca, width = 10)
-ggsave(here(plots, 'temporary', 'algaesheltered.png'), mca_algae_sheltered$ggmca, width = 10)
+ggsave(here(plots, 'temporary', '2algaeexposed.png'), mca_algae_exposed$ggmca, width = 10)
+ggsave(here(plots, 'temporary', '2algaesheltered.png'), mca_algae_sheltered$ggmca, width = 10)
 
-ggsave(here(plots, 'temporary', 'algaeexposed_start.png'), mca_algae_exposed_start$ggmca, width = 10)
-ggsave(here(plots, 'temporary', 'algaeexposed_end.png'), mca_algae_exposed_end$ggmca, width = 10)
+ggsave(here(plots, 'temporary', '2algaeexposed_start.png'), mca_algae_exposed_start$ggmca, width = 10)
+ggsave(here(plots, 'temporary', '2algaeexposed_end.png'), mca_algae_exposed_end$ggmca, width = 10)
 
-ggsave(here(plots, 'temporary', 'algaesheltered_start.png'), mca_algae_sheltered_start$ggmca, width = 10)
-ggsave(here(plots, 'temporary', 'algaesheltered_end.png'), mca_algae_sheltered_end$ggmca, width = 10)
+ggsave(here(plots, 'temporary', '2algaesheltered_start.png'), mca_algae_sheltered_start$ggmca, width = 10)
+ggsave(here(plots, 'temporary', '2algaesheltered_end.png'), mca_algae_sheltered_end$ggmca, width = 10)
 
 ```
 
+```{r}
+library(arsenal)
+# in output, first dataframe is X, second is Y
+exposedvprotect <- comparedf(algae_exposed, algae_sheltered, by = 'species')
+#extract differences
+diffs(exposedvprotect, what = c('observations'))
+
+protectstvend <- comparedf(algae_sheltered_start, algae_sheltered_end, by = 'species')
+diffs(protectstvend, what = c('observations'))
+
+exposedstvend <- comparedf(algae_exposed_start, algae_exposed_end, by = 'species')
+diffs(exposedstvend, what = c('observations'))
+
+
+
+algae_test2 <- read_csv(here(traits, "20220314_1982-end_algae.csv")) %>%
+  filter(intertidal == 'yes') 
+
+algae_test_sheltered <- algae_test2 %>%
+  filter(position == 'sheltered') %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+oldvnew <- comparedf(algae_test_sheltered, algae_sheltered, by = 'species')
+#extract differences
+diffs(oldvnew, what = c('observations'))
+```
 
 
 
