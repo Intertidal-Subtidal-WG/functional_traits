@@ -188,6 +188,8 @@ plot_ellipses_algae_1982_end
 # ALGAE_MCA_1982_1995 ---------------------------------------------------
 #Data
 traits_algae_imputed<-read.csv("20220313_1982-1995_algae.csv")
+
+str(traits_algae_imputed)
 traits_algae_imputed<-filter(traits_algae_imputed,intertidal=="yes")
 #traits_algae_imputed<-select (traits_algae_imputed, -c(body_size_avg_bin,intertidal))
 traits_algae_imputed<-dplyr::select(traits_algae_imputed, -c(body_size_avg_bin,intertidal,calcareous))
@@ -354,8 +356,6 @@ mca4_obs_df = data.frame(mca4$ind$coord)
 
 View(mca4_vars_df )
 
-
-
 # plot of variable categories
 ggplot(data = mca4_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca4_vars_df))) + 
   geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
@@ -384,6 +384,49 @@ fviz_contrib(mca2, choice = "var", axes = 1:2, top = 15)
 
 fviz_contrib(mca2, choice = "var", axes = 1, top = 15)
 
+
+# #Improving some plots ---------------------------------------------------
+
+#### MCA plot
+
+
+ggplot(data = mca4_vars_df, aes(x = Dim.1, y = Dim.2, label = rownames(mca4_vars_df))) + 
+  geom_hline(yintercept = 0, colour = "gray70") + geom_vline(xintercept = 0, 
+                                                             colour = "gray70") + geom_text(aes(colour = Variable)) + ggtitle("Algae_MCA plot of variables using R package FactoMineR") 
+
+# colour palette
+col_pal <- colorRampPalette(c("red", "yellow", "white"))(200)
+
+# plot
+ ggplot(mca4_vars_df, aes(x = Dim.1, y = Dim.2)) +
+  # coloured probabilty background
+  geom_raster(aes(fill= density)) +
+  scale_fill_gradientn(colours = rev(col_pal)) 
+ 
+  # points for species
+  geom_point(data = mca4_vars_df, aes(x = Dim.1, y = Dim.2), size = 0.3, alpha = 0.5, colour = "grey20") +
+  # probability kernels
+  geom_contour(aes(z = value), breaks = cl_50_mi_d1, colour = "grey30", size = 1) +
+  geom_contour(aes(z = value), breaks = cl_95_mi_d1, colour = "grey60", size = 1) +
+  geom_contour(aes(z = value), breaks = cl_99_mi_d1, colour = "grey70", size = 1) +
+  coord_equal() +
+  # add arrows
+  geom_segment(data = pcload_mi_d1_sc, aes(x = 0, y = 0, xend = Comp.1_mean, yend = Comp.2_mean), arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  # add dashed arrows ends
+  geom_segment(data = pcload_mi_d1_sc, aes(x = 0, y = 0, xend = -Comp.1_mean, yend = -Comp.2_mean), lty = 5, colour = "darkgrey") +
+  # add arrow labels
+  geom_text(data = pcload_mi_d1_sc, aes(x = Comp.1_mean, y = Comp.2_mean, label = trait), size = 6, nudge_x = c(0, 0, 0, 0, -0.2), nudge_y = c(0.2, -0.2, -0.2, -0.2, 0.2)) +
+  # axis labels - see comp_var
+  labs(x = "PC1 (34.1%)", y = "PC2 (26.0%)") +
+  # edit plot
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text = element_text(colour = "black"),
+        legend.position = "none",
+        text = element_text(size = 20))
+
+# display plot
+pca_plot_mi_d1
 # List_of_plots -----------------------------------------------------------
 
 plot_algae_1982_end
@@ -673,21 +716,50 @@ plot(hv_set)
 
 
 # With our data
+
+
+# Creating hypervolumnes for our time frames
+
 #Plotting and individual hypervolume
 hypervolume1<-hypvol(mca2_obs_df)
 plot(hypervolume1)
 
-# Creating hypervolumnes for our time frames
+# set  hypervolumes
+set.seed(3)
 
 a<-hypervolume_box(mca2_obs_df) # 1982-1995
 b<-hypervolume_box(mca3_obs_df) # 1996-
 c<-hypervolume_box(mca4_obs_df) # 2011-end
 
-# Calculating some statistics
+#hv_set <-hypervolume::hypervolume_set(a, c, check.memory=FALSE)
 hv_set <- hypervolume_set(a, c, check.memory=FALSE)
+
+# Calculating some statistics
+# overlap statistics
 hypervolume_overlap_statistics(hv_set)
 
+# summarise volumes
+hypervolume::get_volume(hv_set)
 plot(hv_set)
+
+
+# Plot 3D hypervolumes 
+
+hv_set@HVList$HV1 <- NULL
+hv_set@HVList$HV2 <- NULL
+hv_set@HVList$Union <- NULL
+
+# trait names (This will only allow to include as many traits as dimensions not sure why)
+names <- c("Space_use", "Macrophyte", "Leathery", "Corticated", "Foliose")
+
+colnames(hv_set@HVList$Intersection@RandomPoints) <- names
+colnames(hv_set@HVList$Unique_1@RandomPoints) <- names
+colnames(hv_set@HVList$Unique_2@RandomPoints) <- names
+
+colnames(hv_set@HVList$Intersection@RandomPoints)
+
+# plot hypervolumes for mammals and birds
+hypervolume::plot.HypervolumeList(hv_set, show.3d = TRUE, plot.3d.axes.id = c(1,5,3), show.random = FALSE, show.data = TRUE, show.centroid = FALSE, show.density = FALSE, cex.random = 5, colors = c("#C77CFF", "#F8766D","#00BFC4"))
 
 ####
 # Other ways of doing the hypervolume # but not sure how to use it with categorical data
@@ -700,6 +772,8 @@ s <- Ostats(traits =traits_algae_imputed_sel,
                              plots = factor(rep(1, nrow(traits_algae_imputed_sel))),
                              run_null_model = FALSE)
                              
+
+
 
 ### End of script
 
