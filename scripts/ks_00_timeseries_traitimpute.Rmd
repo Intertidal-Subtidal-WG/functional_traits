@@ -22,8 +22,8 @@ library(here)
 #be sure to use na.strings or imputation will fail!
 
 # algae traits not ready
-#algae_raw <- read.csv(here("data", '20220320_shoals_algae_traits.csv'), 
-#                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
+algae_raw <- read.csv(here("data", '20220323_shoals_algae_traits.csv'), 
+                      na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
 
 animal_raw <- read.csv(here("data", '20220320_shoals_animal_traits.csv'), 
                       na.strings = c("","NA", 'N/A')) %>% filter(!(is.na(species)))
@@ -36,10 +36,27 @@ Also remove any columns known a priori to be collinear, or move them to the fron
 
 
 ```{r filter}
-#algae_raw <- algae_raw %>%
-#  select(species, group, common_name_division_bgr, ... ) %>%
+algae_raw <- algae_raw %>%
+  select(species, phylum, group, common_name_division_bgr,
+         intertidal, subtidal, feeding,
+         # s-d morphology, expanded
+         macroalgae, erect_morphology_growth_form, foliose_morphology_growth_form,
+         filamentous_morphology_growth_form, crustose_morphology_growth_form,
+         globular_morphology_growth_form, leathery_external_morphology, articulated_external_morphology,
+         branched_external_morphology, saccate_external_morphology,
+         #corticated_internal_anatomy,
+         #physical_defenses_calcification,
+         # canopy/subcanopy/turf
+         space_use_canopy, space_use_sub_canopy, space_use_turf,
+         # life history traits
+         potential_asexual_reproduction, maximun_longevity,
+         size_categories, 
+         # where/on what does it grow
+         epilithic_use_space, epiphytic_env_position, epizoic_env_position,
+         epibiotic_env_position
+         ) %>%
 # Make everything a factor
-#  mutate(across(.fns = ~ as.factor(.)))
+  mutate(across(.fns = ~ as.factor(.)))
 
 animal_raw <- animal_raw %>%
   select(species, phylum, common_name_division, # for filtering later
@@ -70,10 +87,10 @@ animal_raw <- animal_raw %>%
 ```{r mice}
 ## algae
 # run mice on select columns
-algae_imp <- mice(algae_clean[,3:ncol(algae_clean)], m=5, method = 'cart', print = F)
+algae_imp <- mice(algae_raw[,8:ncol(algae_raw)], m=5, method = 'cart', print = F)
 algae_imp2 <- complete(algae_imp) # necessary!
 # reattach taxonomy/filtering columns
-algae_imp2 <- cbind(algae_raw[,1:2],algae_imp2)
+algae_imp2 <- cbind(algae_raw[,1:7],algae_imp2)
 
 #to see logged events
 algae_imp$loggedEvents
@@ -95,7 +112,7 @@ animal_imp$loggedEvents
 
 ```{r save}
 # write csv for imputed data
-write.csv(algae_imp2, file = here('data', 'clean','20220321_algae_imputed.csv'))
+write.csv(algae_imp2, file = here('data', 'clean','20220323_algae_imputed.csv'))
 write.csv(animal_imp2, file = here('data', 'clean','20220321_animal_imputed.csv'))
 
 # if you want .RData versions

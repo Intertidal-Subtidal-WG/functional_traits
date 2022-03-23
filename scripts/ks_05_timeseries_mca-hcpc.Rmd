@@ -22,11 +22,10 @@ plots <- here('output', '2022march', 'mca')
 
 ```{r}
 # all species
-algae_imputed_all <- read_csv(here(traits, "20220312_algae_imputed.csv"),
+algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
                                  col_select = !1) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(body_size_avg_bin, intertidal,
-             calcareous)))
+  select(!(c(intertidal)))
 
 animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
                                  col_select = !1) %>%
@@ -34,9 +33,9 @@ animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
   select(!(c(intertidal)))
 
 # time series
-algae_traits <- read_csv(here(traits, "20220314_1982-end_algae.csv")) %>%
+algae_traits <- read_csv(here(traits, "20220321_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(intertidal, body_size_avg_bin)))
+  select(!(c(intertidal)))
 
 animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
@@ -127,13 +126,20 @@ explore output; use df$ to see all saved plots and summary stats
 Any output starting with gg is a ggplot object and can be chained with ggplot functions such as:
 `algae_all$ggmca + theme_bw()`
 ```{r}
-algae_all <- appledoreMCAHCPC(algae_imputed_all)
+algae_all_test <- algae_traits %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+algae_all <- appledoreMCAHCPC(algae_all_test)
 # example view a summary
-algae_all$mcaeigen
+algae_all$mcares$eig
 # example ggplot
 algae_all$ggscreeplot + theme_bw()
 
-animal_all <- appledoreMCAHCPC(animal_imputed_all)
+algae_all$ggclusterplot
+
+algae_all$clustervariables
+
 ```
 # set up subsets and run
 

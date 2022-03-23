@@ -22,7 +22,7 @@ field <- here('data','fielddata')
 ## remove first column, turn all into factors
 animal_imp2 <- read.csv(file = here(trait,'20220321_animal_imputed.csv'))[,-1]%>% 
   mutate(across(.fns = ~ as.factor(.)))
-algae_imp2 <- read.csv(file = here(trait,'20220312_algae_imputed.csv'))[,-1]%>% 
+algae_imp2 <- read.csv(file = here(trait,'20220323_algae_imputed.csv'))[,-1]%>% 
   mutate(across(.fns = ~ as.factor(.)))
 
 # combined year+transect list
@@ -107,8 +107,8 @@ sp_1982r_algae <- sp_1982r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
-write.csv(sp_1982r_animal, here('data', 'clean', '20220313_1982-1995_animal.csv'), row.names = FALSE)
-write.csv(sp_1982r_algae, here('data', 'clean', '20220313_1982-1995_algae.csv'), row.names = FALSE)
+write.csv(sp_1982r_animal, here('data', 'clean', '20220323_1982-1995_animal.csv'), row.names = FALSE)
+write.csv(sp_1982r_algae, here('data', 'clean', '20220323_1982-1995_algae.csv'), row.names = FALSE)
 ```
 
 ```{r 1996}
@@ -133,8 +133,8 @@ sp_1996r_algae <- sp_1996r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
-write.csv(sp_1996r_animal, here('data', 'clean', '20220313_1996-2006_animal.csv'), row.names = FALSE)
-write.csv(sp_1996r_algae, here('data', 'clean', '20220313_1996-2006_algae.csv'), row.names = FALSE)
+write.csv(sp_1996r_animal, here('data', 'clean', '20220323_1996-2006_animal.csv'), row.names = FALSE)
+write.csv(sp_1996r_algae, here('data', 'clean', '20220323_1996-2006_algae.csv'), row.names = FALSE)
 ```
 
 
