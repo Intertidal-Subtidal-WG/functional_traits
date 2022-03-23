@@ -136,7 +136,7 @@ explore output; use df\$ to see all saved plots and summary stats Any
 output starting with gg is a ggplot object and can be chained with
 ggplot functions such as: `algae_all$ggmca + theme_bw()`
 
-```{r}
+```{r function-explore}
 algae_all_test <- algae_traits %>%
   select(!(c(year, transect, position))) %>%
   distinct()
@@ -162,7 +162,7 @@ algae_all$clustmembers
 
 ## Algae
 
-```{r}
+```{r algae-all}
 algaehcpc <- HCPC(algae_all$mcares, nb.clust = 5)
 
 algaehcpc$desc.var
@@ -174,7 +174,7 @@ fviz_dend(algaehcpc)
 
 ### Timeseries
 
-```{r}
+```{r algae-timeseries}
 # filter
 algae_82_95 <- algae_traits %>%
   filter(year <= 1994 & year >= 1982) %>%
@@ -197,7 +197,7 @@ mca_algae_96_06 <- appledoreMCAHCPC(algae_96_06)
 mca_algae_10_end <- appledoreMCAHCPC(algae_10_end)
 ```
 
-```{r}
+```{r algae-timeseries-explore}
 mca_algae_82_95$ggmca
 mca_algae_96_06$ggmca
 mca_algae_10_end$ggmca
@@ -269,7 +269,7 @@ ggsave(here(plots, 'temporary', '2algaesheltered_end.png'), mca_algae_sheltered_
 
 ```
 
-```{r}
+```{r algae-exposedsheltered-explore}
 
 
 mca_algae_exposed$ggdendrogram
@@ -300,7 +300,7 @@ fviz_dend(exposedhcpc2)
 
 ```
 
-```{r summary}
+```{r algae-exposedsheltered-summarystats}
 mca_algae_exposed_start$mcares$eig
 mca_algae_exposed_end$mcares$eig
 mca_algae_sheltered_start$mcares$eig
@@ -322,7 +322,7 @@ mca_algae_sheltered_start$ggcontrib
 mca_algae_sheltered_end$ggcontrib
 ```
 
-```{r}
+```{r algae-compare}
 library(arsenal)
 # in output, first dataframe is X, second is Y
 exposedvprotect <- comparedf(algae_exposed, algae_sheltered, by = 'species')
@@ -343,30 +343,26 @@ Note animal_all gives different result than any group of animals. I
 really don't understand why, it puts Astarias rubens in totally
 different locations.
 
-```{r}
+```{r animal-all}
 animal_all_t <- animal_traits %>%
   select(!(c(year,transect,position))) %>%
   distinct()
 
 mca_animal_all <- appledoreMCAHCPC(animal_all_t)
 
-animal_allhcpc <- HCPC(res = mca_animal_all$mcares, nb.clust =  4)
+animal_allhcpc <- HCPC(res = mca_animal_all$mcares, nb.clust =  5)
 
-fviz_cluster(testhcpc, geom = "point", main = "Factor map")
+# plots testing output
 fviz_cluster(animal_allhcpc, geom = "point", main = "Factor map")
-animal_all$ggclusterplot
-
-
+mca_animal_all$ggclusterplot
 fviz_dend(animal_allhcpc)
-fviz_dend(testhcpc)
-
-animal_all$clustmembers
-animal_all$clustervariables
+mca_animal_all$clustmembers
+mca_animal_all$clustervariables
 ```
 
 ### Timeseries
 
-```{r}
+```{r animal-timeseries}
 # filter
 animal_82_95 <- animal_traits %>%
   filter(year <= 1994 & year >= 1982) %>%
@@ -445,13 +441,9 @@ mca_animal_exposed_start$ggvars
 mca_animal_exposed_end$ggvars
 
 
-
-
-
 # exposed
 mca_animal_exposed_start$ggmca
 mca_animal_exposed_end$ggmca
-
 
 
 # sheltered
@@ -469,7 +461,7 @@ ggsave(here(plots, 'temporary', 'animalsheltered_end.png'), mca_animal_sheltered
 
 ```
 
-```{r hcpc-exploration}
+```{r animal-hcpc-exploration}
 shelteredhcpc2 <- HCPC(res = mca_animal_sheltered$mcares, nb.clust =  5)
 exposedhcpc2 <- HCPC(res = mca_animal_exposed$mcares, nb.clust =  4)
   
@@ -507,7 +499,7 @@ mca_animal_exposed_end$ggdendrogram
 
 # arsenal to extract differences quickly
 
-```{r}
+```{r animal-compare}
 library(arsenal)
 # in output, first dataframe is X, second is Y
 exposedvprotect <- comparedf(animal_exposed, animal_sheltered, by = 'species')
@@ -624,6 +616,42 @@ algaehcpc_cluster +
 ggsave(filename = here(plots, 'hcpc', '20220323_algae_all_cluster.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
 
+```
+
+
+
+```{r animal-all}
+animal_allhcpc <- HCPC(res = mca_animal_all$mcares, nb.clust =  5)
+animal_hcpc_dend <- fviz_dend(animal_allhcpc, cex = .6)
+animal_hcpc_dend <- as.ggdend(animal_hcpc_dend$plot_env$dend)
+animalhcpc_cluster <- fviz_cluster(animal_allhcpc, geom = "point", main = "Factor map")
+
+ggplot(animal_hcpc_dend, horiz = TRUE) + 
+  labs(y = NULL, title = 'Animal Functional groups: All') +
+  ylim(.29,-.12) +
+  # manually set colors
+  scale_color_manual(values = c('#5484c4','#bcbcd2','#543414','#374658', '#a08b5a', 'black')) +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank()
+        )
+
+#ggsave(filename = here(plots, 'hcpc', '20220323_animal_dend_all.png'), device = 'png', 
+#       height = 5, width = 7, units = 'in')
+
+animalhcpc_cluster$data
+
+animalhcpc_cluster +
+  #manually set colors
+  scale_fill_manual(values = c('#374658', '#5484c4', '#bcbcd2','#a08b5a', '#543414')) +
+  scale_color_manual(values = c('#374658','#5484c4', '#bcbcd2', '#a08b5a', '#543414')) +
+  labs(title = 'Animal functional groups: All') +
+  theme_classic() +
+  theme(axis.text = element_blank(),
+        legend.position = 'none')
+
+
+ggsave(filename = here(plots, 'hcpc', '20220323_animal_all_cluster.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
 ```
 
 
