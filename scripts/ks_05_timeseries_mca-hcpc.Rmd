@@ -497,33 +497,38 @@ ggsave(filename = here(plots, 'algaetest3.png'), device = 'png',
 #manually split the 4 clusters for sheltered_start
 ## probably better plotting can be done at this point but 
 # i'm just going to make it into the same format as the others
-shelteredhcpc2 <- HCPC(res = mca_animal_sheltered_start$mcares, nb.clust =  4)
+shelteredhcpc2 <- HCPC(res = mca_animal_sheltered_start$mcares, nb.clust =  5)
 start_test <- fviz_dend(shelteredhcpc2, cex = .7)
 start_test2 <- as.ggdend(start_test$plot_env$dend)
 start_cluster2 <- fviz_cluster(shelteredhcpc2, geom = "point", main = "Factor map")
 
 
-dend_animal_sheltered_end <- as.ggdend(mca_animal_sheltered_end$ggdendrogram$plot_env$dend)
+shelteredhcpc3 <- HCPC(res = mca_animal_sheltered_end$mcares, nb.clust =  5)
+end_test <- fviz_dend(shelteredhcpc3, cex = .7)
+end_test2 <- as.ggdend(end_test$plot_env$dend)
+
+
+#dend_animal_sheltered_end <- as.ggdend(mca_animal_sheltered_end$ggdendrogram$plot_env$dend)
 
 
 ggplot(start_test2, horiz = TRUE) + 
   labs(y = NULL, title = 'Animal Functional groups: Protected 1982-1995') +
   ylim(.25,-.12) +
   # manually set colors
-  scale_color_manual(values = c('#a08b5a','#bcbcd2','#543414','#5484c4','black')) +
+  scale_color_manual(values = c('#5484c4','#bcbcd2','#543414','#374658', '#a08b5a', 'black')) +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank()
         )
 
-ggsave(filename = here(plots, 'hcpc', '20220321_animal_dend_protected-start.png'), device = 'png', 
-       height = 5, width = 7, units = 'in')
+#ggsave(filename = here(plots, 'hcpc', '20220321_animal_dend_protected-start.png'), device = 'png', 
+#       height = 5, width = 7, units = 'in')
 
 
-ggplot(dend_animal_sheltered_end, horiz = TRUE) + 
+ggplot(end_test2, horiz = TRUE) + 
   labs(y = NULL, title = 'Animal functional groups: protected 2010-present') +
   ylim(.3,-.12) +
   # manually set colors
-  scale_color_manual(values = c('#a08b5a','#543414','#bcbcd2','black')) +
+  scale_color_manual(values = c('#a08b5a','#543414','#bcbcd2','#5484c4', '#374658', 'black')) +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank()
         )
