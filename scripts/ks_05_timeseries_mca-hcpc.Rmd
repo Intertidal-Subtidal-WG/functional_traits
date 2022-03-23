@@ -3,6 +3,9 @@ title: "ks_mca-hcpc_timeseries"
 author: "Kate Sheridan"
 date: "3/13/2022"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -24,7 +27,12 @@ plots <- here('output', '2022march', 'mca')
 # time series
 algae_traits <- read_csv(here(traits, "20220321_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
-  select(!(c(intertidal, group, size_categories, feeding)))
+  select(!(c(intertidal, group, size_categories, feeding, 
+             saccate_external_morphology,
+             #potential_asexual_reproduction,
+             epilithic_use_space,
+             epiphytic_env_position, epizoic_env_position,
+             macroalgae)))
 
 animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
@@ -40,10 +48,10 @@ animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
 
 
 # all species
-#algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
-#                                 col_select = !1) %>%
-#  filter(intertidal == 'yes') %>%
-#  select(!(c(intertidal)))
+algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
+                                 col_select = !1) %>%
+  filter(intertidal == 'yes') %>%
+  select(!(c(intertidal)))
 
 #animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
 #                                 col_select = !1) %>%
@@ -123,9 +131,11 @@ appledoreMCAHCPC <- function(traits) {
 ```
 
 ## run function example
-explore output; use df$ to see all saved plots and summary stats
-Any output starting with gg is a ggplot object and can be chained with ggplot functions such as:
-`algae_all$ggmca + theme_bw()`
+
+explore output; use df\$ to see all saved plots and summary stats Any
+output starting with gg is a ggplot object and can be chained with
+ggplot functions such as: `algae_all$ggmca + theme_bw()`
+
 ```{r}
 algae_all_test <- algae_traits %>%
   select(!(c(year, transect, position))) %>%
@@ -137,16 +147,33 @@ algae_all$mcares$eig
 # example ggplot
 algae_all$ggscreeplot + theme_bw()
 
+algae_all$ggmca
+
+
+algae_all$ggdendrogram
 algae_all$ggclusterplot
 
 algae_all$clustervariables
+algae_all$clustmembers
 
 ```
+
 # set up subsets and run
 
 ## Algae
 
+```{r}
+algaehcpc <- HCPC(algae_all$mcares, nb.clust = 5)
+
+algaehcpc$desc.var
+algaehcpc$desc.ind
+
+fviz_dend(algaehcpc)
+
+```
+
 ### Timeseries
+
 ```{r}
 # filter
 algae_82_95 <- algae_traits %>%
@@ -169,13 +196,12 @@ mca_algae_82_95 <- appledoreMCAHCPC(algae_82_95)
 mca_algae_96_06 <- appledoreMCAHCPC(algae_96_06)
 mca_algae_10_end <- appledoreMCAHCPC(algae_10_end)
 ```
+
 ```{r}
 mca_algae_82_95$ggmca
 mca_algae_96_06$ggmca
 mca_algae_10_end$ggmca
 ```
-
-
 
 ### exposed/sheltered
 
@@ -223,7 +249,6 @@ mca_algae_exposed_end <- appledoreMCAHCPC(algae_exposed_end)
 mca_algae_sheltered_end <- appledoreMCAHCPC(algae_sheltered_end)
 ```
 
-
 ```{r algae-position-plots}
 
 mca_algae_exposed_start$ggmca
@@ -245,6 +270,59 @@ ggsave(here(plots, 'temporary', '2algaesheltered_end.png'), mca_algae_sheltered_
 ```
 
 ```{r}
+
+
+mca_algae_exposed$ggdendrogram
+mca_algae_sheltered$ggdendrogram
+
+mca_algae_exposed_start$ggdendrogram
+mca_algae_exposed_end$ggdendrogram
+
+mca_algae_sheltered_start$ggdendrogram
+mca_algae_sheltered_end$ggdendrogram
+
+mca_algae_sheltered_end$clustmembers
+mca_algae_sheltered_end$clustervariables
+
+mca_algae_sheltered_start$clustmembers
+mca_algae_sheltered_start$clustervariables
+
+
+exposedhcpc2 <- HCPC(res = mca_algae_exposed_end$mcares, nb.clust =  5)
+mca_algae_exposed_start$ggdendrogram
+fviz_dend(exposedhcpc2)
+
+
+
+
+
+
+
+```
+
+```{r summary}
+mca_algae_exposed_start$mcares$eig
+mca_algae_exposed_end$mcares$eig
+mca_algae_sheltered_start$mcares$eig
+mca_algae_sheltered_end$mcares$eig
+
+
+mca_algae_exposed_start$ggcos2
+mca_algae_exposed_end$ggcos2
+mca_algae_sheltered_start$ggcos2
+mca_algae_sheltered_end$ggcos2
+
+
+mca_algae_exposed_start$mcares$var$contrib
+
+
+mca_algae_exposed_start$ggcontrib
+mca_algae_exposed_end$ggcontrib
+mca_algae_sheltered_start$ggcontrib
+mca_algae_sheltered_end$ggcontrib
+```
+
+```{r}
 library(arsenal)
 # in output, first dataframe is X, second is Y
 exposedvprotect <- comparedf(algae_exposed, algae_sheltered, by = 'species')
@@ -257,28 +335,13 @@ diffs(protectstvend, what = c('observations'))
 exposedstvend <- comparedf(algae_exposed_start, algae_exposed_end, by = 'species')
 diffs(exposedstvend, what = c('observations'))
 
-
-
-algae_test2 <- read_csv(here(traits, "20220314_1982-end_algae.csv")) %>%
-  filter(intertidal == 'yes') 
-
-algae_test_sheltered <- algae_test2 %>%
-  filter(position == 'sheltered') %>%
-  select(!(c(year, transect, position))) %>%
-  distinct()
-
-oldvnew <- comparedf(algae_test_sheltered, algae_sheltered, by = 'species')
-#extract differences
-diffs(oldvnew, what = c('observations'))
 ```
-
-
-
-
 
 ## Animals
 
-Note animal_all gives different result than any group of animals. I really don't understand why, it puts Astarias rubens in totally different locations.
+Note animal_all gives different result than any group of animals. I
+really don't understand why, it puts Astarias rubens in totally
+different locations.
 
 ```{r}
 animal_all_t <- animal_traits %>%
@@ -301,8 +364,8 @@ animal_all$clustmembers
 animal_all$clustervariables
 ```
 
-
 ### Timeseries
+
 ```{r}
 # filter
 animal_82_95 <- animal_traits %>%
@@ -405,6 +468,7 @@ ggsave(here(plots, 'temporary', 'animalsheltered_start.png'), mca_animal_shelter
 ggsave(here(plots, 'temporary', 'animalsheltered_end.png'), mca_animal_sheltered_end$ggmca, width = 10)
 
 ```
+
 ```{r hcpc-exploration}
 shelteredhcpc2 <- HCPC(res = mca_animal_sheltered$mcares, nb.clust =  5)
 exposedhcpc2 <- HCPC(res = mca_animal_exposed$mcares, nb.clust =  4)
@@ -441,7 +505,6 @@ mca_animal_exposed_start$ggdendrogram
 mca_animal_exposed_end$ggdendrogram
 ```
 
-
 # arsenal to extract differences quickly
 
 ```{r}
@@ -459,23 +522,16 @@ diffs(exposedstvend, what = c('observations'))
 
 ```
 
-
-
 # presentation plots
 
 palette is:
 `#bcbcd2, #94b4d8, #5484c4, #374658, #a08b5a, #806238, #543414, #3a230e`
-lavender grey, pale cerulean, glaucous, charcoal, metallic sunburst, coyote brown, dark brown, bistre
+lavender grey, pale cerulean, glaucous, charcoal, metallic sunburst,
+coyote brown, dark brown, bistre
 
-sets of 2 should be primarily drawn from the middle two of each part of the palette:
-two blues
-#94b4d8, #5484c4
-two browns
-#806238, #543414
-blue brown light
-#94b4d8,#806238
-blue brown dark
-#5484c4, #543414
+sets of 2 should be primarily drawn from the middle two of each part of
+the palette: two blues #94b4d8, #5484c4 two browns #806238, #543414 blue
+brown light #94b4d8,#806238 blue brown dark #5484c4, #543414
 
 ## clusters
 
@@ -533,6 +589,44 @@ ggsave(filename = here(plots, 'algaetest3.png'), device = 'png',
        height = 5, width = 7, units = 'in')
 
 ```
+
+```{r algae}
+library(dendextend)
+algaehcpc_dend <- fviz_dend(algaehcpc, cex = .6)
+algaehcpc_dend <- as.ggdend(algaehcpc_dend$plot_env$dend)
+algaehcpc_cluster <- fviz_cluster(algaehcpc, geom = "point", main = "Factor map")
+
+
+ggplot(algaehcpc_dend, horiz = TRUE) + 
+  labs(y = NULL, title = 'Algae Functional Groups: All') +
+  ylim(.25,-.12) +
+  # manually set colors
+  scale_color_manual(values = c('#bcbcd2','#5484c4','#543414','#374658', '#a08b5a', 'black')) +
+  theme(axis.ticks = element_blank(),
+        axis.text.y = element_blank()
+        )
+
+#ggsave(filename = here(plots, 'hcpc', '20220323_algae_dend.png'), device = 'png', 
+#       height = 5, width = 7, units = 'in')
+
+algaehcpc_cluster$data
+
+
+algaehcpc_cluster +
+  #manually set colors
+  scale_fill_manual(values = c('#543414', '#a08b5a','#5484c4', '#bcbcd2','#374658')) +
+  scale_color_manual(values = c('#543414','#a08b5a','#5484c4', '#bcbcd2','#374658')) +
+  labs(title = 'Algae functional groups: All') +
+  theme_classic() +
+  theme(axis.text = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, 'hcpc', '20220323_algae_all_cluster.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+```
+
+
 
 ```{r animals}
 #manually split the 4 clusters for sheltered_start
@@ -623,9 +717,6 @@ ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), d
 
 ```
 
-
-
-
 ## MCA plots
 
 ```{r}
@@ -647,8 +738,6 @@ ggsave(filename = here(plots, 'algaetest3.png'), device = 'png',
        height = 5, width = 7, units = 'in')
 ```
 
-
-
 ```{r venns}
 library(eulerr)
 
@@ -667,4 +756,3 @@ plot(euleranimal,
      adjust_labels = TRUE,
      main = 'Unique fish species')
 ```
-
