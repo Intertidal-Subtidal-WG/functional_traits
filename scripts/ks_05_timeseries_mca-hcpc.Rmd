@@ -19,6 +19,11 @@ library(here)
 # here filepaths
 traits <- here('data', 'clean')
 plots <- here('output', '2022march', 'mca')
+
+# set seed for whole session:
+addTaskCallback(function(...) {set.seed(3824);TRUE})
+# to remove
+#removeTaskCallback(1)
 ```
 
 ## load in data
@@ -29,10 +34,14 @@ algae_traits <- read_csv(here(traits, "20220321_1982-end_algae.csv")) %>%
   filter(intertidal == 'yes') %>%
   select(!(c(intertidal, group, size_categories, feeding, 
              saccate_external_morphology,
-             #potential_asexual_reproduction,
+             potential_asexual_reproduction,
              epilithic_use_space,
              epiphytic_env_position, epizoic_env_position,
              macroalgae)))
+
+algae_traits <- algae_traits %>%
+  mutate(maximun_longevity = str_replace_all(maximun_longevity, c(" \\(one-ten years\\)"= "")))
+  
 
 animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
   filter(intertidal == 'yes') %>%
@@ -48,10 +57,10 @@ animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
 
 
 # all species
-algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
-                                 col_select = !1) %>%
-  filter(intertidal == 'yes') %>%
-  select(!(c(intertidal)))
+#algae_imputed_all <- read_csv(here(traits, "20220323_algae_imputed.csv"),
+#                                 col_select = !1) %>%
+#  filter(intertidal == 'yes') %>%
+#  select(!(c(intertidal)))
 
 #animal_imputed_all <- read_csv(here(traits, "20220321_animal_imputed.csv"),
 #                                 col_select = !1) %>%
@@ -338,6 +347,88 @@ diffs(exposedstvend, what = c('observations'))
 
 ```
 
+
+```{r algae-hypervolume}
+library(hypervolume)
+#testing
+#hypervolume1<-hypervolume_box(data.frame(algae_all$mcares$ind$coord))
+#plot(hypervolume1)
+
+
+hyp_algae_exposed_start <-hypervolume_gaussian(data.frame(mca_algae_exposed_start$mcares$ind$coord))
+#hyp_algae_exposed_end <-hypervolume_box(data.frame(mca_algae_exposed_end$mcares$ind$coord))
+hyp_algae_sheltered_start <-hypervolume_gaussian(data.frame(mca_algae_sheltered_start$mcares$ind$coord))
+hyp_algae_sheltered_end <-hypervolume_gaussian(data.frame(mca_algae_sheltered_end$mcares$ind$coord))
+
+
+# protected v exposed start
+hyp_set_algae_sides1 <- hypervolume_set(hyp_algae_exposed_start, hyp_algae_sheltered_start, check.memory=FALSE)
+# 1 is first listed, 2 is second listed
+hypervolume_overlap_statistics(hyp_set_algae_sides1)
+#volumes
+get_volume(hyp_set_algae_sides1)
+# basic plot
+plot.HypervolumeList(hyp_set_algae_sides1, colors = c('#806238', "#94b4d8", '#bcbcd2', 'purple', '#a08b5a', 'blue'))
+
+
+# protected v exposed current
+hyp_set_algae_sides <- hypervolume_set(hyp_algae_exposed_end, hyp_algae_sheltered_end, check.memory=FALSE)
+# 1 is first listed, 2 is second listed
+hypervolume_overlap_statistics(hyp_set_algae_sides)
+#volumes
+get_volume(hyp_set_algae_sides)
+# basic plot
+plot.HypervolumeList(hyp_set_algae_sides, colors = c('#806238', "#94b4d8", '#bcbcd2', 'purple', '#a08b5a', 'blue'))
+
+
+
+# exposed beginning v end
+hyp_set_algae_exposed <- hypervolume_set(hyp_algae_exposed_start, hyp_algae_exposed_end, check.memory=FALSE)
+# 1 is first listed, 2 is second listed
+hypervolume_overlap_statistics(hyp_set_algae_exposed)
+#volumes
+get_volume(hyp_set_algae_exposed)
+# basic plot
+plot.HypervolumeList(hyp_set_algae_exposed, colors = c('#806238', "#94b4d8", '#bcbcd2', 'purple', '#a08b5a', 'blue'))
+
+
+# protected beginning v end
+hyp_set_algae_sheltered <- hypervolume_set(hyp_algae_sheltered_start, hyp_algae_sheltered_end, check.memory=FALSE)
+# 1 is first listed, 2 is second listed
+hypervolume_overlap_statistics(hyp_set_algae_sheltered)
+#volumes
+get_volume(hyp_set_algae_sheltered)
+# basic plot
+plot.HypervolumeList(hyp_set_algae_sheltered, colors = c('#806238', "#94b4d8", '#bcbcd2', 'purple', '#a08b5a', 'blue'),
+                     show.axes = FALSE, cex.random = .1)
+
+hypervolume_redundancy(hyp_algae_sheltered_start, data.frame(mca_algae_sheltered_end$mcares$ind$coord))
+hypervolume_redundancy(hyp_algae_sheltered_start, data.frame(mca_algae_sheltered_start$mcares$ind$coord))
+
+
+## both tests seem to show change, but not significance. 
+
+# to run this test I need to sample from both populations not just one; 
+# run resample on all sheltered, then overlap test with the path being to overlap test
+## this method is less good for small sample sizes
+hyp_algae_shelter_all <- hypervolume_gaussian(data.frame(mca_algae_sheltered_end$mcares$ind$coord))
+test_algae_start <- hypervolume_resample('test_algae_start', hyp_algae_shelter_all, 'bootstrap', cores = 2)
+
+# this is good for smaller datasets
+test_algae_start <- hypervolume_permute('test_algae_permute', hyp_algae_sheltered_start, hyp_algae_sheltered_end, cores = 2)
+algae_sheltered_overlap <- hypervolume_overlap_test(hyp_algae_sheltered_start, hyp_algae_sheltered_end, path = test_algae_start)
+
+algae_sheltered_overlap
+
+hypervolume_funnel()
+
+plot(hyp_algae_sheltered_start)
+plot(hyp_algae_sheltered_end)
+```
+
+
+
+
 ## Animals
 
 Note animal_all gives different result than any group of animals. I
@@ -602,15 +693,15 @@ algaehcpc_cluster <- fviz_cluster(algaehcpc, geom = "point", main = "Factor map"
 
 ggplot(algaehcpc_dend, horiz = TRUE) + 
   labs(y = NULL, title = 'Algae Functional Groups: All') +
-  ylim(.25,-.12) +
+  ylim(.15,-.12) +
   # manually set colors
   scale_color_manual(values = c('#bcbcd2','#5484c4','#543414','#374658', '#a08b5a', 'black')) +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank()
         )
 
-#ggsave(filename = here(plots, 'hcpc', '20220323_algae_dend.png'), device = 'png', 
-#       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, 'hcpc', '20220323_algae_dend.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
 
 algaehcpc_cluster$data
 
@@ -762,16 +853,16 @@ ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), d
 ```{r algae-scratch}
 
 
-fviz_mca_var(mca_algae_sheltered_start$mcares, col.var = 'cos2', alpha.var = 'contrib',
+fviz_mca_var(mca_algae_exposed_end$mcares, col.var = 'cos2', alpha.var = 'contrib',
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-                           select.var = list(cos2 = .5),
+                           select.var = list(cos2 = .6),
                            repel = TRUE, # Avoid text overlapping
                            ggtheme = theme_minimal()) 
 
 
 mca_algae_sheltered_start$vars_df
 
-('branched_external_morphology', 'subtidal', 'leathery_external_morpohology', 'erect_morphology_growth_form', 'maximun_longevity', 'potential_asexual_reproduction')
+#('branched_external_morphology', 'leathery_external_morphology', 'erect_morphology_growth_form')
 ```
 
 
@@ -780,8 +871,8 @@ library(ggrepel)
 #added scavenger and filter/suspension to >.6 cos2
 # make subset of vars to plot arrows for
 exposed_arrows1 <- mca_algae_exposed_end$vars_df %>%
-  filter(Variable %in% c('motility_adult', 'epibiotic')) %>%
-  `row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic'))
+  filter(Variable %in% c('branched_external_morphology', 'leathery_external_morphology')) %>%
+  `row.names<-`(c('Not Leathery', 'Leathery', 'Not Branched', 'Branched'))
 
 # exposed
 ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
@@ -796,8 +887,8 @@ ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Di
     scale_colour_manual(values = c('#806238','#5484c4','purple')) +
     geom_segment(data = exposed_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  xlim(-1.5,1.6) +
-  ylim(-1.25,1) +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
     theme_classic() +
   theme(axis.text  = element_blank(),
         legend.position = 'none')
@@ -809,9 +900,9 @@ ggsave(filename = here(plots, '20220323_algae_exposed.png'), device = 'png',
 
 # make subset of vars to plot arrows for
 sheltered_arrows2 <- mca_algae_sheltered_end$vars_df %>%
-  filter(Variable %in% c('branched_external_morphology', 'subtidal', 'leathery_external_morphology', 'erect_morphology_growth_form')) %>%
-  `row.names<-`(c('Intertidal Only','Also found in Subtidal','Not Erect Growth', 'Erect growth',
-                  'Not Leathery', 'Leathery', 'Not Branched', 'Branched')) %>%
+  filter(Variable %in% c('branched_external_morphology', 'filamentous_morphology_growth_form', 
+                         'leathery_external_morphology', 'erect_morphology_growth_form')) %>%
+  `row.names<-`(c('Not erect growth','Erect growth','Not Filamentous','Filamentous', 'Not Leathery', 'Leathery', 'Not Branched', 'Branched')) %>%
   filter(!(Variable == 'leathery_external_morphology' & Dim.1 < 0))
 
 
@@ -829,8 +920,8 @@ ggplot(data.frame(mca_algae_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y = 
     scale_colour_manual(values = c('#806238','#94b4d8','#5484c4', '#374658', 'orange', 'blue')) +
     geom_segment(data = sheltered_arrows2, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  xlim(-1.5,2) +
-  ylim(-1.25,2) +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
     theme_classic() +
   theme(axis.text  = element_blank(),
         legend.position = 'none')
@@ -839,9 +930,9 @@ ggsave(filename = here(plots, '20220323_algae_sheltered-end.png'), device = 'png
        height = 5, width = 7, units = 'in')  
   
 sheltered_arrows1 <- mca_algae_sheltered_start$vars_df %>%
-  filter(Variable %in% c('branched_external_morphology', 'subtidal', 'leathery_external_morpohology',
-                         'erect_morphology_growth_form', 'maximun_longevity', 'potential_asexual_reproduction')) #%>%
-  #`row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic')) %>%
+  filter(Variable %in% c('branched_external_morphology', 'filamentous_morphology_growth_form', 
+                         'leathery_external_morphology', 'erect_morphology_growth_form')) %>%
+  `row.names<-`(c('Not erect growth','Erect growth','Not Filamentous','Filamentous', 'Not Leathery', 'Leathery', 'Not Branched', 'Branched')) #%>%
   #filter(!(Variable == 'scavenger' & Dim.1 < 0 | Variable == 'epibiotic' & Dim.1 > 0 | Variable == 'filter_suspension' & Dim.1 > 0))
 
 
@@ -856,11 +947,11 @@ ggplot(data.frame(mca_algae_sheltered_start$mcares$ind$coord), aes(x = Dim.1, y 
                                      label = rownames(sheltered_arrows1), 
                                      colour = Variable), seed = 3824) +
   labs(title = "algaes: Sheltered 1982-1994", x = NULL, y = NULL) +
-    scale_colour_manual(values = c('#806238','#5484c4', 'green', 'orange', 'blue')) +
+    scale_colour_manual(values = c('#806238','#94b4d8','#5484c4', '#374658', 'orange', 'blue')) +
     geom_segment(data = sheltered_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  xlim(-1.5,1.6) +
-  ylim(-1.25,1) +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
   #scale_y_reverse(limits = c(1.3,-2.5)) +
     theme_classic() +
   theme(axis.text  = element_blank(),

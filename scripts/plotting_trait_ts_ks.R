@@ -4,10 +4,12 @@
 # PACKAGES and DATA #===========================================================
 library(tidyverse)
 library(patchwork)
+library(here)
 
 # count and cover data from the intertidal
 count_data <- read_csv("data/fielddata/ct_clean.csv")
 cover_data <- read_csv("data/fielddata/pc_clean.csv")
+
 
 # transects and position (exposed vs. sheltered)
 transects <- read_csv("data/fielddata/transect_info.csv") %>% 
@@ -18,8 +20,8 @@ transects <- read_csv("data/fielddata/transect_info.csv") %>%
 #algae <- read_csv("data/clean/algae_clean.csv")
 #animal <- read_csv("data/clean/animal_clean.csv")
 
-algae <- read_csv("data/algae_clean.csv")
-animal <- read_csv("data/animal_clean.csv")
+algae <- read_csv(here('data','clean','20220323_algae_imputed.csv'))[,-1]
+animal <- read_csv(here('data','clean','20220321_animal_imputed.csv'))[,-1]
 
 # SUMMARIZE #===================================================================
 
@@ -77,6 +79,7 @@ count_avg_by_year <- count %>%
 cover <-  cover_data %>% 
   select(Year, Transect, Level, Replicate, Data_taken, Organism, Percent_cover) %>% 
   filter(Data_taken != "no") %>%
+  mutate(Organism = stringr::str_replace(Organism, " \\s*\\([^\\)]+\\)", "")) %>% 
   group_by(Year, Transect, Level, Replicate, Organism) %>% 
   summarise(Cover = mean(Percent_cover)) %>% 
   ungroup() %>% 
@@ -103,9 +106,10 @@ cover_avg_by_year <- cover %>%
   left_join(., cover %>% group_by(Year, Position) %>% 
               summarize(Total_abund = sum(Cover))) %>% 
   mutate(Rel_abund_by_side = Abund / Total_abund)
-#write_csv(cover_avg_by_year, "data/clean/relative_abund_cover.csv")
+#write_csv(cover_avg_by_year, "data/clean/20220323_relative_abund_cover.csv")
 
 # MERGE DATASETS #==============================================================
+
 
 # Traits #
 # join animal and algae together
@@ -118,6 +122,17 @@ algae <- algae %>%
 all_sp_traits <- bind_rows(algae, animal)
 
 # Combine Traits with Abundance Data #
+
+# taxonomy adjustment to match traits
+
+# group key, make named list
+sp_key <- read_csv((here('data', 'splists', 'species_group_key.csv'))) %>%
+  filter(!(is.na(Replacement)))
+
+sp_key2 <- setNames(as.list(sp_key$Species), sp_key$Replacement)
+sp_key2 <- unlist(sp_key2)
+
+
 
 count_transect_all <- count_avg_by_transect %>% 
   inner_join(., all_sp_traits, by = c("Organism" = "species"))
