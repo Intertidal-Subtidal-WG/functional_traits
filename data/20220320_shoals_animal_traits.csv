@@ -2,7 +2,7 @@ species,phylum,group,common_name_division,solitary_colonial,body_size_lower_cm,a
 Annelida,Annelida,Invertebrate,Annelid worm,solitary,,,SC1,no,yes,yes,yes,yes,yes,yes,,motile,,,,,yes,yes,,,"Annelida, Polychaeta, Oligochaeta, Lepidonotus, Namanareis",
 Sedentary Polychaete,Annelida,Invertebrate,Annelid worm,solitary,,,SC1,no,no,no,no,no,yes,no,primary consumer,sessile,,yes,no,,yes,yes,,,"Nicolea, Cirratulus, Thelepus cincinnatus",
 Spirorbis,Annelida,Invertebrate,Annelid worm,gregarious,,0.5,SC1,yes,no,no,no,no,yes,no,primary consumer,sessile,epifloral,no,no,yes,yes,no,,"WoRMS,",,filter feeder
-Semibalanus balanoides,Arthropoda,Invertebrate,Barnacle,gregarious,1,5,SC1,yes,no,no,no,no,yes,no,primary consumer ,sessile,epifaunal,no,no,yes,yes,no,,,,Suspension feeder
+Semibalanus balanoides,Arthropoda,Invertebrate,Barnacle,gregarious,1,5,SC1,yes,no,no,no,no,yes,no,primary consumer ,sessile,epifaunal,yes,no,yes,yes,no,,,,Suspension feeder
 Anurida maritima,Arthropoda,invertebrate,Collembolan,solitary,,0.3,SC1,yes,no,no,no,no,no,yes,decomposer,motile,epibenthic,yes,no,no,yes,no,,,,scavenger/detritivore
 Amphipoda,Arthropoda,Invertebrate,Crustacean,solitary,1,2,SC1,yes,yes,yes,yes,no,no,yes,secondary consumer,motile,epilithic/epifaunal,yes,yes,yes,yes,no,,,,scavenger/detritivore
 Cancer borealis,Arthropoda,Invertebrate,Crustacean,solitary,0.2,20,SC2,yes,no,yes,yes,no,no,no,secondary consumer,motile,epibenthic,yes,no,no,yes,yes,,,,predator

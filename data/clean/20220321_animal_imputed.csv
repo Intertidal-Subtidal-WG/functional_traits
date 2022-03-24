@@ -2,7 +2,7 @@
 "1","Annelida","Annelida","Annelid worm","yes","yes","solitary","SC1","no","motile","yes","yes","yes","yes","yes","yes","secondary consumer","yes","yes","no"
 "2","Sedentary Polychaete","Annelida","Annelid worm","yes","yes","solitary","SC1","no","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
 "3","Spirorbis","Annelida","Annelid worm","no","yes","gregarious","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","no","no","yes"
-"4","Semibalanus balanoides","Arthropoda","Barnacle","no","yes","gregarious","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","no","no","yes"
+"4","Semibalanus balanoides","Arthropoda","Barnacle","no","yes","gregarious","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
 "5","Anurida maritima","Arthropoda","Collembolan","no","yes","solitary","SC1","yes","motile","no","no","no","no","no","yes","decomposer","yes","no","no"
 "6","Amphipoda","Arthropoda","Crustacean","no","yes","solitary","SC1","yes","motile","yes","yes","yes","no","no","yes","secondary consumer","yes","yes","yes"
 "7","Cancer borealis","Arthropoda","Crustacean","yes","yes","solitary","SC2","yes","motile","no","yes","yes","no","no","no","secondary consumer","yes","no","no"

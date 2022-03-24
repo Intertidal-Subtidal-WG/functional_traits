@@ -94,7 +94,7 @@ appledoreMCAHCPC <- function(traits) {
     scale_colour_discrete(name = "Variable") +
     geom_segment(data = mca2_vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-    theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
+    theme_bw(20)
   # ellipses plot
   plot_ellipses <- plotellipses(mca2)
   # diagnostics
@@ -119,6 +119,7 @@ appledoreMCAHCPC <- function(traits) {
   
   #output
   list(mcares = mca2, mcacos2 = mca2_vars$cos2,
+       vars_df = mca2_vars_df,
        clustmembers = hcpc2$desc.ind$para,
        clustervariables = hcpc2$desc.var$category,
        hcpc_chi = hcpc2$desc.var$test.chi2,
@@ -358,6 +359,9 @@ mca_animal_all$ggclusterplot
 fviz_dend(animal_allhcpc)
 mca_animal_all$clustmembers
 mca_animal_all$clustervariables
+
+animal_allhcpc$desc.var
+animal_allhcpc$desc.ind
 ```
 
 ### Timeseries
@@ -748,21 +752,124 @@ ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), d
 ## MCA plots
 
 ```{r}
-mca_animal_exposed_start$ggmca + 
-  labs(title = 'Algae mca') +
+mca_animal_exposed_start$ggmca
+mca_animal_exposed_end$ggmca
+
+
+# sheltered
+mca_animal_sheltered_start$ggmca
+mca_animal_sheltered_end$ggmca
+
+mca_animal_sheltered_start$ggvars
+mca_animal_sheltered_end$ggvars
+
+
+mca_animal_exposed_end$ggmca + 
+  labs(title = 'Animals: Exposed') +
     scale_color_manual(values = c('red','blue','purple', 'black',
                                   'green','orange', 'grey', 'yellow', 'brown',
                                   'grey17', 'pink', 'grey60', 'salmon',
                                   'violet', 'cornsilk2')) +
   theme_classic() +
   theme(legend.position = 'none')
+
+#how to make ggvars
+fviz_mca_var(mca_animal_sheltered_end$mcares, col.var = 'cos2', alpha.var = 'contrib',
+                           gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                           #select.var = list(cos2 = .6),
+                           repel = TRUE, # Avoid text overlapping
+                           ggtheme = theme_minimal()) +
+  geom_density2d(colour = "gray80")
+
+
+mca_animal_exposed_end$ggvars +
+  geom_segment(data = mca_animal_exposed_end$vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  geom_density2d(colour = "gray80")
+
+# how to mca plot
+ggplot(data.frame(mca_animal_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray70") + 
+    geom_vline(xintercept = 0, colour = "gray70") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray80") + 
+    geom_text(data = mca_animal_exposed_end$vars_df, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(mca_animal_exposed_end$vars_df), 
+                                     colour = Variable)) + 
+    ggtitle("MCA plot with FactorMineR") + 
+    scale_colour_discrete(name = "Variable") +
+    geom_segment(data = mca_animal_exposed_end$vars_df, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+    theme_bw(20)+ xlab ("Dim 1 21.28 %")+ ylab("Dim 2 17.54%")
+  
+
+```
+
+
+
+```{r}
+library(ggrepel)
+
+# make subset of vars to plot arrows for
+exposed_arrows1 <- mca_animal_exposed_end$vars_df %>%
+  filter(Variable %in% c('benthic', 'motility_adult', 'epibiotic')) %>%
+  `row.names<-`(c('Motile','Sessile','Not Benthic','Benthic','Not Epibiotic','Epibiotic'))
+
+# exposed
+ggplot(data.frame(mca_animal_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray80") + 
+    geom_text_repel(data = exposed_arrows1, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(exposed_arrows1), 
+                                     colour = Variable), seed = 3824) +
+  labs(title = "Animals: Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('red','blue','purple')) +
+    geom_segment(data = exposed_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.4,1.6) +
+  ylim(-1.5,1.5) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+
+# make subset of vars to plot arrows for
+sheltered_arrows2 <- mca_animal_sheltered_end$vars_df %>%
+  filter(Variable %in% c('benthic', 'motility_adult', 'epibiotic', 'scavenger', 'filter_suspension')) %>%
+  `row.names<-`(c('Motile','Sessile','Not Filter-Suspension', 'Filter or Suspension feeder',
+                  'Not a Scavenger', 'Scavenger', 'Not Benthic','Benthic','Not Epibiotic','Epibiotic')) %>%
+  filter(!(Variable == 'scavenger' & Dim.1 < 0 | Variable == 'epibiotic' & Dim.1 > 0 | Variable == 'filter_suspension' & Dim.1 > 0))
+
+
+
+# exposed
+ggplot(data.frame(mca_animal_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray80") + 
+    geom_text_repel(data = sheltered_arrows2, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(sheltered_arrows2), 
+                                     colour = Variable), seed = 3824) +
+  labs(title = "Animals: Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('red','blue','purple', 'green', 'orange', 'blue')) +
+    geom_segment(data = sheltered_arrows2, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.4,1.6) +
+  ylim(-1.5,2) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
   
   
 
 
 
   
-ggsave(filename = here(plots, 'algaetest3.png'), device = 'png', 
+ggsave(filename = here(plots, '20220323_animal_exposed.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
 ```
 
