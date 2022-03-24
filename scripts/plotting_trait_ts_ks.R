@@ -23,6 +23,45 @@ transects <- read_csv("data/fielddata/transect_info.csv") %>%
 algae <- read_csv(here('data','clean','20220323_algae_imputed.csv'))[,-1]
 animal <- read_csv(here('data','clean','20220321_animal_imputed.csv'))[,-1]
 
+# taxonomy adjustment to match traits
+# group key, make named list
+sp_key <- read_csv((here('data', 'splists', 'species_group_key.csv'))) %>%
+  filter(!(is.na(Replacement)))
+
+sp_key2 <- setNames(as.list(sp_key$Species), sp_key$Replacement)
+sp_key2 <- unlist(sp_key2)
+
+# update taxonomy
+
+count_data$species2 <- sapply(count_data$Organism, function(species) {
+  names(sp_key2)[sp_key2 == species]
+})
+
+# this makes up for that real quick and easy
+count_data <- count_data %>%
+  mutate(species2 = str_replace_all(species2, c("character\\(0\\)" = ""))) %>%
+  na_if("") %>%
+  mutate(species3 = coalesce(c(species2), c(Organism))) %>%
+  select(!(c(Organism, species2))) %>%
+  dplyr::rename(Organism = species3) %>%
+  distinct()
+
+
+cover_data$species2 <- sapply(cover_data$Organism, function(species) {
+  names(sp_key2)[sp_key2 == species]
+})
+
+# this makes up for that real quick and easy
+cover_data <- cover_data %>%
+  mutate(species2 = str_replace_all(species2, c("character\\(0\\)" = ""))) %>%
+  na_if("") %>%
+  mutate(species3 = coalesce(c(species2), c(Organism))) %>%
+  select(!(c(Organism, species2))) %>%
+  dplyr::rename(Organism = species3) %>%
+  distinct()
+
+unique(cover_data$Organism)
+
 # SUMMARIZE #===================================================================
 
 # Count Data #
@@ -42,6 +81,7 @@ count <-  count_data %>%
   select(-Replicate) %>% 
   # join in transect position data
   left_join(., transects)
+
 
 # get average count per level for each transect (by year)
 count_avg_by_transect <- count %>%
@@ -108,6 +148,7 @@ cover_avg_by_year <- cover %>%
   mutate(Rel_abund_by_side = Abund / Total_abund)
 #write_csv(cover_avg_by_year, "data/clean/20220323_relative_abund_cover.csv")
 
+
 # MERGE DATASETS #==============================================================
 
 
@@ -123,25 +164,17 @@ all_sp_traits <- bind_rows(algae, animal)
 
 # Combine Traits with Abundance Data #
 
-# taxonomy adjustment to match traits
-
-# group key, make named list
-sp_key <- read_csv((here('data', 'splists', 'species_group_key.csv'))) %>%
-  filter(!(is.na(Replacement)))
-
-sp_key2 <- setNames(as.list(sp_key$Species), sp_key$Replacement)
-sp_key2 <- unlist(sp_key2)
 
 
 
-count_transect_all <- count_avg_by_transect %>% 
-  inner_join(., all_sp_traits, by = c("Organism" = "species"))
+#count_transect_all <- count_avg_by_transect %>% 
+#  inner_join(., all_sp_traits, by = c("Organism" = "species"))
 
 count_year_all <- count_avg_by_year %>% 
   inner_join(., all_sp_traits, by = c("Organism" = "species"))
 
-cover_transect_all <- cover_avg_by_transect %>% 
-  inner_join(., all_sp_traits, by = c("Organism" = "species"))
+#cover_transect_all <- cover_avg_by_transect %>% 
+#  inner_join(., all_sp_traits, by = c("Organism" = "species"))
 
 cover_year_all <- cover_avg_by_year %>% 
   inner_join(., all_sp_traits, by = c("Organism" = "species"))
