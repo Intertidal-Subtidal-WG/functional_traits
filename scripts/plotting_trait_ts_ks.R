@@ -374,14 +374,45 @@ plot2 <- cover_year_all %>%
 
 
 # morphology
-#(plot3 <- cover_year_all %>% 
-#    group_by(Year, Position, morphology1) %>%
-#    summarise(Sum = sum(Rel_abund_by_side)) %>% 
-#    ggplot(aes(x = Year, y = Sum, color = morphology1)) +
-#    geom_point() +
-#    geom_line() +
-#    facet_wrap(~ Position, nrow = 2) + 
-#    theme_bw())
+plot3 <- cover_year_all %>% 
+    group_by(Year, Position, leathery_external_morphology) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>%
+  filter(!(is.na(leathery_external_morphology))) %>%
+  filter(!(leathery_external_morphology == 'no')) %>%
+    ggplot(aes(x = Year, y = Sum, color = leathery_external_morphology)) +
+    geom_line() +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw()
+
+crust <- cover_year_all %>%
+  group_by(Year, Position, crustose_morphology_growth_form) %>%
+  summarise(Sum = sum(Rel_abund_by_side)) %>%
+  filter(!(is.na(crustose_morphology_growth_form))) %>%
+  filter(crustose_morphology_growth_form == 'yes')
+
+branch <- cover_year_all %>%
+  group_by(Year, Position, branched_external_morphology) %>%
+  summarise(Sum = sum(Rel_abund_by_side)) %>%
+  filter(branched_external_morphology == 'yes')
+
+artic <- cover_year_all %>%
+  group_by(Year, Position, articulated_external_morphology) %>%
+  summarise(Sum = sum(Rel_abund_by_side)) %>%
+  filter(articulated_external_morphology == 'yes')
+
+
+plot3 + 
+  geom_line(data = crust, aes(x = Year, y = Sum, color = crustose_morphology_growth_form), color = 'blue') +
+  geom_line(data = branch, aes(x = Year, y = Sum, color = branched_morphology), color = 'green') +
+  geom_line(data = artic, aes(x = Year, y = Sum, color = branched_morphology), color = 'purple') +
+  labs(title = 'Cover', y = 'Relative abundance', subtitle = 'red-leathery, blue-crustose, green-branched, purple-articulated') +
+  ylim(0,.65) +
+  theme(legend.position = 'none')
+
+ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_algae.png",
+       device = 'png',
+       width = 8)
+
 
 # trophic level
 plot4 <- cover_year_all %>% 
@@ -394,15 +425,39 @@ plot4 <- cover_year_all %>%
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
 
-# dietary_pref
-#(plot5 <- cover_year_all %>% 
-#    group_by(Year, Position, dietary_pref_c) %>%
-#    summarise(Sum = sum(Rel_abund_by_side)) %>% 
-#    ggplot(aes(x = Year, y = Sum, color = dietary_pref_c)) +
-#    geom_point() +
-#    geom_line() +
-#    facet_wrap(~ Position, nrow = 2) + 
-#    theme_bw())
+#dietary_pref
+plot5 <- cover_year_all %>% 
+    group_by(Year, Position, space_use_canopy) %>%
+    summarise(Sum = sum(Rel_abund_by_side)) %>% 
+  filter(space_use_canopy == 'yes') %>%
+    ggplot(aes(x = Year, y = Sum)) +
+    geom_line(color = 'salmon') +
+    facet_wrap(~ Position, nrow = 2) + 
+    theme_bw()
+
+
+
+subc <- cover_year_all %>%
+  group_by(Year, Position, space_use_sub_canopy) %>%
+  summarise(Sum = sum(Rel_abund_by_side)) %>%
+  filter(space_use_sub_canopy == 'yes')
+
+turf <- cover_year_all %>%
+  group_by(Year, Position, space_use_turf) %>%
+  summarise(Sum = sum(Rel_abund_by_side)) %>%
+  filter(space_use_turf == 'yes')
+
+
+plot5 + 
+  geom_line(data = subc, aes(x = Year, y = Sum), color = 'blue') +
+  geom_line(data = turf, aes(x = Year, y = Sum), color = 'purple') +
+  labs(title = 'Cover', y = 'Relative abundance', subtitle = 'salmon-canopy, blue-subcanopy, purple-turf') +
+  ylim(0,.65) +
+  theme(legend.position = 'none')
+
+ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_canopy-sub-turf.png",
+       device = 'png',
+       width = 8)
 
 # motility_adult
 #plot6 <- cover_year_all %>% 

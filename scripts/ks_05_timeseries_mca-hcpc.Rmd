@@ -609,6 +609,26 @@ diffs(exposedstvend, what = c('observations'))
 
 ```
 
+
+```{r animal-hypervolume}
+library(hypervolume)
+
+hyp_animal_sheltered_start <-hypervolume_gaussian(data.frame(mca_animal_sheltered_start$mcares$ind$coord))
+hyp_animal_sheltered_end <-hypervolume_gaussian(data.frame(mca_animal_sheltered_end$mcares$ind$coord))
+
+# protected beginning v end
+hyp_set_animal_sheltered <- hypervolume_set(hyp_animal_sheltered_start, hyp_animal_sheltered_end, check.memory=FALSE)
+# 1 is first listed, 2 is second listed
+hypervolume_overlap_statistics(hyp_set_animal_sheltered)
+#volumes
+get_volume(hyp_set_animal_sheltered)
+# basic plot
+plot.HypervolumeList(hyp_set_animal_sheltered, colors = c('#806238', "#94b4d8", '#bcbcd2', 'purple', '#a08b5a', 'blue'),
+                     show.axes = FALSE, cex.random = .1)
+
+
+```
+
 # presentation plots
 
 palette is:
@@ -853,9 +873,9 @@ ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), d
 ```{r algae-scratch}
 
 
-fviz_mca_var(mca_algae_exposed_end$mcares, col.var = 'cos2', alpha.var = 'contrib',
+fviz_mca_var(algae_all$mcares, col.var = 'cos2', alpha.var = 'contrib',
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-                           select.var = list(cos2 = .6),
+                           select.var = list(cos2 = .4),
                            repel = TRUE, # Avoid text overlapping
                            ggtheme = theme_minimal()) 
 
@@ -864,6 +884,40 @@ mca_algae_sheltered_start$vars_df
 
 #('branched_external_morphology', 'leathery_external_morphology', 'erect_morphology_growth_form')
 ```
+
+```{r algae-all-mca}
+library(ggrepel)
+#added scavenger and filter/suspension to >.6 cos2
+# make subset of vars to plot arrows for
+arrows1 <- algae_all$vars_df %>%
+  filter(Variable %in% c('branched_external_morphology', 'leathery_external_morphology')) %>%
+  `row.names<-`(c('Not Leathery', 'Leathery', 'Not Branched', 'Branched'))
+
+# exposed
+ggplot(data.frame(algae_all$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = arrows1, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(arrows1), 
+                                     colour = Variable), seed = 3824) +
+  labs(title = "algaes: Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#5484c4','purple')) +
+    geom_segment(data = arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.25,1.8) +
+  ylim(-1.15,1.7) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220323_algae_all.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+
+
+```
+
 
 
 ```{r algae}
