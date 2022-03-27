@@ -243,6 +243,17 @@ algae_sheltered_start <- algae_traits %>%
   select(!(c(year, transect, position))) %>%
   distinct()
 
+
+algae_sheltered_middle <- algae_traits %>%
+  filter(position == 'sheltered' & year >= 1996 & year < 2007) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+algae_exposed_middle <- algae_traits %>%
+  filter(position == 'exposed' & year >= 1996 & year < 2007) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
 algae_exposed_end <- algae_traits %>%
   filter(position == 'exposed' & year <= 2010) %>%
   select(!(c(year, transect, position))) %>%
@@ -255,6 +266,8 @@ algae_sheltered_end <- algae_traits %>%
 
 mca_algae_exposed_start <- appledoreMCAHCPC(algae_exposed_start)
 mca_algae_sheltered_start <- appledoreMCAHCPC(algae_sheltered_start)
+mca_algae_exposed_middle <- appledoreMCAHCPC(algae_exposed_middle)
+mca_algae_sheltered_middle <- appledoreMCAHCPC(algae_sheltered_middle)
 mca_algae_exposed_end <- appledoreMCAHCPC(algae_exposed_end)
 mca_algae_sheltered_end <- appledoreMCAHCPC(algae_sheltered_end)
 ```
@@ -313,13 +326,17 @@ fviz_dend(exposedhcpc2)
 ```{r algae-exposedsheltered-summarystats}
 mca_algae_exposed_start$mcares$eig
 mca_algae_exposed_end$mcares$eig
+mca_algae_exposed_middle$mcares$eig
 mca_algae_sheltered_start$mcares$eig
+mca_algae_exposed_middle$mcares$eig
 mca_algae_sheltered_end$mcares$eig
 
 
 mca_algae_exposed_start$ggcos2
+mca_algae_exposed_middle$ggcos2
 mca_algae_exposed_end$ggcos2
 mca_algae_sheltered_start$ggcos2
+mca_algae_sheltered_middle$ggcos2
 mca_algae_sheltered_end$ggcos2
 
 
@@ -327,8 +344,10 @@ mca_algae_exposed_start$mcares$var$contrib
 
 
 mca_algae_exposed_start$ggcontrib
+mca_algae_exposed_middle$ggcontrib
 mca_algae_exposed_end$ggcontrib
 mca_algae_sheltered_start$ggcontrib
+mca_algae_sheltered_middle$ggcontrib
 mca_algae_sheltered_end$ggcontrib
 ```
 
@@ -510,6 +529,18 @@ animal_sheltered_start <- animal_traits %>%
   select(!(c(year, transect, position))) %>%
   distinct()
 
+
+animal_exposed_middle <- animal_traits %>%
+  filter(position == 'exposed' & year >= 1996 & year < 2007) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+animal_sheltered_middle <- animal_traits %>%
+  filter(position == 'sheltered' & year >= 1996 & year < 2007) %>%
+  select(!(c(year, transect, position))) %>%
+  distinct()
+
+
 animal_exposed_end <- animal_traits %>%
   filter(position == 'exposed' & year <= 2010) %>%
   select(!(c(year, transect, position))) %>%
@@ -522,6 +553,8 @@ animal_sheltered_end <- animal_traits %>%
 
 mca_animal_exposed_start <- appledoreMCAHCPC(animal_exposed_start)
 mca_animal_sheltered_start <- appledoreMCAHCPC(animal_sheltered_start)
+mca_animal_exposed_middle <- appledoreMCAHCPC(animal_exposed_middle)
+mca_animal_sheltered_middle <- appledoreMCAHCPC(animal_sheltered_middle)
 mca_animal_exposed_end <- appledoreMCAHCPC(animal_exposed_end)
 mca_animal_sheltered_end <- appledoreMCAHCPC(animal_sheltered_end)
 ```
@@ -646,6 +679,17 @@ blue brown light
 #94b4d8,#806238 
 blue brown dark 
 #5484c4, #543414
+
+```{r nice-fonts}
+library(showtext)
+showtext_auto()
+# to see list of fonts
+font_files()
+# add desired fonts with ('name to call it by in code', 'name in filepath, or complete filepath')
+font_add('quicksand', 'Quicksand-Medium.ttf')
+```
+
+
 
 ## clusters
 
@@ -873,14 +917,16 @@ ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), d
 ```{r algae-scratch}
 
 
-fviz_mca_var(algae_all$mcares, col.var = 'cos2', alpha.var = 'contrib',
+fviz_mca_var(mca_algae_sheltered_end$mcares, col.var = 'cos2', alpha.var = 'contrib',
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
                            select.var = list(cos2 = .4),
                            repel = TRUE, # Avoid text overlapping
                            ggtheme = theme_minimal()) 
 
 
-mca_algae_sheltered_start$vars_df
+mca_algae_sheltered_middle$vars_df
+
+#'space_use_sub_canopy', 'crustose_morphology_growth_form', 'leathery_external_morphology', 'erect_morphology_growth_form'
 
 #('branched_external_morphology', 'leathery_external_morphology', 'erect_morphology_growth_form')
 ```
@@ -924,20 +970,31 @@ ggsave(filename = here(plots, '20220323_algae_all.png'), device = 'png',
 library(ggrepel)
 #added scavenger and filter/suspension to >.6 cos2
 # make subset of vars to plot arrows for
-exposed_arrows1 <- mca_algae_exposed_end$vars_df %>%
+exposed_arrows1 <- mca_algae_exposed_start$vars_df %>%
   filter(Variable %in% c('branched_external_morphology', 'leathery_external_morphology')) %>%
   `row.names<-`(c('Not Leathery', 'Leathery', 'Not Branched', 'Branched'))
 
+exposed_arrows2 <- mca_algae_exposed_middle$vars_df %>%
+  filter(Variable %in% c('branched_external_morphology', 'leathery_external_morphology')) %>%
+  `row.names<-`(c('Not Leathery', 'Leathery', 'Not Branched', 'Branched'))
+
+exposed_arrows3 <- mca_algae_exposed_end$vars_df %>%
+  filter(Variable %in% c('branched_external_morphology', 'leathery_external_morphology')) %>%
+  `row.names<-`(c('Not Leathery', 'Leathery', 'Not Branched', 'Branched'))
+
+
 # exposed
-ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+ggplot(data.frame(mca_algae_exposed_start$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
     geom_hline(yintercept = 0, colour = "gray90") + 
     geom_vline(xintercept = 0, colour = "gray90") + 
     geom_point(colour = "gray50", alpha = 0.7) + 
     geom_density2d(colour = "gray87") + 
     geom_text_repel(data = exposed_arrows1, aes(x = Dim.1, y = Dim.2, 
                                      label = rownames(exposed_arrows1), 
-                                     colour = Variable), seed = 3824) +
-  labs(title = "algaes: Exposed", x = NULL, y = NULL) +
+                                     colour = Variable,
+                                     family = 'quicksand'
+                                     ), seed = 3824) +
+  labs(title = "Algae: 1982-1995, Exposed", x = NULL, y = NULL) +
     scale_colour_manual(values = c('#806238','#5484c4','purple')) +
     geom_segment(data = exposed_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
@@ -947,8 +1004,63 @@ ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Di
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220323_algae_exposed.png'), device = 'png', 
+ggsave(filename = here(plots, '20220327_algae_exposed_start.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_algae_exposed_start.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+
+ggplot(data.frame(mca_algae_exposed_middle$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = exposed_arrows2, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(exposed_arrows2), 
+                                     colour = Variable,
+                                     family = 'quicksand'
+                                     ), seed = 3824) +
+  labs(title = "Algae: 1996-2006, Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#5484c4','purple')) +
+    geom_segment(data = exposed_arrows2, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220327_algae_exposed_mid.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_algae_exposed_mid.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+
+ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = exposed_arrows3, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(exposed_arrows3), 
+                                     colour = Variable,
+                                     family = 'quicksand'
+                                     ), seed = 3824) +
+  labs(title = "Algaes: 2010-present, Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#5484c4','purple')) +
+    geom_segment(data = exposed_arrows3, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220327_algae_exposed_end.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_algae_exposed_end.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
 
 
 
@@ -962,36 +1074,29 @@ sheltered_arrows2 <- mca_algae_sheltered_end$vars_df %>%
 
 
 # sheltered
-ggplot(data.frame(mca_algae_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
-    geom_hline(yintercept = 0, colour = "gray90") + 
-    geom_vline(xintercept = 0, colour = "gray90") + 
-    geom_point(colour = "gray50", alpha = 0.7) + 
-    geom_density2d(colour = "gray87") + 
-    geom_text_repel(data = sheltered_arrows2, aes(x = Dim.1, y = Dim.2, 
-                                     label = rownames(sheltered_arrows2), 
-                                     colour = Variable), seed = 3824) +
-  labs(title = "Algae: Sheltered 2010-present", x = NULL, y = NULL) +
-    scale_colour_manual(values = c('#806238','#94b4d8','#5484c4', '#374658', 'orange', 'blue')) +
-    geom_segment(data = sheltered_arrows2, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
-               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
-  xlim(-1.25,1.75) +
-  ylim(-1.15,1.45) +
-    theme_classic() +
-  theme(axis.text  = element_blank(),
-        legend.position = 'none')
-
-ggsave(filename = here(plots, '20220323_algae_sheltered-end.png'), device = 'png', 
-       height = 5, width = 7, units = 'in')  
-  
 sheltered_arrows1 <- mca_algae_sheltered_start$vars_df %>%
   filter(Variable %in% c('branched_external_morphology', 'filamentous_morphology_growth_form', 
                          'leathery_external_morphology', 'erect_morphology_growth_form')) %>%
   `row.names<-`(c('Not erect growth','Erect growth','Not Filamentous','Filamentous', 'Not Leathery', 'Leathery', 'Not Branched', 'Branched')) #%>%
   #filter(!(Variable == 'scavenger' & Dim.1 < 0 | Variable == 'epibiotic' & Dim.1 > 0 | Variable == 'filter_suspension' & Dim.1 > 0))
 
+#'space_use_sub_canopy', 'crustose_morphology_growth_form', 'leathery_external_morphology', 'erect_morphology_growth_form'
+
+sheltered_arrows2 <- mca_algae_sheltered_middle$vars_df %>%
+  filter(Variable %in% c('branched_external_morphology', 'crustose_morphology_growth_form', 
+                         'leathery_external_morphology', 'erect_morphology_growth_form',
+                         'space_use_sub_canopy')) %>%
+  `row.names<-`(c('Not erect growth','Erect growth','Not Crustose','Crustose',
+                  'Not Leathery', 'Leathery', 'Not Branched', 'Branched', 'Not Subcanopy', 'Subcanopy')) %>%
+  filter(!(Variable == 'crustose_morphology_growth_form' & Dim.1 > 0 | Variable == 'erect_morphology_growth_form' & Dim.1 < 0))
+
+sheltered_arrows3 <- mca_algae_sheltered_end$vars_df %>%
+  filter(Variable %in% c('branched_external_morphology', 'filamentous_morphology_growth_form', 
+                         'leathery_external_morphology', 'erect_morphology_growth_form')) %>%
+  `row.names<-`(c('Not erect growth','Erect growth','Not Filamentous','Filamentous', 'Not Leathery', 'Leathery', 'Not Branched', 'Branched')) %>%
+  filter(!(Variable == 'filamentous_morphology_growth_form' & Dim.1 > 0 | Variable == 'leathery_external_morphology' & Dim.1 < 0))
 
 
-# exposed
 ggplot(data.frame(mca_algae_sheltered_start$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
     geom_hline(yintercept = 0, colour = "gray90") + 
     geom_vline(xintercept = 0, colour = "gray90") + 
@@ -999,9 +1104,11 @@ ggplot(data.frame(mca_algae_sheltered_start$mcares$ind$coord), aes(x = Dim.1, y 
     geom_density2d(colour = "gray87") + 
     geom_text_repel(data = sheltered_arrows1, aes(x = Dim.1, y = Dim.2, 
                                      label = rownames(sheltered_arrows1), 
-                                     colour = Variable), seed = 3824) +
-  labs(title = "algaes: Sheltered 1982-1994", x = NULL, y = NULL) +
-    scale_colour_manual(values = c('#806238','#94b4d8','#5484c4', '#374658', 'orange', 'blue')) +
+                                     colour = Variable,
+                                     family = 'quicksand'
+                                     ), seed = 3824) +
+  labs(title = "algaes: 1982-1994, Protected", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#374658', '#94b4d8', '#5484c4','orange', 'blue')) +
     geom_segment(data = sheltered_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
   xlim(-1.25,1.75) +
@@ -1012,9 +1119,73 @@ ggplot(data.frame(mca_algae_sheltered_start$mcares$ind$coord), aes(x = Dim.1, y 
         legend.position = 'none')
 
 
-  
-ggsave(filename = here(plots, '20220323_algae_sheltered-start.png'), device = 'png', 
+ggsave(filename = here(plots, '20220327_algae_sheltered-start.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_algae_sheltered-start.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+
+ggplot(data.frame(mca_algae_sheltered_middle$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = sheltered_arrows2, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(sheltered_arrows2), 
+                                     colour = Variable,
+                                     family = 'quicksand'
+                                     ), seed = 3824) +
+  labs(title = "Algaes: 1996-2006, Protected", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#a08b5a', '#374658','#5484c4', '#543414', 'blue')) +
+    geom_segment(data = sheltered_arrows2, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
+  #scale_y_reverse(limits = c(1.3,-2.5)) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+
+  
+ggsave(filename = here(plots, '20220327_algae_sheltered-middle.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_algae_sheltered-middle.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+
+ggplot(data.frame(mca_algae_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = sheltered_arrows3, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(sheltered_arrows3), 
+                                     colour = Variable,
+                                     family = 'quicksand'
+                                     ), seed = 3824) +
+  labs(title = "Algae: 2010-present, Protected", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238', '#374658', '#94b4d8','#5484c4', 'orange', 'blue')) +
+    geom_segment(data = sheltered_arrows3, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.25,1.75) +
+  ylim(-1.15,1.45) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220327_algae_sheltered-end.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')  
+ggsave(filename = here(plots, '20220327_algae_sheltered-end.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')  
+  
+
+
+
+
+
+
+
 ```
 
 
@@ -1121,12 +1292,20 @@ library(ggrepel)
 
 #added scavenger and filter/suspension to >.6 cos2
 # make subset of vars to plot arrows for
-exposed_arrows1 <- mca_animal_exposed_end$vars_df %>%
+exposed_arrows1 <- mca_animal_exposed_start$vars_df %>%
+  filter(Variable %in% c('motility_adult', 'epibiotic')) %>%
+  `row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic'))
+
+exposed_arrows2 <- mca_animal_exposed_middle$vars_df %>%
+  filter(Variable %in% c('motility_adult', 'epibiotic')) %>%
+  `row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic'))
+
+exposed_arrows3 <- mca_animal_exposed_end$vars_df %>%
   filter(Variable %in% c('motility_adult', 'epibiotic')) %>%
   `row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic'))
 
 # exposed
-ggplot(data.frame(mca_animal_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+ggplot(data.frame(mca_animal_exposed_start$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
     geom_hline(yintercept = 0, colour = "gray90") + 
     geom_vline(xintercept = 0, colour = "gray90") + 
     geom_point(colour = "gray50", alpha = 0.7) + 
@@ -1144,12 +1323,78 @@ ggplot(data.frame(mca_animal_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = D
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220323_animal_exposed.png'), device = 'png', 
+ggsave(filename = here(plots, '20220327_animal_exposed_start.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_animal_exposed_start.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+ggplot(data.frame(mca_animal_exposed_middle$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = exposed_arrows1, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(exposed_arrows2), 
+                                     colour = Variable), seed = 3824) +
+  labs(title = "Animals: Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#5484c4','purple')) +
+    geom_segment(data = exposed_arrows2, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.5,1.6) +
+  ylim(-1.25,1) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220327_animal_exposed_middle.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_animal_exposed_middle.pdf'), device = 'pdf', 
        height = 5, width = 7, units = 'in')
 
 
+ggplot(data.frame(mca_animal_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = exposed_arrows3, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(exposed_arrows3), 
+                                     colour = Variable,
+                                     family = 'quicksand'), seed = 3824) +
+  labs(title = "Animals: Exposed", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#5484c4','purple')) +
+    geom_segment(data = exposed_arrows3, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.5,1.6) +
+  ylim(-1.25,1) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220327_animal_exposed_end.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_animal_exposed_end.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+
+
+
+
+
+
 # make subset of vars to plot arrows for
-sheltered_arrows2 <- mca_animal_sheltered_end$vars_df %>%
+sheltered_arrows1 <- mca_animal_sheltered_start$vars_df %>%
+  filter(Variable %in% c('motility_adult', 'epibiotic')) %>%
+  `row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic')) %>%
+  filter(!(Variable == 'scavenger' & Dim.1 < 0 | Variable == 'epibiotic' & Dim.1 > 0 | Variable == 'filter_suspension' & Dim.1 > 0))
+
+sheltered_arrows2 <- mca_animal_sheltered_middle$vars_df %>%
+  filter(Variable %in% c('motility_adult', 'epibiotic', 'scavenger', 'filter_suspension')) %>%
+  `row.names<-`(c('Motile','Sessile','Not Filter-Suspension', 'Filter or Suspension feeder',
+                  'Not a Scavenger', 'Scavenger','Not Epibiotic','Epibiotic')) %>%
+  filter(!(Variable == 'scavenger' & Dim.1 < 0 | Variable == 'epibiotic' & Dim.1 > 0 | Variable == 'filter_suspension' & Dim.1 > 0))
+
+sheltered_arrows3 <- mca_animal_sheltered_end$vars_df %>%
   filter(Variable %in% c('motility_adult', 'epibiotic', 'scavenger', 'filter_suspension')) %>%
   `row.names<-`(c('Motile','Sessile','Not Filter-Suspension', 'Filter or Suspension feeder',
                   'Not a Scavenger', 'Scavenger','Not Epibiotic','Epibiotic')) %>%
@@ -1158,7 +1403,33 @@ sheltered_arrows2 <- mca_animal_sheltered_end$vars_df %>%
 
 
 # sheltered
-ggplot(data.frame(mca_animal_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+ggplot(data.frame(mca_animal_sheltered_start$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+    geom_hline(yintercept = 0, colour = "gray90") + 
+    geom_vline(xintercept = 0, colour = "gray90") + 
+    geom_point(colour = "gray50", alpha = 0.7) + 
+    geom_density2d(colour = "gray87") + 
+    geom_text_repel(data = sheltered_arrows1, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(sheltered_arrows1), 
+                                     colour = Variable,
+                                     family = 'quicksand'), seed = 3824) +
+  labs(title = "Animals: Sheltered 1982-1994", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#5484c4', 'green', 'orange', 'blue')) +
+    geom_segment(data = sheltered_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+               arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
+  xlim(-1.5,1.6) +
+  ylim(-1.25,1) +
+  #scale_y_reverse(limits = c(1.3,-2.5)) +
+    theme_classic() +
+  theme(axis.text  = element_blank(),
+        legend.position = 'none')
+
+ggsave(filename = here(plots, '20220327_animal_sheltered-start.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')
+ggsave(filename = here(plots, '20220327_animal_sheltered-start.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')
+
+
+ggplot(data.frame(mca_animal_sheltered_middle$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
     geom_hline(yintercept = 0, colour = "gray90") + 
     geom_vline(xintercept = 0, colour = "gray90") + 
     geom_point(colour = "gray50", alpha = 0.7) + 
@@ -1176,40 +1447,43 @@ ggplot(data.frame(mca_animal_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y =
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220323_animal_sheltered-end.png'), device = 'png', 
+ggsave(filename = here(plots, '20220327_animal_sheltered-middle.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')  
+ggsave(filename = here(plots, '20220327_animal_sheltered-middle.pdf'), device = 'pdf', 
        height = 5, width = 7, units = 'in')  
   
-sheltered_arrows1 <- mca_animal_sheltered_start$vars_df %>%
-  filter(Variable %in% c('motility_adult', 'epibiotic')) %>%
-  `row.names<-`(c('Motile','Sessile','Not Epibiotic','Epibiotic')) %>%
-  filter(!(Variable == 'scavenger' & Dim.1 < 0 | Variable == 'epibiotic' & Dim.1 > 0 | Variable == 'filter_suspension' & Dim.1 > 0))
 
 
 
-# exposed
-ggplot(data.frame(mca_animal_sheltered_start$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
+
+ggplot(data.frame(mca_animal_sheltered_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
     geom_hline(yintercept = 0, colour = "gray90") + 
     geom_vline(xintercept = 0, colour = "gray90") + 
     geom_point(colour = "gray50", alpha = 0.7) + 
     geom_density2d(colour = "gray87") + 
-    geom_text_repel(data = sheltered_arrows1, aes(x = Dim.1, y = Dim.2, 
-                                     label = rownames(sheltered_arrows1), 
+    geom_text_repel(data = sheltered_arrows3, aes(x = Dim.1, y = Dim.2, 
+                                     label = rownames(sheltered_arrows3), 
                                      colour = Variable), seed = 3824) +
-  labs(title = "Animals: Sheltered 1982-1994", x = NULL, y = NULL) +
-    scale_colour_manual(values = c('#806238','#5484c4', 'green', 'orange', 'blue')) +
-    geom_segment(data = sheltered_arrows1, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
+  labs(title = "Animals: Sheltered 2010-present", x = NULL, y = NULL) +
+    scale_colour_manual(values = c('#806238','#94b4d8','#5484c4', '#374658', 'orange', 'blue')) +
+    geom_segment(data = sheltered_arrows3, aes(x = 0, y = 0, xend = Dim.1, yend = Dim.2), 
                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +
   xlim(-1.5,1.6) +
   ylim(-1.25,1) +
-  #scale_y_reverse(limits = c(1.3,-2.5)) +
     theme_classic() +
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-
+ggsave(filename = here(plots, '20220327_animal_sheltered-end.png'), device = 'png', 
+       height = 5, width = 7, units = 'in')  
+ggsave(filename = here(plots, '20220327_animal_sheltered-end.pdf'), device = 'pdf', 
+       height = 5, width = 7, units = 'in')  
   
-ggsave(filename = here(plots, '20220323_animal_sheltered-start.png'), device = 'png', 
-       height = 5, width = 7, units = 'in')
+
+
+
+
+
 ```
 
 ### other
