@@ -209,7 +209,6 @@ plot2 <- count_year_all %>%
     theme_bw()
 
 
-
 # morphology
 #plot3 <- count_year_all %>% 
 #    group_by(Year, Position, morphology1) %>%
@@ -226,12 +225,10 @@ plot4 <- count_year_all %>%
     group_by(Year, Position, feeding) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = feeding)) +
-    geom_point() +
-    geom_line() +
+    geom_point(alpha = .7) +
+    geom_line(alpha = .8) +
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
-
-
 
 # dietary_pref
 #plot5 <- count_year_all %>% 
@@ -264,10 +261,10 @@ plot7 <- count_year_all %>%
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
 
-
 # benthic
 plot8 <- count_year_all %>% 
     group_by(Year, Position, solitary_colonial) %>%
+  filter(!(solitary_colonial == 'colonial')) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
     ggplot(aes(x = Year, y = Sum, color = solitary_colonial)) +
     geom_point() +
@@ -275,7 +272,7 @@ plot8 <- count_year_all %>%
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
 
-
+plot8
 
 # invasive
 #plot9 <- count_year_all %>% 
@@ -302,45 +299,48 @@ ggsave("output/2022march/count_rel_abund_plots.png",
 
 
 plot2 + labs(title = 'Count', y = 'Relative Abundance') +
-  scale_color_discrete(name = 'Adult Body Size', labels = c('5cm or less', '6-20cm','21-50cm'))
+  scale_color_manual(name = 'Adult Body Size', labels = c('5cm or less', '6-20cm','21-50cm'), values = c('#94b4d8','#5484c4', '#374658'))
 
-ggsave("output/2022march/relative_abundance/20220323_count-rel-abund_body-size.png",
+
+ggsave("output/2022march/relative_abundance/20220327_count-rel-abund_body-size.png",
        device = 'png',
        width = 8)
 
 
 
 plot4 + labs(title = 'Count', y = 'Relative Abundance') +
-  scale_color_discrete(name = 'Primary Diet', labels = c('Filter/suspension', 'Herbivore','Omnivore', 'Predator'))
+  scale_color_manual(name = 'Primary Diet', labels = c('Filter/suspension', 'Herbivore','Omnivore', 'Predator'), values = c('#94b4d8', '#374658', '#a08b5a', '#806238'))
 
-ggsave("output/2022march/relative_abundance/20220323_count-rel-abund_feeding.png",
+ggsave("output/2022march/relative_abundance/20220327_count-rel-abund_feeding.png",
        device = 'png',
        width = 8)
 
 
 plot6 + labs(title = 'Count', y = 'Relative Abundance') +
-  scale_color_discrete(labels = c('Motile', 'Sessile')) +
+  scale_color_manual(labels = c('Motile', 'Sessile'), values = c('#94b4d8', '#806238')) +
   theme(legend.title = element_blank())
 
-ggsave("output/2022march/relative_abundance/20220323_count-rel-abund_adult-motility.png",
+ggsave("output/2022march/relative_abundance/20220327_count-rel-abund_adult-motility.png",
        device = 'png',
        width = 8)
 
 
 plot7 + labs(title = 'Count', y = 'Relative Abundance') +
-  scale_color_discrete(labels = c('Not Epibiotic', 'Epibiotic')) +
+  scale_color_manual(labels = c('Not Epibiotic', 'Epibiotic'), values = c('#94b4d8', '#806238')) +
   theme(legend.title = element_blank())
 
-ggsave("output/2022march/relative_abundance/20220323_count-rel-abund_epibiotic.png",
+ggsave("output/2022march/relative_abundance/20220327_count-rel-abund_epibiotic.png",
        device = 'png',
        width = 8)
 
 
 plot8 + labs(title = 'Count', y = 'Relative Abundance') +
-  scale_color_discrete(labels = c('Colonial', 'Gregarious', 'Solitary')) +
+  scale_color_manual(labels = c(
+    #'Colonial', 
+    'Gregarious', 'Solitary'),values = c('#94b4d8', '#806238')) +
   theme(legend.title = element_blank())
 
-ggsave("output/2022march/relative_abundance/20220323_count-rel-abund_sociability.png",
+ggsave("output/2022march/relative_abundance/20220327_count-rel-abund_sociability.png",
        device = 'png',
        width = 8)
 
@@ -380,7 +380,7 @@ plot3 <- cover_year_all %>%
   filter(!(is.na(leathery_external_morphology))) %>%
   filter(!(leathery_external_morphology == 'no')) %>%
     ggplot(aes(x = Year, y = Sum, color = leathery_external_morphology)) +
-    geom_line() +
+    geom_line(color = '#a08b5a') +
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
 
@@ -402,14 +402,14 @@ artic <- cover_year_all %>%
 
 
 plot3 + 
-  geom_line(data = crust, aes(x = Year, y = Sum, color = crustose_morphology_growth_form), color = 'blue') +
-  geom_line(data = branch, aes(x = Year, y = Sum, color = branched_morphology), color = 'green') +
-  geom_line(data = artic, aes(x = Year, y = Sum, color = branched_morphology), color = 'purple') +
-  labs(title = 'Cover', y = 'Relative abundance', subtitle = 'red-leathery, blue-crustose, green-branched, purple-articulated') +
+  geom_line(data = crust, aes(x = Year, y = Sum, color = crustose_morphology_growth_form), color = '#5484c4') +
+  geom_line(data = branch, aes(x = Year, y = Sum, color = branched_morphology), color = '#94b4d8') +
+  geom_line(data = artic, aes(x = Year, y = Sum, color = branched_morphology), color = '#543414') +
+  labs(title = 'Cover', y = 'Relative abundance', subtitle = 'lightbrown-leathery, blue-crustose, lightblue-branched, darkbrown-articulated') +
   ylim(0,.65) +
   theme(legend.position = 'none')
 
-ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_algae.png",
+ggsave("output/2022march/relative_abundance/20220327_cover-rel-abund_algae.png",
        device = 'png',
        width = 8)
 
@@ -425,13 +425,14 @@ plot4 <- cover_year_all %>%
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
 
+
 #dietary_pref
 plot5 <- cover_year_all %>% 
     group_by(Year, Position, space_use_canopy) %>%
     summarise(Sum = sum(Rel_abund_by_side)) %>% 
   filter(space_use_canopy == 'yes') %>%
     ggplot(aes(x = Year, y = Sum)) +
-    geom_line(color = 'salmon') +
+    geom_line(color = '#a08b5a') +
     facet_wrap(~ Position, nrow = 2) + 
     theme_bw()
 
@@ -449,13 +450,13 @@ turf <- cover_year_all %>%
 
 
 plot5 + 
-  geom_line(data = subc, aes(x = Year, y = Sum), color = 'blue') +
-  geom_line(data = turf, aes(x = Year, y = Sum), color = 'purple') +
-  labs(title = 'Cover', y = 'Relative abundance', subtitle = 'salmon-canopy, blue-subcanopy, purple-turf') +
+  geom_line(data = subc, aes(x = Year, y = Sum), color = '#5484c4') +
+  geom_line(data = turf, aes(x = Year, y = Sum), color = '#543414') +
+  labs(title = 'Cover', y = 'Relative abundance', subtitle = 'lightbrown-canopy, blue-subcanopy, darkbrown-turf') +
   ylim(0,.65) +
   theme(legend.position = 'none')
 
-ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_canopy-sub-turf.png",
+ggsave("output/2022march/relative_abundance/20220327_cover-rel-abund_canopy-sub-turf.png",
        device = 'png',
        width = 8)
 
@@ -515,23 +516,25 @@ plot8 <- cover_year_all %>%
 #       width = 12)
 
 plot1 + labs(title = 'Cover', y = 'Relative Abundance') +
+  scale_color_manual(values = c('#94b4d8', '#806238')) +
   ylim(0,.65) +
   theme(legend.title = element_blank())
 
-ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_group.png",
+ggsave("output/2022march/relative_abundance/20220327_cover-rel-abund_group.png",
        device = 'png',
        width = 8)
 
 
 plot2 + labs(title = 'Cover', y = 'Relative Abundance') +
   ylim(0,.65) +
-  scale_color_discrete(name = 'Adult Body Size', labels = c('5cm or less', '6-20cm'))
+  scale_color_manual(name = 'Adult Body Size', labels = c('5cm or less', '6-20cm'), values = c('#94b4d8','#5484c4'))
 
 
-ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_body-size.png",
+ggsave("output/2022march/relative_abundance/20220327_cover-rel-abund_body-size.png",
        device = 'png',
        width = 8)
 
+#this just shows invert vs algae
 plot4 + labs(title = 'Cover', y = 'Relative Abundance') +
   ylim(0,.65) +
   scale_color_discrete(labels = c('Autotroph', 'Filter/Suspension')) +
@@ -541,7 +544,7 @@ ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_feeding.png
        device = 'png',
        width = 8)
 
-
+# not useful
 plot7 + labs(title = 'Cover', y = 'Relative Abundance') +
   ylim(0,.65) +
   scale_color_discrete(labels = c('Not Epibiotic', 'Epibiotic')) +
@@ -554,10 +557,10 @@ ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_epibiotic.p
 
 plot8 + labs(title = 'Cover', y = 'Relative Abundance') +
   ylim(0,.65) +
-  scale_color_discrete(labels = c('Colonial', 'Gregarious')) +
+  scale_color_manual(labels = c('Colonial', 'Gregarious'), values = c('#94b4d8', '#806238')) +
   theme(legend.title = element_blank())
 
-ggsave("output/2022march/relative_abundance/20220323_cover-rel-abund_colonial.png",
+ggsave("output/2022march/relative_abundance/20220327_cover-rel-abund_colonial.png",
        device = 'png',
        width = 8)
 
