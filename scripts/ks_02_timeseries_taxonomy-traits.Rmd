@@ -135,7 +135,7 @@ sp_1996r_algae <- sp_1996r %>%
   filter(!(is.na(group)))
 
 write.csv(sp_1996r_animal, here('data', 'clean', '20220323_1996-2006_animal.csv'), row.names = FALSE)
-write.csv(sp_1996r_algae, here('data', 'clean', '20220323_1996-2006_algae.csv'), row.names = FALSE)
+write.csv(sp_1996r_algae, here('data', 'clean', '20220525_1996-2006_algae.csv'), row.names = FALSE)
 ```
 
 

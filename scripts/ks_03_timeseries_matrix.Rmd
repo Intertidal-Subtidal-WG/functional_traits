@@ -33,9 +33,9 @@ library(here)
 
 ```{r load-in}
 # algae time series
-algae_1982 <- read_csv(here('data', 'clean', '20220128_1982-1995_algae.csv'))
-algae_1996 <- read_csv(here('data', 'clean', '20220128_1996-2006_algae.csv'))
-algae_2011 <- read_csv(here('data', 'clean', '20220128_2011-end_algae.csv'))
+algae_1982 <- read_csv(here('data', 'clean', '20220525_1982-1995_algae.csv'))
+algae_1996 <- read_csv(here('data', 'clean', '20220525_1996-2006_algae.csv'))
+algae_2011 <- read_csv(here('data', 'clean', '20220525_2011-end_algae.csv'))
 
 # animal time series
 animal_1982 <- read_csv(here('data', 'clean', '20220128_1982-1995_animal.csv'))
