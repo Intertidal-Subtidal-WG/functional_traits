@@ -114,7 +114,6 @@ groupfits <- function(final_fit,distMeasure,clusterMethod){
 }
 ```
 
-
 ```{r dissimilarity matrix legendre}
 "coldiss" <- function(D, nc = 4, byrank = TRUE, diag = FALSE)
 {
@@ -153,11 +152,12 @@ groupfits <- function(final_fit,distMeasure,clusterMethod){
 }
 ```
 
-
 # Animals
 
 ## 1982-1995
+
 setup
+
 ```{r animal matrix}
 ##Cluster using nomclust
 
@@ -180,6 +180,7 @@ animal_dataSET2 <- animal_dataSET %>%
 ```
 
 generate all options with loop from ladds
+
 ```{r animal loop}
 
 dataSET <- animal_dataSET2
@@ -320,10 +321,10 @@ animal_1982_eval <- animal_eval
 
 ```
 
+### validation/evaluation
 
+for each method to pick number of clusters and matrix type
 
-### validation/evaluation 
-for each method to pick number of clusters and matrix type 
 ```{r animal-validation}
 ##------------ VALIDATION
 
@@ -441,6 +442,7 @@ for(i in 1:length(nomclustEvals)){
 ```
 
 ### matrix
+
 ```{r}
 #pick the method you want for matrix based on evaluation plots above
 animal_1982_matrix <- good3(animal_dataSET2)
@@ -469,16 +471,6 @@ coldiss(animal_1982_matrix)
 dev.off()
 ```
 
-
-
-
-
-
-
-
-
-
-
 ## 1996-2006
 
 ```{r animal matrix2}
@@ -503,6 +495,7 @@ animal_dataSET2 <- animal_dataSET %>%
 ```
 
 generate all options with loop from ladds
+
 ```{r animal loop2}
 
 dataSET <- animal_dataSET2
@@ -643,9 +636,8 @@ animal_1996_eval <- animal_eval
 
 ```
 
+### validation/evaluation for each method to pick number of clusters and matrix type
 
-
-### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r animal-validation2}
 ##------------ VALIDATION
 
@@ -791,9 +783,6 @@ coldiss(animal_1996_matrix)
 dev.off()
 ```
 
-
-
-
 ## 2011-end
 
 ```{r animal matrix3}
@@ -818,6 +807,7 @@ animal_dataSET2 <- animal_dataSET %>%
 ```
 
 generate all options with loop from ladds
+
 ```{r animal loop}
 
 dataSET <- animal_dataSET2
@@ -958,9 +948,8 @@ animal_2011_eval <- animal_eval
 
 ```
 
+### validation/evaluation for each method to pick number of clusters and matrix type
 
-
-### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r animal-validation3}
 ##------------ VALIDATION
 
@@ -1076,7 +1065,6 @@ for(i in 1:length(nomclustEvals)){
 }
 ```
 
-
 ### matrix
 
 ```{r}
@@ -1107,12 +1095,10 @@ coldiss(animal_2011_matrix)
 dev.off()
 ```
 
-
-
 # Algae
 
-
 ## 1982-1995
+
 ```{r algae matrix}
 ##Cluster using nomclust
 
@@ -1135,6 +1121,7 @@ algae_dataSET2 <- algae_dataSET %>%
 ```
 
 generate all options with loop from ladds
+
 ```{r algae loop}
 
 dataSET <- algae_dataSET2
@@ -1275,9 +1262,8 @@ algae_1982_eval <- algae_eval
 
 ```
 
+### validation/evaluation for each method to pick number of clusters and matrix type
 
-
-### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r algae-validation}
 ##------------ VALIDATION
 
@@ -1388,7 +1374,7 @@ for(i in 1:length(nomclustEvals)){
   EvalData <- evaluation[evaluation$name==nomclustEvals[i],]
   EvalPlot <- plotEvals(EvalData, nomclustEvals[i])
   ggsave(EvalPlot, device = "pdf",
-         filename = here('output', 'cluster_ks', '20220128_timeseries',
+         filename = here('output', 'cluster_ks', '20220525_timeseries',
                          paste0("algae_", nomclustEvals[i],"_plot-1982-1995.pdf")))
 }
 ```
@@ -1413,18 +1399,15 @@ coldiss(algae_1982_matrix)
 algae_1982_matrix2 <- fortify(algae_1982_matrix)
 
 #save(algae_matrix, file = here('data','algae_matrix-1982r.RData'))
-write.csv(algae_1982_matrix2, file = here('data', 'clean', '20220128_algae_matrix_1982-1995.csv'))
+write.csv(algae_1982_matrix2, file = here('data', 'clean', '20220525_algae_matrix_1982-1995.csv'))
 
-png(filename = here('output', 'cluster_ks', '20220128_timeseries',
+png(filename = here('output', 'cluster_ks', '20220525_timeseries',
                     'algae-dissimilarity_1982-1995.png'),
     width = 1000, height = 500,
     units = 'px')
 coldiss(algae_1982_matrix)
 dev.off()
 ```
-
-
-
 
 ## 1996-2006
 
@@ -1450,6 +1433,7 @@ algae_dataSET2 <- algae_dataSET %>%
 ```
 
 generate all options with loop from ladds
+
 ```{r algae loop}
 
 dataSET <- algae_dataSET2
@@ -1590,9 +1574,8 @@ algae_1982_eval <- algae_eval
 
 ```
 
+### validation/evaluation for each method to pick number of clusters and matrix type
 
-
-### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r algae-validation2}
 ##------------ VALIDATION
 
@@ -1738,7 +1721,6 @@ coldiss(algae_1996_matrix)
 dev.off()
 ```
 
-
 ## 2011-end
 
 ```{r algae matrix}
@@ -1763,6 +1745,7 @@ algae_dataSET2 <- algae_dataSET %>%
 ```
 
 generate all options with loop from ladds
+
 ```{r algae loop}
 
 dataSET <- algae_dataSET2
@@ -1903,9 +1886,8 @@ algae_1982_eval <- algae_eval
 
 ```
 
+### validation/evaluation for each method to pick number of clusters and matrix type
 
-
-### validation/evaluation for each method to pick number of clusters and matrix type 
 ```{r algae-validation}
 ##------------ VALIDATION
 
@@ -2021,7 +2003,6 @@ for(i in 1:length(nomclustEvals)){
 }
 ```
 
-
 ### matrix
 
 ```{r}
@@ -2051,4 +2032,3 @@ png(filename = here('output', 'cluster_ks', '20220128_timeseries',
 coldiss(algae_2011_matrix)
 dev.off()
 ```
-
