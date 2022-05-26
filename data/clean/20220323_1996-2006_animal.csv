@@ -1,0 +1,87 @@
+"species","phylum","common_name_division","subtidal","intertidal","solitary_colonial","adult_body_size_bin","calcareous","motility_adult","herbivore","predator","omnivore","deposit_feeder","filter_suspension","scavenger","trophic_level","benthic","pelagic","epibiotic"
+"Cyanobacteria",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Verrucaria ",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Arthopyrenia",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Prasiola stipitata",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Hildenbrandia rubra",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Fucus ",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Fucus vesticulosus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Ascophyllum nodosum",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Corallina ",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Semibalanus balanoides","Arthropoda","Barnacle","no","yes","gregarious","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Chordaria flagelliformis",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Fucus vesiculosus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Chondrus crispus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Mastocarpus stellatus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Ralfsia ",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Codium fragile",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Chaetomorpha",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Cladophora",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Fucus distichus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Mytilus edulis","Mollusca","Bivalve","yes","yes","gregarious","SC2","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Metridium dianthus","Cnidaria","Anemone","no","yes","gregarious","SC2","no","sessile","no","yes","yes","no","yes","no","secondary consumer","yes","no","yes"
+"Dynamena pumila","Cnidaria","Hydrozoan","no","yes","colonial","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Modiolus modiolus","Mollusca","Bivalve","yes","yes","gregarious","SC2","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Ulva lactuca",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Polysiphonia",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Elachista fucicola",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Leathesia marina",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Chaetomorpha ligustica",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Porphyra",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Ceramium virgatum",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Alaria esculenta",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Ulva intestinalis",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Corallina officinalis",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Cryptosula pallasiana","Bryozoa","Bryozoan","yes","yes","colonial","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Schizoporella unicornis","Bryozoa","Bryozoan","yes","yes","colonial","SC2","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Dumontia contorta",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Scytosiphon lomentaria ",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Bonnemaisonia hamifera",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Diadumene lineata","Cnidaria","Anemone","yes","yes","solitary","SC1","no","sessile","no","yes","no","no","no","no","secondary consumer","yes","no","yes"
+"Anomia simplex","Mollusca","Bivalve","no","yes","solitary","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Halichondria panicea","Porifera","Sponge","yes","no","colonial","SC3","no","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Phymatolithon lenormandii",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Clathromorphum circumscriptum",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Botrylloides violaceus","Tunicata","Tunicate","yes","no","colonial","SC2","no","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Ahnfeltia plicata",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Hiatella arctica","Mollusca","Bivalve","no","yes","solitary","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Membranipora membranacea","Bryozoa","Bryozoan","yes","yes","colonial","SC2","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Electra pilosa","Bryozoa","Bryozoan","yes","yes","colonial","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Botryllus schlosseri","Tunicata","Tunicate","yes","yes","colonial","SC2","no","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Diplosoma ",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Monostroma",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Acrosiphonia",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Plumaria plumosa",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Antithamnion",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Saccharina latissima",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Spongomorpha aeruginosa",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Pylaiella littoralis",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Diatoma",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Cystoclonium purpureum",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Testudinalia testudinalis","Mollusca","Gastropod","yes","no","solitary","SC2","yes","sessile","yes","no","no","no","no","no","primary consumer","yes","no","yes"
+"Amphipoda","Arthropoda","Crustacean","no","yes","solitary","SC1","yes","motile","yes","yes","yes","no","no","yes","secondary consumer","yes","yes","yes"
+"Annelida","Annelida","Annelid worm","yes","yes","solitary","SC1","no","motile","yes","yes","yes","yes","yes","yes","secondary consumer","yes","yes","no"
+"Anurida maritima","Arthropoda","Collembolan","no","yes","solitary","SC1","yes","motile","no","no","no","no","no","yes","decomposer","yes","no","no"
+"Asterias forbesi","Echinodermata","Sea Stars","yes","yes","solitary","SC2","yes","motile","no","yes","no","no","no","no","secondary consumer","yes","no","no"
+"Asterias rubens","Echinodermata","Sea Stars","yes","yes","solitary","SC3","yes","motile","no","yes","no","no","no","yes","secondary consumer","yes","yes","no"
+"Cancer borealis","Arthropoda","Crustacean","yes","yes","solitary","SC2","yes","motile","no","yes","yes","no","no","no","secondary consumer","yes","no","no"
+"Cancer irroratus","Arthropoda","Crustacean","yes","yes","solitary","SC2","yes","motile","yes","yes","yes","no","no","yes","secondary consumer","yes","no","no"
+"Carcinus maenus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Crepidula fornicata","Mollusca","Gastropod","yes","yes","gregarious","SC2","yes","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"
+"Small worm","Mixed","Small worm","yes","yes","solitary","SC1","no","motile","yes","yes","yes","yes","no","yes","secondary consumer","yes","yes","no"
+"Halacarus",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"Hemigrapsus sanguineus","Arthropoda","Crustacean","no","yes","solitary","SC2","yes","motile","no","no","yes","no","no","yes","secondary consumer","yes","no","no"
+"Henricia sanguinolenta","Echinodermata","Sea Stars","yes","yes","solitary","SC2","yes","motile","no","no","no","no","yes","yes","primary consumer","yes","no","no"
+"Isopoda","Arthropoda","Crustacean","no","yes","solitary","SC2","yes","motile","yes","no","no","no","no","yes","primary consumer","yes","no","no"
+"Lacuna vincta","Mollusca","Gastropod","no","yes","solitary","SC1","yes","motile","yes","no","no","no","no","no","primary consumer","no","no","yes"
+"Littorina littorea","Mollusca","Gastropod","no","yes","gregarious","SC2","yes","motile","yes","no","no","no","no","no","primary consumer","no","no","yes"
+"Littorina obtusata","Mollusca","Gastropod","no","yes","solitary","SC1","yes","motile","yes","no","no","no","no","no","primary consumer","no","no","yes"
+"Littorina saxatilis","Mollusca","Gastropod","no","yes","solitary","SC2","yes","motile","yes","no","no","no","no","no","primary consumer","yes","no","no"
+"Nucella lapillus","Mollusca","Gastropod","no","yes","gregarious","SC2","yes","motile","no","yes","no","no","no","no","secondary consumer","no","no","yes"
+"Nudibranchia","Mollusca","Gastropod","yes","yes","solitary","SC1","no","motile","no","yes","no","no","no","no","secondary consumer","yes","no","no"
+"Ophiopholis aculeata","Echinodermata","Echinoderm","yes","no","solitary","SC2","yes","motile","no","yes","no","no","no","yes","secondary consumer","yes","no","no"
+"Pagurus acadianus","Arthropoda","Crustacean","no","yes","solitary","SC2","yes","motile","no","no","yes","no","no","yes","secondary consumer","yes","no","no"
+"Spirorbis","Annelida","Annelid worm","no","yes","gregarious","SC1","yes","sessile","no","no","no","no","yes","no","primary consumer","no","no","yes"
+"Strongylocentrotus droebachiensis","Echinodermata","Echinoderm","yes","yes","gregarious","SC2","yes","motile","yes","no","no","no","no","no","primary consumer","yes","no","yes"
+"Boreochiton ruber","Mollusca","Chiton","yes","no","solitary","SC1","yes","motile","yes","no","no","no","no","no","primary consumer","yes","no","yes"
+"Tunicate","Tunicata","Tunicate",NA,NA,"gregarious","SC2","no","sessile","no","no","no","no","yes","no","primary consumer","yes","no","yes"

@@ -9,6 +9,7 @@ This script adds trait data to the species lists from the filter, replaces the s
 
 ```{r setup, include=FALSE}
 library(dplyr)
+library(stringr)
 library(here)
 
 # here filepaths
@@ -22,7 +23,7 @@ field <- here('data','fielddata')
 ## remove first column, turn all into factors
 animal_imp2 <- read.csv(file = here(trait,'20220321_animal_imputed.csv'))[,-1]%>% 
   mutate(across(.fns = ~ as.factor(.)))
-algae_imp2 <- read.csv(file = here(trait,'20220323_algae_imputed.csv'))[,-1]%>% 
+algae_imp2 <- read.csv(file = here(trait,'20220525_algae_imputed.csv'))[,-1]%>% 
   mutate(across(.fns = ~ as.factor(.)))
 
 # combined year+transect list
@@ -76,7 +77,7 @@ pc_ct_algae <- pc_ct %>%
   filter(!(is.na(group)))
 
 write.csv(pc_ct_animal, here(trait, '20220321_1982-end_animal.csv'), row.names = FALSE)
-write.csv(pc_ct_algae, here(trait, '20220321_1982-end_algae.csv'), row.names = FALSE)
+write.csv(pc_ct_algae, here(trait, '20220525_1982-end_algae.csv'), row.names = FALSE)
 
 
 ```
@@ -101,14 +102,14 @@ sp_1982r <- sp_1982r %>%
 
 
 sp_1982r_animal <- sp_1982r %>%
-  left_join(animal_imp2) %>%
-  filter(!(is.na(group)))
+  left_join(animal_imp2)# %>%
+  #filter(!(is.na(group)))
 sp_1982r_algae <- sp_1982r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
 write.csv(sp_1982r_animal, here('data', 'clean', '20220323_1982-1995_animal.csv'), row.names = FALSE)
-write.csv(sp_1982r_algae, here('data', 'clean', '20220323_1982-1995_algae.csv'), row.names = FALSE)
+write.csv(sp_1982r_algae, here('data', 'clean', '20220525_1982-1995_algae.csv'), row.names = FALSE)
 ```
 
 ```{r 1996}
@@ -127,8 +128,8 @@ sp_1996r <- sp_1996r %>%
 
 
 sp_1996r_animal <- sp_1996r %>%
-  left_join(animal_imp2) %>%
-  filter(!(is.na(group)))
+  left_join(animal_imp2)# %>%
+ # filter(!(is.na(group)))
 sp_1996r_algae <- sp_1996r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
@@ -154,13 +155,13 @@ sp_2011r <- sp_2011r %>%
 
 
 sp_2011r_animal <- sp_2011r %>%
-  left_join(animal_imp2) %>%
-  filter(!(is.na(group)))
+  left_join(animal_imp2) #%>%
+  #filter(!(is.na(group)))
 sp_2011r_algae <- sp_2011r %>%
   left_join(algae_imp2) %>%
   filter(!(is.na(group)))
 
 write.csv(sp_2011r_animal, here('data', 'clean', '20220313_2011-end_animal.csv'), row.names = FALSE)
-write.csv(sp_2011r_algae, here('data', 'clean', '20220313_2011-end_algae.csv'), row.names = FALSE)
+write.csv(sp_2011r_algae, here('data', 'clean', '20220525_2011-end_algae.csv'), row.names = FALSE)
 ```
 
