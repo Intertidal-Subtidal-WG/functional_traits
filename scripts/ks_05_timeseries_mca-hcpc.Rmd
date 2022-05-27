@@ -18,7 +18,7 @@ library(here)
 
 # here filepaths
 traits <- here('data', 'clean')
-plots <- here('output', '2022march', 'mca')
+plots <- here('output', '2022may', 'mca')
 
 # set seed for whole session:
 addTaskCallback(function(...) {set.seed(3824);TRUE})
@@ -30,17 +30,15 @@ addTaskCallback(function(...) {set.seed(3824);TRUE})
 
 ```{r}
 # time series
-algae_traits <- read_csv(here(traits, "20220321_1982-end_algae.csv")) %>%
-  filter(intertidal == 'yes') %>%
-  select(!(c(intertidal, group, size_categories, feeding, 
+algae_traits <- read_csv(here(traits, "20220525_1982-end_algae.csv")) %>%
+  filter(intertidal_gom == 'yes') %>%
+  select(!(c(intertidal_gom, group, autotroph, 
              saccate_external_morphology,
              potential_asexual_reproduction,
-             epilithic_use_space,
-             epiphytic_env_position, epizoic_env_position,
-             macroalgae)))
+             epilithic_env_position)))
 
-algae_traits <- algae_traits %>%
-  mutate(maximun_longevity = str_replace_all(maximun_longevity, c(" \\(one-ten years\\)"= "")))
+#algae_traits <- algae_traits %>%
+#  mutate(maximun_longevity = str_replace_all(maximun_longevity, c(" \\(one-ten years\\)"= "")))
   
 
 animal_traits <- read_csv(here(traits, "20220321_1982-end_animal.csv")) %>%
@@ -757,14 +755,14 @@ algaehcpc_cluster <- fviz_cluster(algaehcpc, geom = "point", main = "Factor map"
 
 ggplot(algaehcpc_dend, horiz = TRUE) + 
   labs(y = NULL, title = 'Algae Functional Groups: All') +
-  ylim(.15,-.12) +
+  ylim(.2,-.12) +
   # manually set colors
   scale_color_manual(values = c('#bcbcd2','#5484c4','#543414','#374658', '#a08b5a', 'black')) +
   theme(axis.ticks = element_blank(),
         axis.text.y = element_blank()
         )
 
-ggsave(filename = here(plots, 'hcpc', '20220323_algae_dend.png'), device = 'png', 
+ggsave(filename = here(plots, 'hcpc', '20220525_algae_dend.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
 
 algaehcpc_cluster$data
@@ -958,7 +956,7 @@ ggplot(data.frame(algae_all$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) +
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220323_algae_all.png'), device = 'png', 
+ggsave(filename = here(plots, '20220525_algae_all.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
 
 
@@ -977,7 +975,7 @@ ggplot() +
   theme_classic() +
   theme(axis.text = element_blank())
 
-ggsave(filename = here(plots, '20220327_algae_sheltered_change.png'), device = 'png', 
+ggsave(filename = here(plots, '20220525_algae_sheltered_change.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
 
 
@@ -993,7 +991,7 @@ ggplot() +
   theme_classic() +
   theme(axis.text = element_blank())
 
-ggsave(filename = here(plots, '20220327_algae_exposed_change.png'), device = 'png', 
+ggsave(filename = here(plots, '20220525_algae_exposed_change.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
 ```
 
@@ -1036,10 +1034,10 @@ ggplot(data.frame(mca_algae_exposed_start$mcares$ind$coord), aes(x = Dim.1, y = 
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220327_algae_exposed_start.png'), device = 'png', 
+ggsave(filename = here(plots, '20220525_algae_exposed_start.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
-ggsave(filename = here(plots, '20220327_algae_exposed_start.pdf'), device = 'pdf', 
-       height = 5, width = 7, units = 'in')
+#ggsave(filename = here(plots, '20220327_algae_exposed_start.pdf'), device = 'pdf', 
+#       height = 5, width = 7, units = 'in')
 
 
 ggplot(data.frame(mca_algae_exposed_middle$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
@@ -1062,10 +1060,10 @@ ggplot(data.frame(mca_algae_exposed_middle$mcares$ind$coord), aes(x = Dim.1, y =
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220327_algae_exposed_mid.png'), device = 'png', 
+ggsave(filename = here(plots, '20220525_algae_exposed_mid.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
-ggsave(filename = here(plots, '20220327_algae_exposed_mid.pdf'), device = 'pdf', 
-       height = 5, width = 7, units = 'in')
+#ggsave(filename = here(plots, '20220327_algae_exposed_mid.pdf'), device = 'pdf', 
+#       height = 5, width = 7, units = 'in')
 
 
 ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Dim.2)) + 
@@ -1088,10 +1086,10 @@ ggplot(data.frame(mca_algae_exposed_end$mcares$ind$coord), aes(x = Dim.1, y = Di
   theme(axis.text  = element_blank(),
         legend.position = 'none')
 
-ggsave(filename = here(plots, '20220327_algae_exposed_end.png'), device = 'png', 
+ggsave(filename = here(plots, '20220525_algae_exposed_end.png'), device = 'png', 
        height = 5, width = 7, units = 'in')
-ggsave(filename = here(plots, '20220327_algae_exposed_end.pdf'), device = 'pdf', 
-       height = 5, width = 7, units = 'in')
+#ggsave(filename = here(plots, '20220327_algae_exposed_end.pdf'), device = 'pdf', 
+#       height = 5, width = 7, units = 'in')
 
 
 
