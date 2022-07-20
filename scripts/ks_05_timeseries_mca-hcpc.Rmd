@@ -347,6 +347,20 @@ mca_algae_exposed_end$ggcontrib
 mca_algae_sheltered_start$ggcontrib
 mca_algae_sheltered_middle$ggcontrib
 mca_algae_sheltered_end$ggcontrib
+
+
+mca_algae_sheltered_end$mcares$ind$contrib
+mca_algae_sheltered_end$mcares$ind$cos2
+
+mca_algae_sheltered_end$mcares$var$eta2
+mca_algae_sheltered_end$mcares$var$contrib
+
+mca_algae_sheltered_start$mcares$ind$contrib
+mca_algae_sheltered_start$mcares$ind$cos2
+
+mca_algae_sheltered_start$mcares$var$eta2
+mca_algae_sheltered_start$mcares$var$contrib
+
 ```
 
 ```{r algae-compare}
@@ -621,6 +635,25 @@ mca_animal_sheltered_end$ggdendrogram
 mca_animal_exposed$ggdendrogram
 mca_animal_exposed_start$ggdendrogram
 mca_animal_exposed_end$ggdendrogram
+
+
+mca_animal_sheltered_end$mcares$ind$cos2
+mca_animal_sheltered_end$mcares$ind$contrib
+
+mca_animal_sheltered_end$ggvars
+
+
+fviz_mca_ind(mca_animal_sheltered_end$mcares, col.var = 'contrib', #alpha.var = 'contrib',
+                           gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                           select.var = list(cos2 = .4),
+                           repel = TRUE, # Avoid text overlapping
+                           ggtheme = theme_minimal()) 
+
+mca_animal_exposed_end$mcares$var$eta2
+mca_animal_exposed_end$mcares$var$contrib
+
+
+
 ```
 
 # arsenal to extract differences quickly
@@ -637,6 +670,14 @@ diffs(protectstvend, what = c('observations'))
 
 exposedstvend <- comparedf(animal_exposed_start, animal_exposed_end, by = 'species')
 diffs(exposedstvend, what = c('observations'))
+
+
+animal_exp_notmiddle <- full_join(animal_exposed_start, animal_exposed_end)
+
+exposedstvend <- comparedf(animal_exposed_middle, animal_exp_notmiddle, by = 'species')
+diffs(exposedstvend, what = c('observations'))
+
+#nothing unique to the middle
 
 ```
 
@@ -915,7 +956,7 @@ ggsave(filename = here(plots, 'hcpc', '20220321_animal_exposed-end_dend.png'), d
 ```{r algae-scratch}
 
 
-fviz_mca_var(mca_algae_sheltered_end$mcares, col.var = 'cos2', alpha.var = 'contrib',
+fviz_mca_var(mca_animal_sheltered_end$mcares, col.var = 'cos2', alpha.var = 'contrib',
                            gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
                            select.var = list(cos2 = .4),
                            repel = TRUE, # Avoid text overlapping
